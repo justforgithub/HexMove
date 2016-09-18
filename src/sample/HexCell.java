@@ -1,13 +1,13 @@
 package sample;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
-import sample.Building.ABuilding;
+import sample.Building.AField;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
+
 
 
 /**
@@ -22,7 +22,7 @@ public class HexCell {
      */
 
     public ATerrain terrain;
-    public ABuilding building;
+    public AField field;
     public AUnit unit;
 
     public Polygon polygon;
@@ -32,14 +32,20 @@ public class HexCell {
     public int y;
     public Board board;
 
+    // For path finding
+    public double distance;
+    public HexCell precursor;
+
     HexCell(int x, int y, Board board, ATerrain terrain) {
         this.drawGroup = new Group();
         this.terrain = terrain;
         polygon = drawHexCell();
-        drawObject();
         this.x = x;
         this.y = y;
         this.board = board;
+        this.distance = 0;
+        this.precursor = null;
+        drawObject();
         prepareEventListeners();
     }
 
@@ -57,15 +63,17 @@ public class HexCell {
         drawGroup.getChildren().addAll(new Group(polygon));
 
 
-        // building Check
-        if (building != null) {
-            drawGroup.getChildren().addAll(building.drawObject());
+        // field Check
+        if (field != null) {
+            drawGroup.getChildren().addAll(field.drawObject());
         }
 
         // Unit check
         if (unit != null) {
             drawGroup.getChildren().addAll(unit.drawObject());
         }
+
+        Tooltip.install(drawGroup, new Tooltip(toString()));
 
         return drawGroup;
 
@@ -140,14 +148,25 @@ public class HexCell {
         otherHexCell.drawGroup.setTranslateY(drawGroup.getTranslateY() + y);
     }
 
+
     /**
      * Prepare Mouse handlers
      */
     private void prepareEventListeners() {
         drawGroup.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println("LeftClicked");
-                setSelected(true);
+                board.dummy1 = this;
+            } else {
+                if(event.getButton().equals(MouseButton.SECONDARY)){
+                    board.dummy2 = this;
+                }
+            }
+            if(board.dummy1 != null  && board.dummy2 != null){
+                Path path = board.calculatePath(board.dummy1, board.dummy2);
+                board.deselectAllCells();
+                for(HexCell current: path.pathCells){
+                    current.setSelected(true);
+                }
             }
 
         });
@@ -166,24 +185,28 @@ public class HexCell {
     }
 
     /**
-     * Sets the terrain, building and unit
+     * Sets the terrain, field and unit
      *
      * @param terrain
-     * @param building
+     * @param field
      * @param unit
      */
-    public Group setTerraBuildUnitGetDraw(ATerrain terrain, ABuilding building, AUnit unit) {
+    public Group setTerraBuildUnitGetDraw(ATerrain terrain, AField field, AUnit unit) {
         if(terrain != null){
             this.terrain = terrain;
+            this.terrain.hexCell = this;
         }
-        if(building != null){
-            this.building = building;
+        if(field != null){
+            this.field = field;
+            this.field.hexCell = this;
+
         }
         if(unit!= null){
             this.unit = unit;
+            this.unit.hexCell = this;
         }
 
-        return (drawObject());
+        return drawObject();
     }
 
     public void setSelected(boolean bool){
@@ -192,5 +215,37 @@ public class HexCell {
         } else {
             polygon.setStroke(MyValues.HEX_STROKE);
         }
+    }
+
+    /**
+     * sums up all path costs of terrain, field and unit
+     * @return
+     */
+    public double getAllCosts(boolean countUnit){
+        double cost = 0.0;
+        if(terrain != null){
+            cost += terrain.pathCost;
+        }
+        if(field != null){
+            cost += field.pathCost;
+        }
+        if(countUnit && unit != null){
+            cost += unit.pathCost;
+        }
+        return  cost;
+    }
+
+    public String toString(){
+        String s = " - Cell xy:" + Integer.toString(x) + " " + Integer.toString(y) + "\n";
+        if(terrain != null){
+            s += terrain.toString() + " \n";
+        }
+        if(field != null){
+            s += field.toString() + " \n";
+        }
+        if(unit != null){
+            s += unit.toString() + " ";
+        }
+        return s;
     }
 }

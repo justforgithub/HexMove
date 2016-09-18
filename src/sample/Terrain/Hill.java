@@ -2,6 +2,7 @@ package sample.Terrain;
 
 
 import javafx.scene.Group;
+import sample.HexCell;
 import sample.MyValues;
 
 /**
@@ -9,15 +10,16 @@ import sample.MyValues;
  */
 public class Hill extends ATerrain {
 
-    public Hill(){
+    public Hill(HexCell hexCell){
         this.name = MyValues.NAMES_HILL;
         this.texture = MyValues.IMAGE_HILL;
         this.pathCost = 3.0;
         this.draw = new Group();
+        this.hexCell = hexCell;
     }
 
     @Override
-    public ATerrain generateNewCopy() {
-        return new Hill();
+    public ATerrain generateNewCopy(HexCell hexCell) {
+        return new Hill(hexCell);
     }
 }

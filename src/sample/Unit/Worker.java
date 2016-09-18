@@ -2,25 +2,58 @@ package sample.Unit;
 
 import javafx.scene.Group;
 import javafx.scene.text.Text;
+import sample.HexCell;
 import sample.MyValues;
+import sample.Resources.Backpack;
 
 /**
  * Created by Deviltech on 07.09.2016.
  */
 public class Worker extends AUnit {
 
-    public Worker() {
+    Backpack backpack;
+
+
+    public Worker(HexCell hexCell) {
         this.name = MyValues.NAMES_WORKER;
         this.texture = MyValues.IMAGE_WORKER;
+        this.energy = getMaxEnergy();
+        this.health = getMaxHealth();
         this.draw = new Group();
+        this.pathCost = MyValues.UNIT_PATHCOST;
+        this.hexCell = hexCell;
+        this.backpack = new Backpack(MyValues.WORKER_BACKPACK_CAPACITY);
 
-        this.energy = 10;
+    }
+
+
+
+    @Override
+    public void resetEnergy() {
+        this.energy = getMaxEnergy();
     }
 
     @Override
-    public Group drawObject() {
-        draw.getChildren().clear();
-        draw.getChildren().addAll(generateRectangle());
-        return draw;
+    public double getMaxEnergy() {
+        return 10;
+    }
+
+    @Override
+    public void resetHealth() {
+        this.health = getMaxHealth();
+    }
+
+    @Override
+    public double getMaxHealth() {
+        return 10;
+    }
+
+    public Backpack getBackpack(){
+        return backpack;
+    }
+
+    @Override
+    public String toString(){
+        return this.name + ", Energy: " + this.energy +"\n" + "Backpack: " + backpack.toString();
     }
 }

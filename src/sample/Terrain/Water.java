@@ -1,6 +1,7 @@
 package sample.Terrain;
 
 import javafx.scene.Group;
+import sample.HexCell;
 import sample.MyValues;
 
 /**
@@ -8,15 +9,16 @@ import sample.MyValues;
  */
 public class Water extends ATerrain {
 
-    public Water(){
+    public Water(HexCell hexCell){
         this.name = MyValues.NAMES_WATER;
         this.texture = MyValues.IMAGE_WATER;
         this.pathCost = 10.0;
         this.draw = new Group();
+        this.hexCell = hexCell;
     }
 
     @Override
-    public ATerrain generateNewCopy() {
-        return new Water();
+    public ATerrain generateNewCopy(HexCell hexCell) {
+        return new Water(hexCell);
     }
 }
