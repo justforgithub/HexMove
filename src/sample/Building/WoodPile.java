@@ -14,7 +14,7 @@ public class WoodPile extends AResourceField{
 
     public WoodPile(HexCell hexCell, double capacity){
         this.name = MyValues.NAMES_WOOD;
-        this.texture = MyValues.IMAGE_WOOD;
+        this.texture = generatePattern("wood.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

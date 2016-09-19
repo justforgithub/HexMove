@@ -12,7 +12,7 @@ public class Hill extends ATerrain {
 
     public Hill(HexCell hexCell){
         this.name = MyValues.NAMES_HILL;
-        this.texture = MyValues.IMAGE_HILL;
+        this.texture = generatePattern("hill.png");
         this.pathCost = 3.0;
         this.draw = new Group();
         this.hexCell = hexCell;

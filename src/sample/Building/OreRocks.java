@@ -14,7 +14,7 @@ public class OreRocks extends AResourceField {
 
     public OreRocks(HexCell hexCell, double capacity) {
         this.name = MyValues.NAMES_ORE;
-        this.texture = MyValues.IMAGE_ORE;
+        this.texture = generatePattern("ore.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -38,6 +39,11 @@ public abstract class ACellContent {
         rectangle.setY((-rectangle.getHeight() * 0.5)*(1-y));
 
         return rectangle;
+    }
+
+    public ImagePattern generatePattern(String s){
+        //return new ImagePattern(new Image(IMAGE_PATH + s), 0, 0, 1, 1, true);
+        return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.IMAGE_PATH + s).toExternalForm()), 0, 0, 1, 1, true);
     }
 
 }

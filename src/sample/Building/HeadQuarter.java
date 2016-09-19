@@ -12,7 +12,7 @@ public class HeadQuarter extends ABuildingField{
 
     public HeadQuarter(HexCell hexCell) {
         this.name = MyValues.NAMES_HEAD_QUARTER;
-        this.texture = MyValues.IMAGE_BANNER2_BLUE;
+        this.texture = generatePattern("banner2_blue.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

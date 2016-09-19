@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,6 +23,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Pane pane = new Pane();
         VBox mainBox = new VBox();
+
 
         Board myBoard = new Board(8,8, new Grassland(null));
 
@@ -50,8 +52,6 @@ public class Main extends Application {
         Worker worker = new Worker(null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
 
-        worker.texture = MyValues.IMAGE_WORKER_ACTION;
-        worker.drawObject();
 
         Worker hero = (Worker) myBoard.getCell(0,2).unit;
 

@@ -16,7 +16,7 @@ public class Worker extends AUnit {
 
     public Worker(HexCell hexCell) {
         this.name = MyValues.NAMES_WORKER;
-        this.texture = MyValues.IMAGE_WORKER;
+        this.texture = generatePattern("worker.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

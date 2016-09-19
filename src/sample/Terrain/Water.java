@@ -11,7 +11,7 @@ public class Water extends ATerrain {
 
     public Water(HexCell hexCell){
         this.name = MyValues.NAMES_WATER;
-        this.texture = MyValues.IMAGE_WATER;
+        this.texture = generatePattern("water.png");
         this.pathCost = 10.0;
         this.draw = new Group();
         this.hexCell = hexCell;

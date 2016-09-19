@@ -15,7 +15,7 @@ public class Hut extends ABuildingField {
 
     public Hut(HexCell hexCell) {
         this.name = MyValues.NAMES_HUT;
-        this.texture = MyValues.IMAGE_HUT;
+        this.texture = generatePattern("hut.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

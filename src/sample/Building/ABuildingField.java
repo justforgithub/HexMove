@@ -17,7 +17,7 @@ public abstract class ABuildingField extends AField {
     public Group drawObject() {
 
         draw.getChildren().clear();
-        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(MyValues.IMAGE_BANNER1_BLUE, 0.75, 0.55));
+        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(generatePattern("banner1_blue.png"), 0.75, 0.55));
 
         return draw;
     }

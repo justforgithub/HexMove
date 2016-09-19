@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="HexMove">
+    <output-path>$PROJECT_DIR$/out/artifacts/HexMove</output-path>
+    <root id="archive" name="HexMove.jar">
+      <element id="module-output" name="HexMove" />
+    </root>
+  </artifact>
+</component>
