@@ -3,6 +3,7 @@ package sample.Unit;
 import javafx.scene.Group;
 import sample.ACellContent;
 import sample.HexCell;
+import sample.Resources.Backpack;
 
 
 /**
@@ -23,6 +24,11 @@ public abstract class AUnit extends ACellContent {
     @Override
     public boolean isSameContent(HexCell cell){
         return cell.unit != null && this.getClass().equals(cell.unit.getClass());
+    }
+
+    @Override
+    public Backpack getBackpack(){
+        return null;
     }
 
 

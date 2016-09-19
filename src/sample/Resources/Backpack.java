@@ -21,6 +21,7 @@ public class Backpack {
         return (Math.max(0, capacity - food.capacity - ore.capacity - wood.capacity));
     }
 
+
     public void addFood(double value){
         this.food.capacity += value;
     }
@@ -33,8 +34,31 @@ public class Backpack {
         this.wood.capacity += value;
     }
 
+    /**
+     * add amount x to backpack according to given resource type
+     * @param value
+     * @param resource
+     */
+    public void addResource(double value, AResource resource){
+        resource.findResource(this).capacity += value;
+    }
+
+    public Food getFood(){
+        return food;
+    }
+
+    public Ore getOre(){
+        return ore;
+    }
+
+    public Wood getWood(){
+        return wood;
+    }
+
     @Override
     public String toString(){
         return "F: " + food.capacity + ", O: " + ore.capacity + ", W: " +  wood.capacity +", Capacity; " + (capacity - getRemainingCapacity()) + "/" +capacity;
     }
+
+
 }

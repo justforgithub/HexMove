@@ -12,4 +12,11 @@ public abstract class AResource {
     }
 
     public abstract void addResource(Backpack backpack, double value);
+
+    /**
+     * Finds the searched Resource in the backpack
+     * @param backpack
+     * @return
+     */
+    public abstract AResource findResource(Backpack backpack);
 }

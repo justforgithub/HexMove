@@ -4,6 +4,7 @@ package sample.Terrain;
 import javafx.scene.Group;
 import sample.ACellContent;
 import sample.HexCell;
+import sample.Resources.Backpack;
 
 /**
  * Created by Deviltech on 07.09.2016.
@@ -23,6 +24,11 @@ public abstract class ATerrain extends ACellContent {
     @Override
     public boolean isSameContent(HexCell cell){
         return cell.terrain != null && this.getClass().equals(cell.terrain.getClass());
+    }
+
+    @Override
+    public Backpack getBackpack(){
+        return null;
     }
 
     @Override

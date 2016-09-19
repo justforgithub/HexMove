@@ -5,5 +5,9 @@ package sample.Action;
  */
 public abstract class AAction {
 
+    public boolean isObsolete;
+
+    public abstract void execute();
+
 
 }

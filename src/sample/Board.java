@@ -265,7 +265,14 @@ public class Board {
         return new Path(backtrack(endCell), endCell.distance);
     }
 
-    public ArrayList<Path> findResources(HexCell startCell, ACellContent resource,  double maxDistance){
+    /**
+     * Find given cell contents in range
+     * @param startCell
+     * @param content
+     * @param maxDistance
+     * @return
+     */
+    public ArrayList<Path> findACellContents(HexCell startCell, ACellContent content, double maxDistance){
         ArrayList<Path> paths = new ArrayList<>();
         // initialize startcell pathfinding
         ArrayList<HexCell> todoCells = resetHexCellDistances();
@@ -277,7 +284,7 @@ public class Board {
             getAllAdjacentCells(currentCell, usedCells, todoCells);
             todoCells.remove(currentCell);
             usedCells.add(currentCell);
-            if(resource.isSameContent(currentCell)){
+            if(content.isSameContent(currentCell)){
                 paths.add(new Path(backtrack(currentCell), currentCell.distance));
                 System.out.printf("Resource found! %f \n", currentCell.distance);
             }

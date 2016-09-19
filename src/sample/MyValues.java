@@ -41,6 +41,8 @@ public class MyValues {
 
     public static double WORKER_BACKPACK_CAPACITY = 30.0;
 
+    public static double HUT_BACKPACK_CAPACITY = 200.0;
+
 
     // NAME
 

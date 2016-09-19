@@ -8,9 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sample.Action.FindResources;
 import sample.Action.Harvest;
 import sample.Action.Move;
 import sample.Building.*;
+import sample.Resources.Food;
 import sample.Terrain.*;
 import sample.Unit.Worker;
 
@@ -46,12 +48,11 @@ public class Main extends Application {
         myBoard.getCell(3, 3).setTerraBuildUnitGetDraw(new Hill(null), new Barracks(null), null);
         myBoard.getCell(4, 2).setTerraBuildUnitGetDraw(null, new OreRocks(null, 12), null);
         myBoard.getCell(4, 3).setTerraBuildUnitGetDraw(new Hill(null), new OreRocks(null, 20), null);
-        myBoard.getCell(0, 5).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 33), null);
+        myBoard.getCell(0, 5).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 60), null);
         myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), new Hut(null), new Worker(null));
 
         Worker worker = new Worker(null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
-
 
         Worker hero = (Worker) myBoard.getCell(0,2).unit;
 
@@ -63,20 +64,24 @@ public class Main extends Application {
         }
 
 
-        ArrayList<Path> p = myBoard.findResources(hero.hexCell, new FoodBerries(null, 15), 30);
-        //for(Path x:  p){
-        //    x.setSelected(true);
-        //}
-        p.get(2).setSelected(true);
 
-        Button b1 = new Button("Move");
+        Button b1 = new Button("Execute FindResource");
         Button b2 = new Button("Reset Energy");
-        Button b3 = new Button("harvest");
+        Button b3 = new Button("Recalculate FindResource");
+        Button b4 = new Button("Execute StoreResource");
+        Button b5 = new Button("Recalculate StoreResource");
+        Button b6 = new Button("TODO");
+
+        FindResources strategy = new FindResources(hero, new FoodBerries(null, 10), false, null);
+        strategy.setFindMost(100);
+        strategy.prepareActions();
+
+        FindResources bringHomeStrategy = new FindResources(hero, new Hut(null), true, new Food(0));
+        bringHomeStrategy.setFindMost(100);
+        bringHomeStrategy.prepareActions();
 
         b1.setOnAction((value)->{
-            new Move(hero, p.get(2)).excute();
-            myBoard.deselectAllCells();
-            p.get(2).setSelected(true);
+            strategy.execute();
         });
 
         b2.setOnAction((value) -> {
@@ -86,12 +91,29 @@ public class Main extends Application {
         });
 
         b3.setOnAction((value)->{
-            new Harvest(hero, hero.hexCell).execute();
+            strategy.prepareActions();
         });
+
+        b4.setOnAction((value)->{
+            bringHomeStrategy.execute();
+        });
+
+        b5.setOnAction((value) -> {
+            bringHomeStrategy.prepareActions();
+        });
+
+        b4.setDisable(true);
+        b5.setDisable(true);
+
+
+
+
+
+
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3);
+        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6);
 
         mainBox.getChildren().addAll(hbox, pane);
 

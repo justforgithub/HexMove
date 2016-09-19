@@ -25,6 +25,15 @@ public abstract class AResourceField extends AField {
         return MyValues.FIELD_TYPE.RESOURCE;
     }
 
+    @Override
+    public double getResourceQuantityByType(AResource toCompare){
+        if(toCompare.getClass().equals(resource.getClass()) && resource != null){
+            return resource.capacity;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * Get resource from resource field
      * @return

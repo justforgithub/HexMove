@@ -14,5 +14,10 @@ public class Food extends AResource {
         backpack.addFood(value);
     }
 
+    @Override
+    public AResource findResource(Backpack backpack) {
+        return backpack.getFood();
+    }
+
 
 }

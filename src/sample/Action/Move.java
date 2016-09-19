@@ -19,12 +19,13 @@ public class Move extends AAction {
         this.unit = unit;
         this.path = path;
         this.position = path.pathCells.size()-1;
+        this.isObsolete = false;
     }
 
     /**
      * Executes a move, if possible
      */
-    public void excute(){
+    public void execute(){
         ArrayList<HexCell> cells = path.pathCells;
         if(cells.size() >= 2 && position >= 1) {
             HexCell startCell = cells.get(position);
@@ -50,6 +51,8 @@ public class Move extends AAction {
                     break;
                 }
             }
+        } else{
+            isObsolete = true;
         }
     }
 }

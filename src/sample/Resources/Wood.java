@@ -13,4 +13,9 @@ public class Wood extends AResource {
     public void addResource(Backpack backpack, double value) {
         backpack.addWood(value);
     }
+
+    @Override
+    public AResource findResource(Backpack backpack) {
+        return backpack.getWood();
+    }
 }

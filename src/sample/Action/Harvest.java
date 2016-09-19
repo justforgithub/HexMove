@@ -18,6 +18,7 @@ public class Harvest extends AAction {
     public Harvest(Worker worker, HexCell hexcell){
         this.hexcell = hexcell;
         this.worker = worker;
+        this.isObsolete = false;
 
     }
 
@@ -32,14 +33,19 @@ public class Harvest extends AAction {
                     resource.capacity),
                     backpack.getRemainingCapacity());
             System.out.println(worker.energy + " " + resource.capacity + " " + backpack.getRemainingCapacity() + " harvested: " + changeValue);
-            worker.energy -= changeValue;
-            // fill resource into backpack
-            resource.capacity -= changeValue;
-            resource.addResource(backpack, changeValue);
-            hexcell.drawObject();
+            if(changeValue > 0.0) {
+                worker.energy -= changeValue;
+                // fill resource into backpack
+                resource.capacity -= changeValue;
+                resource.addResource(backpack, changeValue);
+                hexcell.drawObject();
+            } else {
+                isObsolete = true;
+            }
         } else {
             System.out.println("Harvest not possible here " +
                     hexcell.field +" " + " " + hexcell.x + " " + hexcell.y);
+            isObsolete = true;
         }
     }
 }

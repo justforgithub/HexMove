@@ -14,4 +14,9 @@ public class Ore extends AResource {
     public void addResource(Backpack backpack, double value) {
         backpack.addOre(value);
     }
+
+    @Override
+    public AResource findResource(Backpack backpack) {
+        return backpack.getOre();
+    }
 }

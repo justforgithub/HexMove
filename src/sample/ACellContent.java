@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import sample.Resources.Backpack;
 
 /**
  * Created by Deviltech on 08.09.2016.
@@ -21,6 +22,8 @@ public abstract class ACellContent {
     public abstract String toString();
 
     public abstract boolean isSameContent(HexCell cell);
+
+    public abstract Backpack getBackpack();
 
     /**
      * draw rectangle with x, y, placement in %
