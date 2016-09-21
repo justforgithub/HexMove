@@ -1,6 +1,7 @@
 package sample.Action;
 
 import sample.HexCell;
+import sample.MyValues;
 import sample.Path;
 import sample.Unit.AUnit;
 
@@ -19,12 +20,11 @@ public class Move extends AAction {
         this.unit = unit;
         this.path = path;
         this.position = path.pathCells.size()-1;
-        this.isObsolete = false;
+        this.actionStatus = MyValues.ACTION_STATUS.READY;
     }
 
-    /**
-     * Executes a move, if possible
-     */
+
+    @Override
     public void execute(){
         ArrayList<HexCell> cells = path.pathCells;
         if(cells.size() >= 2 && position >= 1) {
@@ -32,6 +32,7 @@ public class Move extends AAction {
             HexCell endCell = cells.get(position - 1);
             double currentPathCost = startCell.getAllCosts(false) + endCell.getAllCosts(true);
             while (cells.size() >= 2 && position >=1) {
+                System.out.println("Path l: " + cells.size() + " pos: " + position + " unit e: " + unit.energy + " +cost " + currentPathCost);
                 if (unit.energy >= currentPathCost) {
                     unit.energy -= currentPathCost;
                     endCell.unit = unit;
@@ -48,11 +49,13 @@ public class Move extends AAction {
                         currentPathCost = startCell.getAllCosts(false) + endCell.getAllCosts(true);
                     }
                 } else {
+                    actionStatus = MyValues.ACTION_STATUS.WAIT;
+                    System.out.println("WAIT");
                     break;
                 }
             }
         } else{
-            isObsolete = true;
+            actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }
 }

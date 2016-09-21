@@ -1,6 +1,7 @@
 package sample.Action;
 
 import sample.HexCell;
+import sample.MyValues;
 import sample.Resources.AResource;
 import sample.Resources.Backpack;
 import sample.Unit.Worker;
@@ -18,10 +19,12 @@ public class Store extends AAction{
     public Store(Worker worker, HexCell hexcell, AResource resource){
         this.hexcell = hexcell;
         this.worker = worker;
-        this.isObsolete = false;
+        this.actionStatus = MyValues.ACTION_STATUS.READY;
+        this.resource = resource;
 
     }
 
+    @Override
     public void execute(){
         if(hexcell.field != null && hexcell.field != null && hexcell.field.getBackpack() != null) {
             Backpack toStoreBackpack =  hexcell.field.getBackpack();
@@ -41,12 +44,12 @@ public class Store extends AAction{
                 toStoreBackpack.addResource( changeValue, resource);
                 hexcell.drawObject();
             } else {
-                isObsolete = true;
+                actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
             }
         } else {
             System.out.println("Store not possible here " +
                     hexcell.field +" " + " " + hexcell.x + " " + hexcell.y);
-            isObsolete = true;
+            actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }
 }

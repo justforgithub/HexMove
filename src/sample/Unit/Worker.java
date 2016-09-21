@@ -6,6 +6,8 @@ import sample.HexCell;
 import sample.MyValues;
 import sample.Resources.Backpack;
 
+import java.util.ArrayList;
+
 /**
  * Created by Deviltech on 07.09.2016.
  */
@@ -23,6 +25,7 @@ public class Worker extends AUnit {
         this.pathCost = MyValues.UNIT_PATHCOST;
         this.hexCell = hexCell;
         this.backpack = new Backpack(MyValues.WORKER_BACKPACK_CAPACITY);
+        this.attackDamage = MyValues.WORKER_ATTACK_DAMAGE;
 
     }
 
@@ -35,7 +38,7 @@ public class Worker extends AUnit {
 
     @Override
     public double getMaxEnergy() {
-        return 10;
+        return MyValues.WORKER_MAX_ENERGY;
     }
 
     @Override
@@ -45,12 +48,17 @@ public class Worker extends AUnit {
 
     @Override
     public double getMaxHealth() {
-        return 10;
+        return MyValues.WORKER_MAX_HEALTH;
     }
 
     @Override
     public Backpack getBackpack(){
         return backpack;
+    }
+
+    @Override
+    public ArrayList<HexCell> getAttackCells() {
+        return getMeleeAttackCells();
     }
 
     @Override

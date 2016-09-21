@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
+import java.util.ArrayList;
+
 /**
  * Created by Deviltech on 11.08.2016.
  */
@@ -15,6 +17,9 @@ public class MyValues {
     public enum HEX_POSITION {TOP_LEFT, TOP, TOP_RIGHT, BOT_RIGHT, BOT, BOT_LEFT};
 
     public enum FIELD_TYPE {BUILDING, RESOURCE};
+
+    public enum ACTION_STATUS {INIT, READY, WAIT, OBSOLETE}
+
 
 
     // Hex cell
@@ -27,9 +32,7 @@ public class MyValues {
 
     public static Color HEX_BACKGROUND = Color.WHITE;
 
-    public static Color HEX_STROKE = Color.BLACK;
-
-    public static Color HEX_STROKE_SELECTED = Color.ORANGERED;
+    public static Color[] HEX_STROKE_SELECTION = {Color.BLACK, Color.GREENYELLOW, Color.ORANGERED, Color.DARKRED};
 
     public static double HEX_STROKE_WIDTH = 2;
 
@@ -39,9 +42,17 @@ public class MyValues {
 
     public static double UNIT_PATHCOST = Double.MAX_VALUE;
 
-    public static double WORKER_BACKPACK_CAPACITY = 30.0;
-
     public static double HUT_BACKPACK_CAPACITY = 200.0;
+
+    // WORKER
+
+    public static double WORKER_MAX_HEALTH = 10.0;
+
+    public static double WORKER_MAX_ENERGY = 10.0;
+
+    public static double WORKER_ATTACK_DAMAGE = 2.0;
+
+    public static double WORKER_BACKPACK_CAPACITY = 30.0;
 
 
     // NAME
@@ -75,11 +86,6 @@ public class MyValues {
 
 
     //#################################################################
-
-    private static ImagePattern generatePattern(String s){
-        //return new ImagePattern(new Image(IMAGE_PATH + s), 0, 0, 1, 1, true);
-        return new ImagePattern(new Image(IMAGE_PATH + s));
-    }
 
 
 

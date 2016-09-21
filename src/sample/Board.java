@@ -286,7 +286,7 @@ public class Board {
             usedCells.add(currentCell);
             if(content.isSameContent(currentCell)){
                 paths.add(new Path(backtrack(currentCell), currentCell.distance));
-                System.out.printf("Resource found! %f \n", currentCell.distance);
+                System.out.printf("Resource found! Distance: %f \n", currentCell.distance);
             }
             currentCell = getLowestDistanceCell(todoCells);
             todoCells.remove(currentCell);

@@ -49,7 +49,7 @@ public class Main extends Application {
         myBoard.getCell(4, 2).setTerraBuildUnitGetDraw(null, new OreRocks(null, 12), null);
         myBoard.getCell(4, 3).setTerraBuildUnitGetDraw(new Hill(null), new OreRocks(null, 20), null);
         myBoard.getCell(0, 5).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 60), null);
-        myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), new Hut(null), new Worker(null));
+        myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), new Hut(null),null);
 
         Worker worker = new Worker(null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
@@ -65,29 +65,30 @@ public class Main extends Application {
 
 
 
-        Button b1 = new Button("Execute FindResource");
-        Button b2 = new Button("Reset Energy");
-        Button b3 = new Button("Recalculate FindResource");
-        Button b4 = new Button("Execute StoreResource");
-        Button b5 = new Button("Recalculate StoreResource");
-        Button b6 = new Button("TODO");
+        Button b1 = new Button("Reset Energy");
+        Button b2 = new Button("Go to Food");
+        Button b3 = new Button("Find Food");
+        Button b4 = new Button("Go to Storage");
+        Button b5 = new Button("bring back Food");
+        Button b6 = new Button("AttackRange");
 
         FindResources strategy = new FindResources(hero, new FoodBerries(null, 10), false, null);
         strategy.setFindMost(100);
         strategy.prepareActions();
 
         FindResources bringHomeStrategy = new FindResources(hero, new Hut(null), true, new Food(0));
-        bringHomeStrategy.setFindMost(100);
+        bringHomeStrategy.setFindFastest(100);
         bringHomeStrategy.prepareActions();
 
-        b1.setOnAction((value)->{
-            strategy.execute();
-        });
-
-        b2.setOnAction((value) -> {
+        b1.setOnAction((value) -> {
             hero.energy = hero.getMaxEnergy();
             worker.energy = worker.getMaxEnergy();
             worker.hexCell.drawObject();
+            hero.hexCell.drawObject();
+        });
+
+        b2.setOnAction((value)->{
+            strategy.execute();
         });
 
         b3.setOnAction((value)->{
@@ -102,8 +103,15 @@ public class Main extends Application {
             bringHomeStrategy.prepareActions();
         });
 
-        b4.setDisable(true);
-        b5.setDisable(true);
+        b6.setOnAction((value)-> {
+            ArrayList<HexCell> attcells = hero.getAttackCells();
+            for(HexCell x: attcells){
+                x.setSelected(3);
+            }
+        });
+
+        //b4.setDisable(true);
+        //b5.setDisable(true);
 
 
 

@@ -98,7 +98,7 @@ public class HexCell {
                 +0.5 * hor, hor,
                 -0.5 * hor, hor,
         });
-        polygon.setStroke(MyValues.HEX_STROKE);
+        polygon.setStroke(MyValues.HEX_STROKE_SELECTION[0]);
         polygon.setStrokeWidth(MyValues.HEX_STROKE_WIDTH);
         polygon.setFill(MyValues.HEX_BACKGROUND);
 
@@ -209,12 +209,24 @@ public class HexCell {
         return drawObject();
     }
 
+    /**
+     * Selection with standard select /deselect
+     * @param bool
+     */
     public void setSelected(boolean bool){
         if(bool){
-            polygon.setStroke(MyValues.HEX_STROKE_SELECTED);
+            polygon.setStroke(MyValues.HEX_STROKE_SELECTION[2]);
         } else {
-            polygon.setStroke(MyValues.HEX_STROKE);
+            polygon.setStroke(MyValues.HEX_STROKE_SELECTION[0]);
         }
+    }
+
+    /**
+     * Selection specified with color code
+     * @param i
+     */
+    public void setSelected(int i){
+        polygon.setStroke(MyValues.HEX_STROKE_SELECTION[i%MyValues.HEX_STROKE_SELECTION.length]);
     }
 
     /**
@@ -236,7 +248,7 @@ public class HexCell {
     }
 
     public String toString(){
-        String s = " - Cell xy:" + Integer.toString(x) + " " + Integer.toString(y) + "\n";
+        String s = " - Cell xy:" + Integer.toString(x) + " " + Integer.toString(y) + " Cost: " + getAllCosts(false) + "\n";
         if(terrain != null){
             s += terrain.toString() + " \n";
         }

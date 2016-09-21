@@ -2,8 +2,12 @@ package sample.Unit;
 
 import javafx.scene.Group;
 import sample.ACellContent;
+import sample.Board;
 import sample.HexCell;
+import sample.MyValues;
 import sample.Resources.Backpack;
+
+import java.util.ArrayList;
 
 
 /**
@@ -13,6 +17,7 @@ public abstract class AUnit extends ACellContent {
 
     public double energy;
     public double health;
+    public double attackDamage;
 
     @Override
     public Group drawObject() {
@@ -30,6 +35,8 @@ public abstract class AUnit extends ACellContent {
     public Backpack getBackpack(){
         return null;
     }
+
+    public abstract ArrayList<HexCell> getAttackCells();
 
 
 
@@ -54,6 +61,31 @@ public abstract class AUnit extends ACellContent {
      * @return
      */
     public abstract double getMaxHealth();
+
+    /**
+     * returns all possible adjacent cells of unit for melee range
+     * @return
+     */
+    public ArrayList<HexCell> getMeleeAttackCells(){
+        ArrayList<HexCell> attackCells = new ArrayList<>();
+        Board board = this.hexCell.board;
+        for(MyValues.HEX_POSITION  pos: MyValues.HEX_POSITION.values()){
+           HexCell currentCell = board.getAdjacentCell(this.hexCell, pos);
+            if(currentCell != null){
+                attackCells.add(currentCell);
+            }
+        }
+        return attackCells;
+    }
+
+    public ArrayList<HexCell> getRangeAttackCells(int min, int max){
+        ArrayList<HexCell> attackCells = new ArrayList<>();
+        Board board = this.hexCell.board;
+        for(int i = min; i < max; i++){
+// TODO
+        }
+        return attackCells;
+    }
 
 }
 

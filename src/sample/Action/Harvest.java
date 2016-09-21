@@ -18,10 +18,11 @@ public class Harvest extends AAction {
     public Harvest(Worker worker, HexCell hexcell){
         this.hexcell = hexcell;
         this.worker = worker;
-        this.isObsolete = false;
+        this.actionStatus = actionStatus.READY;
 
     }
 
+    @Override
     public void execute(){
         if(hexcell.field != null && hexcell.field.getFieldType().equals(MyValues.FIELD_TYPE.RESOURCE)) {
             AResourceField resourceField = (AResourceField) hexcell.field;
@@ -40,12 +41,12 @@ public class Harvest extends AAction {
                 resource.addResource(backpack, changeValue);
                 hexcell.drawObject();
             } else {
-                isObsolete = true;
+                actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
             }
         } else {
             System.out.println("Harvest not possible here " +
                     hexcell.field +" " + " " + hexcell.x + " " + hexcell.y);
-            isObsolete = true;
+            actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }
 }

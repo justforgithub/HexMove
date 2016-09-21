@@ -61,13 +61,16 @@ public class FindResources extends AStrategy {
         this.maxDistance = distance;
     }
 
+    /**
+     * find path to resource which suits best for current strategy type
+     */
     public void prepareActions(){
         Board board = currentUnit.hexCell.board;
         ArrayList<Path> paths = board.findACellContents(currentUnit.hexCell, currentField, maxDistance);
         // find nearest path
         if (!paths.isEmpty()) {
             Path bestPath = paths.get(0);
-            double bestPathScore = bestPath.pathCost;
+            double bestPathScore = Double.MIN_VALUE;
             for (Path p : paths) {
                 double currentScore;
                 if(isStore){
@@ -75,13 +78,16 @@ public class FindResources extends AStrategy {
                 }else {
                     currentScore = calculateHarvestScore(currentUnit, p);
                 }
+                System.out.println("Score current: " + currentScore);
                 if (currentScore >= bestPathScore) {
                     bestPath = p;
-                    bestPathScore = p.pathCost;
+                    bestPathScore = currentScore;
                 }
             }
             System.out.println(" Best score: " + bestPathScore);
             Move goToResource = new Move(currentUnit, bestPath);
+            board.deselectAllCells();
+            bestPath.setSelected(true);
             AAction storeOrHarvestAction;
             if(isStore){
                 storeOrHarvestAction = new Store(currentUnit, bestPath.getEnd(), currentResource);
@@ -125,11 +131,21 @@ public class FindResources extends AStrategy {
 
     public void execute(){
         while(!actions.isEmpty() && currentUnit.energy > 0.0){
-            if(!actions.get(0).isObsolete){
+            // Execute ready action
+            if(actions.get(0).isReady()){
                 System.out.println("Action! :" + actions.get(0).toString());
                 actions.get(0).execute();
-            } else {
-                actions.remove(0);
+                // if action is obsolete, remove it and use remaining energy for next action
+                if(actions.get(0).isObsolete()) {
+                    System.out.println("Action obsolete: " + actions.get(0));
+                    actions.remove(0);
+                }
+                // if action asks to wait for new energy for completion, end current execute
+                if(!actions.isEmpty() && actions.get(0).isWait()){
+                    actions.get(0).setReady();
+                    break;
+                }
+
             }
         }
     }
