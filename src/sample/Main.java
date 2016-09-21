@@ -3,17 +3,16 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sample.Action.FindResources;
-import sample.Action.Harvest;
-import sample.Action.Move;
 import sample.Building.*;
 import sample.Resources.Food;
 import sample.Terrain.*;
+import sample.Unit.Archer;
+import sample.Unit.Swordsman;
 import sample.Unit.Worker;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class Main extends Application {
         VBox mainBox = new VBox();
 
 
-        Board myBoard = new Board(8,8, new Grassland(null));
+        Board myBoard = new Board(12,12, new Grassland(null));
 
         myBoard.getCell(0, 0).setTerraBuildUnitGetDraw(new Forest(null), new Barracks(null), null);
 
@@ -35,13 +34,15 @@ public class Main extends Application {
 
         myBoard.getCell(0, 3).setTerraBuildUnitGetDraw(new Water(null), null, null);
         myBoard.getCell(0, 4).setTerraBuildUnitGetDraw(new Water(null), null, null);
-        myBoard.getCell(1, 3).setTerraBuildUnitGetDraw(new Water(null), null, null);
+        myBoard.getCell(1, 3).setTerraBuildUnitGetDraw(new DeepWater(null), null, null);
         myBoard.getCell(2, 4).setTerraBuildUnitGetDraw(new Water(null), null, null);
         myBoard.getCell(2, 1).setTerraBuildUnitGetDraw(new Forest(null), new FoodBerries(null, 20), null);
         myBoard.getCell(2, 0).setTerraBuildUnitGetDraw(new Forest(null), new WoodPile(null, 30), null);
         myBoard.getCell(3, 0).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(1, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
-        myBoard.getCell(0, 2).setTerraBuildUnitGetDraw(null, new Hut(null), new Worker(null));
+
+        Worker hero =  new Worker(null);
+        myBoard.getCell(0, 2).setTerraBuildUnitGetDraw(null, new Hut(null), hero);
         myBoard.getCell(2, 2).setTerraBuildUnitGetDraw(new Grassland(null), new Barracks(null), new Worker(null));
         myBoard.getCell(4, 4).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 54), null);
         myBoard.getCell(3, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
@@ -51,10 +52,15 @@ public class Main extends Application {
         myBoard.getCell(0, 5).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 60), null);
         myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), new Hut(null),null);
 
+        Archer archer = new Archer(null);
+        myBoard.getCell(5, 5).setTerraBuildUnitGetDraw(null, null, archer);
+
+        Swordsman sword = new Swordsman(null);
+        myBoard.getCell(6, 5).setTerraBuildUnitGetDraw(null, null, sword);
+
         Worker worker = new Worker(null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
 
-        Worker hero = (Worker) myBoard.getCell(0,2).unit;
 
         for(int x = 0; x<myBoard.boardCells.length; x++){
             for (int y = 0; y < myBoard.boardCells[0].length; y++){
@@ -68,9 +74,10 @@ public class Main extends Application {
         Button b1 = new Button("Reset Energy");
         Button b2 = new Button("Go to Food");
         Button b3 = new Button("Find Food");
-        Button b4 = new Button("Go to Storage");
-        Button b5 = new Button("bring back Food");
-        Button b6 = new Button("AttackRange");
+        Button b4 = new Button("bring back food");
+        Button b5 = new Button("find Storage");
+        Button b6 = new Button("Attack Melee");
+        Button b7 = new Button("Attack range");
 
         FindResources strategy = new FindResources(hero, new FoodBerries(null, 10), false, null);
         strategy.setFindMost(100);
@@ -104,7 +111,15 @@ public class Main extends Application {
         });
 
         b6.setOnAction((value)-> {
-            ArrayList<HexCell> attcells = hero.getAttackCells();
+            ArrayList<HexCell> attcells = sword.getAttackCells();
+            myBoard.deselectAllCells();
+            for(HexCell x: attcells){
+                x.setSelected(3);
+            }
+        });
+        b7.setOnAction((value)-> {
+            ArrayList<HexCell> attcells = archer.getAttackCells();
+            myBoard.deselectAllCells();
             for(HexCell x: attcells){
                 x.setSelected(3);
             }
@@ -121,7 +136,7 @@ public class Main extends Application {
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6);
+        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7);
 
         mainBox.getChildren().addAll(hbox, pane);
 

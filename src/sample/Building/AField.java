@@ -31,7 +31,7 @@ public abstract class AField extends ACellContent {
     @Override
     public boolean isSameContent(HexCell cell){
 
-        return cell.field != null && this.getClass().equals(cell.field.getClass());
+        return cell.getField() != null && this.getClass().equals(cell.getField().getClass());
     }
 
     @Override

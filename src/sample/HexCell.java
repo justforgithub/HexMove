@@ -21,9 +21,9 @@ public class HexCell {
      * @return
      */
 
-    public ATerrain terrain;
-    public AField field;
-    public AUnit unit;
+    private ATerrain terrain;
+    private AField field;
+    private  AUnit unit;
 
     public Polygon polygon;
 
@@ -172,6 +172,14 @@ public class HexCell {
         });
     }
 
+    /**
+     * returns 2-tuple of coordinates
+     * @return
+     */
+    public Tuple getCoords(){
+        return new Tuple(x, y);
+    }
+
 
     /**
      * Change Position of x and y
@@ -259,5 +267,30 @@ public class HexCell {
             s += unit.toString() + " ";
         }
         return s;
+    }
+
+    public AField getField() {
+        return field;
+    }
+
+    public void setField(AField field) {
+        this.field = field;
+    }
+
+    public AUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(AUnit unit) {
+        this.unit = unit;
+    }
+
+    public ATerrain getTerrain() {
+
+        return terrain;
+    }
+
+    public void setTerrain(ATerrain terrain) {
+        this.terrain = terrain;
     }
 }

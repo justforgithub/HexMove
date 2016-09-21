@@ -44,6 +44,7 @@ public class MyValues {
 
     public static double HUT_BACKPACK_CAPACITY = 200.0;
 
+
     // WORKER
 
     public static double WORKER_MAX_HEALTH = 10.0;
@@ -53,6 +54,23 @@ public class MyValues {
     public static double WORKER_ATTACK_DAMAGE = 2.0;
 
     public static double WORKER_BACKPACK_CAPACITY = 30.0;
+
+
+    // ARCHER
+
+    public static double ARCHER_MAX_HEALTH = 10.0;
+
+    public static double ARCHER_MAX_ENERGY = 8.0;
+
+    public static double ARCHER_ATTACK_DAMAGE = 4;
+
+    // SWORDSMAN
+
+    public static double SWORDSMAN_MAX_HEALTH = 20;
+
+    public static double SWORDSMAN_MAX_ENERGY = 6;
+
+    public static double SWORDSMAN_ATTACK_DAMAGE = 5;
 
 
     // NAME
@@ -71,11 +89,17 @@ public class MyValues {
 
     public static String NAMES_GRASSLAND = "Grassland";
 
+    public static String NAMES_ARCHER = "Archer";
+
+    public static String NAMES_SWORDSMAN = "Swordsman";
+
     public static String NAMES_WORKER = "Worker";
 
     public static String NAMES_HILL = "Hill";
 
     public static String NAMES_WATER = "Water";
+
+    public static String NAMES_DEEP_WATER = "Deep Water";
 
     public static String NAMES_FOREST = "Forest";
 

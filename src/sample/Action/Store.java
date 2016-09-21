@@ -26,8 +26,8 @@ public class Store extends AAction{
 
     @Override
     public void execute(){
-        if(hexcell.field != null && hexcell.field != null && hexcell.field.getBackpack() != null) {
-            Backpack toStoreBackpack =  hexcell.field.getBackpack();
+        if(hexcell != null && hexcell.getField() != null && hexcell.getField().getBackpack() != null) {
+            Backpack toStoreBackpack =  hexcell.getField().getBackpack();
 
             // Check if there is enough energy, store space or backpack resources to store
             Backpack workerBackpack = worker.getBackpack();
@@ -48,7 +48,7 @@ public class Store extends AAction{
             }
         } else {
             System.out.println("Store not possible here " +
-                    hexcell.field +" " + " " + hexcell.x + " " + hexcell.y);
+                    hexcell.getField() +" " + " " + hexcell.x + " " + hexcell.y);
             actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }

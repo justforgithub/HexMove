@@ -35,9 +35,9 @@ public class Move extends AAction {
                 System.out.println("Path l: " + cells.size() + " pos: " + position + " unit e: " + unit.energy + " +cost " + currentPathCost);
                 if (unit.energy >= currentPathCost) {
                     unit.energy -= currentPathCost;
-                    endCell.unit = unit;
+                    endCell.setUnit(unit);
                     unit.hexCell = endCell;
-                    startCell.unit = null;
+                    startCell.setUnit(null);
                     startCell.drawObject();
                     endCell.drawObject();
                     cells.remove(position);

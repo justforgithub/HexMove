@@ -1,10 +1,7 @@
 package sample;
 
-import com.intellij.application.options.codeStyle.arrangement.component.ArrangementAndMatchConditionComponent;
-import javafx.scene.text.Text;
 import sample.Terrain.ATerrain;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,21 +10,21 @@ import java.util.ArrayList;
 public class Board {
 
     public HexCell[][] boardCells;
-    private int x;
-    private int y;
+    private int sizeX;
+    private int sizeY;
 
     public HexCell dummy1;
     public HexCell dummy2;
 
-    Board(int x, int y, ATerrain terrain){
-        this.x = x;
-        this.y = y;
-        boardCells = new HexCell[x][y];
+    Board(int sizeX, int sizeY, ATerrain terrain){
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        boardCells = new HexCell[sizeX][sizeY];
         fillBoardWithCells(terrain);
     }
 
     /**
-     * Fill the board with x*y level 0 cells
+     * Fill the board with sizeX*sizeY level 0 cells
      */
     private void fillBoardWithCells(ATerrain terrain){
         double posx = MyValues.HEX_HORIZONTAL_VALUE*0.5*MyValues.HEX_SCALE + MyValues.HEX_DIAGONAL_VALUE*MyValues.HEX_SCALE + MyValues.HEX_STROKE_WIDTH;
@@ -35,7 +32,7 @@ public class Board {
         HexCell startCell = new HexCell(0,0, this, terrain);
         startCell.changePosition(posx, posy);
         boardCells[0][0] = startCell;
-        for (int i = 0; i< x-1; i++) {
+        for (int i = 0; i< sizeX -1; i++) {
             HexCell currentCell = new HexCell(i+1, 0, this, terrain);
             boardCells[i+1][0] = currentCell;
             //i mod 2 = 0: Bottom
@@ -46,8 +43,8 @@ public class Board {
                 boardCells[i][0].placeHexCell(currentCell, MyValues.HEX_POSITION.TOP_RIGHT );
             }
         }
-        for(int i = 0; i < x; i++){
-            for(int j = 0; j < y-1; j++){
+        for(int i = 0; i < sizeX; i++){
+            for(int j = 0; j < sizeY -1; j++){
                 HexCell currentCell = new HexCell(i, j+1, this, terrain);
                 //System.out.println(Integer.toString(i) + Integer.toString(j));
                 boardCells[i][j+1] = currentCell;
@@ -57,84 +54,133 @@ public class Board {
     }
 
     /**
-     * Return specific hexcell
+     * tuple wrapper for return of specific cell
+     * @param tuple
+     * @return
+     */
+    public HexCell getCell(Tuple tuple){
+        if(tuple != null) {
+            return getCell(tuple.getX(), tuple.getY());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Return specific hexcell, if possible
      * @param x
      * @param y
      * @return
      */
     public HexCell getCell(int x, int y){
-        //TODO Check bounds
-        return boardCells[x][y];
+        if(MyMath.isInBounds(0, sizeX-1, x) && MyMath.isInBounds(0, sizeY-1, y)){
+            return boardCells[x][y];
+        } else {
+            return null;
+        }
     }
 
     /**
-     * Gets the adjacent cell according to position
+     * HexCell-wrapper for adjacent coords
      * @param currentCell
      * @param position
      * @return
      */
-    public HexCell getAdjacentCell(HexCell currentCell, MyValues.HEX_POSITION position){
-        int cellX = currentCell.x;
-        int cellY = currentCell.y;
-        HexCell adjacentCell = null;
+    public Tuple getAdjacentCoords(HexCell currentCell, MyValues.HEX_POSITION position){
+        return getAdjacentCoords(currentCell.getCoords(), position);
+    }
+
+
+    /**
+     * X Y-wrapper for adjacent coords
+     * @param x
+     * @param y
+     * @param position
+     * @return
+     */
+    public Tuple getAdjacentCoords(int x, int y, MyValues.HEX_POSITION position){
+        return getAdjacentCoords(new Tuple(x,y), position);
+    }
+
+
+    /**
+     * Gets the adjacent coordinate tuple  according to position
+     * @param currentTuple
+     * @param position
+     * @return
+     */
+    public Tuple getAdjacentCoords(Tuple currentTuple, MyValues.HEX_POSITION position){
+
+        int cellX = currentTuple.getX();
+        int cellY = currentTuple.getY();
+        Tuple adjacentTuple = null;
         switch (position){
             case TOP:
-                if(isInBound(cellY-1, y)){
-                    adjacentCell = getCell(cellX,
+                if(isInBound(cellY-1, sizeY)){
+                    adjacentTuple = new Tuple(cellX,
                             cellY-1);
                 }
                 break;
             case BOT:
-                if(isInBound(cellY+1, y)){
-                    adjacentCell = getCell(cellX, cellY+1);
+                if(isInBound(cellY+1, sizeY)){
+                    adjacentTuple = new Tuple(cellX, cellY+1);
                 }
                 break;
             case TOP_LEFT:
-                if(isInBound(cellX -1, x)){
+                if(isInBound(cellX -1, sizeX)){
                     if(cellX % 2 ==0){
-                        if(isInBound(cellY-1, y)){
-                            adjacentCell = getCell(cellX-1, cellY-1);
+                        if(isInBound(cellY-1, sizeY)){
+                            adjacentTuple = new Tuple(cellX-1, cellY-1);
                         }
                     } else{
-                        adjacentCell = getCell(cellX-1, cellY);
+                        adjacentTuple = new Tuple(cellX-1, cellY);
                     }
                 }
                 break;
             case TOP_RIGHT:
-                if(isInBound(cellX +1, x)){
+                if(isInBound(cellX +1, sizeX)){
                     if(cellX % 2 ==0){
-                        if(isInBound(cellY-1, y)){
-                            adjacentCell = getCell(cellX+1, cellY-1);
+                        if(isInBound(cellY-1, sizeY)){
+                            adjacentTuple = new Tuple(cellX+1, cellY-1);
                         }
                     } else{
-                        adjacentCell = getCell(cellX+1, cellY);
+                        adjacentTuple = new Tuple(cellX+1, cellY);
                     }
                 }
                 break;
             case BOT_LEFT:
-                if(isInBound(cellX -1, x)){
+                if(isInBound(cellX -1, sizeX)){
                     if(cellX % 2 ==1){
-                        if(isInBound(cellY+1, y)){
-                            adjacentCell = getCell(cellX-1, cellY+1);
+                        if(isInBound(cellY+1, sizeY)){
+                            adjacentTuple = new Tuple(cellX-1, cellY+1);
                         }
                     } else{
-                        adjacentCell = getCell(cellX-1, cellY);
+                        adjacentTuple = new Tuple(cellX-1, cellY);
                     }
                 }
                 break;
             case BOT_RIGHT:
-                if(isInBound(cellX +1, x)){
+                if(isInBound(cellX +1, sizeX)){
                     if(cellX % 2 ==1){
-                        if(isInBound(cellY+1, y)){
-                            adjacentCell = getCell(cellX+1, cellY+1);
+                        if(isInBound(cellY+1, sizeY)){
+                            adjacentTuple = new Tuple(cellX+1, cellY+1);
                         }
                     } else{
-                        adjacentCell = getCell(cellX+1, cellY);
+                        adjacentTuple = new Tuple(cellX+1, cellY);
                     }
                 }
                 break;
         }
-        return adjacentCell;
+        return adjacentTuple;
+    }
+
+    public HexCell getAdjacentCell(HexCell currentCell, MyValues.HEX_POSITION position){
+        Tuple coords = getAdjacentCoords(currentCell, position);
+        if(coords != null){
+            return getCell(coords.getX(), coords.getY());
+        } else {
+            return null;
+        }
     }
 
 
@@ -196,7 +242,7 @@ public class Board {
      */
     private double calculatePathCost(HexCell cell1, HexCell cell2){
         // Check, if both cells are valid
-        if(cell1.terrain != null && cell2.terrain != null){
+        if(cell1.getTerrain() != null && cell2.getTerrain() != null){
             return cell1.getAllCosts(false) + cell2.getAllCosts(true);
         } else {
             return  -1;
@@ -234,7 +280,7 @@ public class Board {
     }
 
     /**
-     * Calculate
+     * Calculate path between 2 cells
      * @param startCell
      * @param endCell
      * @return

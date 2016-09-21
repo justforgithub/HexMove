@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import sample.Resources.Backpack;
+import sample.Unit.Worker;
 
 /**
  * Created by Deviltech on 08.09.2016.
@@ -48,5 +49,6 @@ public abstract class ACellContent {
         //return new ImagePattern(new Image(IMAGE_PATH + s), 0, 0, 1, 1, true);
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.IMAGE_PATH + s).toExternalForm()), 0, 0, 1, 1, true);
     }
+
 
 }

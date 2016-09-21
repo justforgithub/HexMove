@@ -24,8 +24,8 @@ public class Harvest extends AAction {
 
     @Override
     public void execute(){
-        if(hexcell.field != null && hexcell.field.getFieldType().equals(MyValues.FIELD_TYPE.RESOURCE)) {
-            AResourceField resourceField = (AResourceField) hexcell.field;
+        if(hexcell.getField() != null && hexcell.getField().getFieldType().equals(MyValues.FIELD_TYPE.RESOURCE)) {
+            AResourceField resourceField = (AResourceField) hexcell.getField();
             AResource resource = resourceField.getResource();
 
             // Check if there is enough energy, resource or space in backpack for harvest
@@ -45,7 +45,7 @@ public class Harvest extends AAction {
             }
         } else {
             System.out.println("Harvest not possible here " +
-                    hexcell.field +" " + " " + hexcell.x + " " + hexcell.y);
+                    hexcell.getField() +" " + " " + hexcell.x + " " + hexcell.y);
             actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }

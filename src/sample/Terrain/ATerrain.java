@@ -23,7 +23,7 @@ public abstract class ATerrain extends ACellContent {
 
     @Override
     public boolean isSameContent(HexCell cell){
-        return cell.terrain != null && this.getClass().equals(cell.terrain.getClass());
+        return cell.getTerrain() != null && this.getClass().equals(cell.getTerrain().getClass());
     }
 
     @Override

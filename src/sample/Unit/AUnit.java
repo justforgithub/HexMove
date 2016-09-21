@@ -1,10 +1,8 @@
 package sample.Unit;
 
 import javafx.scene.Group;
-import sample.ACellContent;
-import sample.Board;
-import sample.HexCell;
-import sample.MyValues;
+import javafx.scene.text.Text;
+import sample.*;
 import sample.Resources.Backpack;
 
 import java.util.ArrayList;
@@ -22,22 +20,21 @@ public abstract class AUnit extends ACellContent {
     @Override
     public Group drawObject() {
         draw.getChildren().clear();
-        draw.getChildren().addAll(generateRectangle(texture, -0.5,0.5));
+        draw.getChildren().addAll(generateRectangle(texture, -0.5, 0.5));
         return draw;
     }
 
     @Override
-    public boolean isSameContent(HexCell cell){
-        return cell.unit != null && this.getClass().equals(cell.unit.getClass());
+    public boolean isSameContent(HexCell cell) {
+        return cell.getUnit() != null && this.getClass().equals(cell.getUnit().getClass());
     }
 
     @Override
-    public Backpack getBackpack(){
+    public Backpack getBackpack() {
         return null;
     }
 
     public abstract ArrayList<HexCell> getAttackCells();
-
 
 
     /**
@@ -47,6 +44,7 @@ public abstract class AUnit extends ACellContent {
 
     /**
      * get the unit's max energy
+     *
      * @return
      */
     public abstract double getMaxEnergy();
@@ -58,31 +56,52 @@ public abstract class AUnit extends ACellContent {
 
     /**
      * get the unit's max health
+     *
      * @return
      */
     public abstract double getMaxHealth();
 
     /**
      * returns all possible adjacent cells of unit for melee range
+     *
      * @return
      */
-    public ArrayList<HexCell> getMeleeAttackCells(){
+    ArrayList<HexCell> getMeleeAttackCells() {
         ArrayList<HexCell> attackCells = new ArrayList<>();
         Board board = this.hexCell.board;
-        for(MyValues.HEX_POSITION  pos: MyValues.HEX_POSITION.values()){
-           HexCell currentCell = board.getAdjacentCell(this.hexCell, pos);
-            if(currentCell != null){
+        for (MyValues.HEX_POSITION pos : MyValues.HEX_POSITION.values()) {
+            HexCell currentCell = board.getAdjacentCell(this.hexCell, pos);
+            if (currentCell != null) {
                 attackCells.add(currentCell);
             }
         }
         return attackCells;
     }
 
-    public ArrayList<HexCell> getRangeAttackCells(int min, int max){
+    /**
+     * Get circular Range Cells between min and max range
+     * @param minRange
+     * @param maxRange
+     * @return
+     */
+    ArrayList<HexCell> getRangeAttackCells(int minRange, int maxRange) {
         ArrayList<HexCell> attackCells = new ArrayList<>();
         Board board = this.hexCell.board;
-        for(int i = min; i < max; i++){
-// TODO
+        MyValues.HEX_POSITION positions[] = MyValues.HEX_POSITION.values();
+        // iterate over all range lengths
+        for(int i = Math.max(0,minRange); i<= maxRange; i++){
+            Tuple currentTuple = hexCell.getCoords();
+            // move current coordinate to south with current range langth i
+            currentTuple.addY(i);
+            for(MyValues.HEX_POSITION currentPosition: positions){
+                // "walk a circle clockwise" collect all cells at current range i
+                for (int count = 0; count <i; count++){
+                    currentTuple = board.getAdjacentCoords(currentTuple, currentPosition);
+                    if(board.getCell(currentTuple) != null){
+                        attackCells.add(board.getCell(currentTuple));
+                    }
+                }
+            }
         }
         return attackCells;
     }
