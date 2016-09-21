@@ -140,7 +140,7 @@ public class Main extends Application {
 
         mainBox.getChildren().addAll(hbox, pane);
 
-        primaryStage.setScene(new Scene(mainBox, 400, 400));
+        primaryStage.setScene(new Scene(mainBox, 600, 600));
 
         primaryStage.show();
     }
