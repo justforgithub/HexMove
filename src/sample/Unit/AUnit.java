@@ -70,7 +70,7 @@ public abstract class AUnit extends ACellContent {
         ArrayList<HexCell> attackCells = new ArrayList<>();
         Board board = this.hexCell.board;
         for (MyValues.HEX_POSITION pos : MyValues.HEX_POSITION.values()) {
-            HexCell currentCell = board.getAdjacentCell(this.hexCell, pos);
+            HexCell currentCell = board.getAdjacentCell(this.hexCell, pos, true);
             if (currentCell != null) {
                 attackCells.add(currentCell);
             }
@@ -96,7 +96,7 @@ public abstract class AUnit extends ACellContent {
             for(MyValues.HEX_POSITION currentPosition: positions){
                 // "walk a circle clockwise" collect all cells at current range i
                 for (int count = 0; count <i; count++){
-                    currentTuple = board.getAdjacentCoords(currentTuple, currentPosition);
+                    currentTuple = board.getAdjacentCoords(currentTuple, currentPosition, true);
                     if(board.getCell(currentTuple) != null){
                         attackCells.add(board.getCell(currentTuple));
                     }

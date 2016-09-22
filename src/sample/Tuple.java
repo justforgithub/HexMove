@@ -38,4 +38,9 @@ public class Tuple {
         this.y += y;
         return this;
     }
+
+    @Override
+    public String toString(){
+        return "{" + x + ", " + y + "}";
+    }
 }

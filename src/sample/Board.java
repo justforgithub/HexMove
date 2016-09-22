@@ -86,8 +86,8 @@ public class Board {
      * @param position
      * @return
      */
-    public Tuple getAdjacentCoords(HexCell currentCell, MyValues.HEX_POSITION position){
-        return getAdjacentCoords(currentCell.getCoords(), position);
+    public Tuple getAdjacentCoords(HexCell currentCell, MyValues.HEX_POSITION position, boolean isIgnoreBound){
+        return getAdjacentCoords(currentCell.getCoords(), position, isIgnoreBound);
     }
 
 
@@ -98,8 +98,8 @@ public class Board {
      * @param position
      * @return
      */
-    public Tuple getAdjacentCoords(int x, int y, MyValues.HEX_POSITION position){
-        return getAdjacentCoords(new Tuple(x,y), position);
+    public Tuple getAdjacentCoords(int x, int y, MyValues.HEX_POSITION position, boolean isIgnoreBound){
+        return getAdjacentCoords(new Tuple(x,y), position, isIgnoreBound);
     }
 
 
@@ -109,27 +109,28 @@ public class Board {
      * @param position
      * @return
      */
-    public Tuple getAdjacentCoords(Tuple currentTuple, MyValues.HEX_POSITION position){
+    public Tuple getAdjacentCoords(Tuple currentTuple, MyValues.HEX_POSITION position, boolean isIgnoreBound){
+
 
         int cellX = currentTuple.getX();
         int cellY = currentTuple.getY();
         Tuple adjacentTuple = null;
         switch (position){
             case TOP:
-                if(isInBound(cellY-1, sizeY)){
+                if(isInBound(cellY-1, sizeY)  || isIgnoreBound){
                     adjacentTuple = new Tuple(cellX,
                             cellY-1);
                 }
                 break;
             case BOT:
-                if(isInBound(cellY+1, sizeY)){
+                if(isInBound(cellY+1, sizeY)  || isIgnoreBound){
                     adjacentTuple = new Tuple(cellX, cellY+1);
                 }
                 break;
             case TOP_LEFT:
-                if(isInBound(cellX -1, sizeX)){
+                if(isInBound(cellX -1, sizeX)  || isIgnoreBound){
                     if(cellX % 2 ==0){
-                        if(isInBound(cellY-1, sizeY)){
+                        if(isInBound(cellY-1, sizeY)  || isIgnoreBound){
                             adjacentTuple = new Tuple(cellX-1, cellY-1);
                         }
                     } else{
@@ -138,9 +139,9 @@ public class Board {
                 }
                 break;
             case TOP_RIGHT:
-                if(isInBound(cellX +1, sizeX)){
+                if(isInBound(cellX +1, sizeX)  || isIgnoreBound){
                     if(cellX % 2 ==0){
-                        if(isInBound(cellY-1, sizeY)){
+                        if(isInBound(cellY-1, sizeY)  || isIgnoreBound){
                             adjacentTuple = new Tuple(cellX+1, cellY-1);
                         }
                     } else{
@@ -149,9 +150,9 @@ public class Board {
                 }
                 break;
             case BOT_LEFT:
-                if(isInBound(cellX -1, sizeX)){
+                if(isInBound(cellX -1, sizeX)  || isIgnoreBound){
                     if(cellX % 2 ==1){
-                        if(isInBound(cellY+1, sizeY)){
+                        if(isInBound(cellY+1, sizeY)  || isIgnoreBound){
                             adjacentTuple = new Tuple(cellX-1, cellY+1);
                         }
                     } else{
@@ -160,9 +161,9 @@ public class Board {
                 }
                 break;
             case BOT_RIGHT:
-                if(isInBound(cellX +1, sizeX)){
+                if(isInBound(cellX +1, sizeX)  || isIgnoreBound){
                     if(cellX % 2 ==1){
-                        if(isInBound(cellY+1, sizeY)){
+                        if(isInBound(cellY+1, sizeY)  || isIgnoreBound){
                             adjacentTuple = new Tuple(cellX+1, cellY+1);
                         }
                     } else{
@@ -174,8 +175,8 @@ public class Board {
         return adjacentTuple;
     }
 
-    public HexCell getAdjacentCell(HexCell currentCell, MyValues.HEX_POSITION position){
-        Tuple coords = getAdjacentCoords(currentCell, position);
+    public HexCell getAdjacentCell(HexCell currentCell, MyValues.HEX_POSITION position, boolean isIgnoreBound){
+        Tuple coords = getAdjacentCoords(currentCell, position, isIgnoreBound);
         if(coords != null){
             return getCell(coords.getX(), coords.getY());
         } else {
@@ -194,7 +195,7 @@ public class Board {
     private ArrayList<HexCell> getAllAdjacentCells(HexCell myCell, ArrayList<HexCell> usedCells, ArrayList<HexCell> todoCells ){
 
         for(MyValues.HEX_POSITION pos: MyValues.HEX_POSITION.values() ){
-            HexCell current = getAdjacentCell(myCell, pos);
+            HexCell current = getAdjacentCell(myCell, pos, false);
             // if adjacent Cell is valid and not already used, add it
             if(todoCells.contains(current) && current != null ){
                 if(current.distance > myCell.distance + calculatePathCost(myCell, current)) {
