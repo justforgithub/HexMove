@@ -17,7 +17,8 @@ public class Hut extends ABuildingField {
 
     public Backpack backpack;
 
-    public Hut(HexCell hexCell) {
+    public Hut(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_HUT;
         this.texture = generatePattern("hut.png");
         this.draw = new Group();

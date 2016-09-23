@@ -18,6 +18,7 @@ public abstract class AUnit extends ACellContent {
 
     public double energy;
     public double health;
+    public Faction faction;
     public double attackDamage;
 
     @Override
@@ -153,7 +154,7 @@ public abstract class AUnit extends ACellContent {
 
     @Override
     public String toString(){
-        return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth();
+        return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth() + "\n" + faction.getName();
     }
 
 

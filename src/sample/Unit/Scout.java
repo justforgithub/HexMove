@@ -11,9 +11,10 @@ import java.util.ArrayList;
  */
 public class Scout extends AUnit{
 
-    public Scout(HexCell hexCell) {
+    public Scout(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_SCOUT;
-        this.texture = generatePattern("scout.png");
+        this.texture = generatePattern(faction, "scout.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

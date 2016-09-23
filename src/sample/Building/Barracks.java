@@ -9,7 +9,8 @@ import sample.MyValues;
  */
 public class Barracks extends ABuildingField {
 
-    public Barracks(HexCell hexCell) {
+    public Barracks(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_BARRACKS;
         this.texture = generatePattern("barracks.png");
         this.draw = new Group();

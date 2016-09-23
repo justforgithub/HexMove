@@ -49,9 +49,25 @@ public abstract class ACellContent {
         return rectangle;
     }
 
+    /**
+     * generate general pattern
+     * @param s
+     * @return
+     */
     public ImagePattern generatePattern(String s){
-        //return new ImagePattern(new Image(IMAGE_PATH + s), 0, 0, 1, 1, true);
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.IMAGE_PATH + s).toExternalForm()), 0, 0, 1, 1, true);
+    }
+
+    /**
+     * generate pattern based on faction specific images
+     * @param f
+     * @param s
+     * @return
+     */
+    public ImagePattern generatePattern(Faction f, String s){
+        String factionNumber = Integer.toString(f.getTeamID());
+        String imagePath = MyValues.IMAGE_PATH + MyValues.FACTION_PATH + factionNumber + "/" + s;
+        return new ImagePattern(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm()), 0, 0, 1, 1, true);
     }
 
 

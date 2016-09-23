@@ -1,6 +1,7 @@
 package sample.Building;
 
 import javafx.scene.Group;
+import sample.Faction;
 import sample.MyValues;
 import sample.Resources.AResource;
 
@@ -8,6 +9,12 @@ import sample.Resources.AResource;
  * Created by Deviltech on 18.09.2016.
  */
 public abstract class ABuildingField extends AField {
+
+    Faction faction;
+
+    public Faction getFaction(){
+        return faction;
+    }
 
     // In general, Buildings dont hold resources
     public double getResourceQuantityByType(AResource toCompare){
@@ -23,7 +30,7 @@ public abstract class ABuildingField extends AField {
     public Group drawObject() {
 
         draw.getChildren().clear();
-        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(generatePattern("banner1_blue.png"), 0.75, 0.55));
+        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(generatePattern(faction, "banner1.png"), 0.75, 0.55));
 
         return draw;
     }

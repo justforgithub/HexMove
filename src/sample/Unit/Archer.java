@@ -3,7 +3,6 @@ package sample.Unit;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
-import sample.Resources.Backpack;
 
 import java.util.ArrayList;
 
@@ -13,9 +12,10 @@ import java.util.ArrayList;
 public class Archer extends AUnit{
 
 
-    public Archer(HexCell hexCell) {
+    public Archer(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_ARCHER;
-        this.texture = generatePattern("archer.png");
+        this.texture = generatePattern(faction, "archer.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

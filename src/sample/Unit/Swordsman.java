@@ -13,9 +13,10 @@ public class Swordsman extends AUnit {
 
 
 
-    public Swordsman(HexCell hexCell) {
+    public Swordsman(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_SWORDSMAN;
-        this.texture = generatePattern("swordsman.png");
+        this.texture = generatePattern(faction, "swordsman.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

@@ -16,9 +16,10 @@ public class Worker extends AUnit {
     Backpack backpack;
 
 
-    public Worker(HexCell hexCell) {
+    public Worker(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_WORKER;
-        this.texture = generatePattern("worker.png");
+        this.texture = generatePattern(faction, "worker.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

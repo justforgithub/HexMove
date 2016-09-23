@@ -12,9 +12,10 @@ import java.util.ArrayList;
  */
 public class Catapult extends AUnit {
 
-    public Catapult(HexCell hexCell) {
+    public Catapult(sample.Faction faction, HexCell hexCell) {
+        this.faction = faction;
         this.name = MyValues.NAMES_CATAPULT;
-        this.texture = generatePattern("catapult.png");
+        this.texture = generatePattern(faction, "catapult.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();

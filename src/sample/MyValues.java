@@ -132,9 +132,15 @@ public class MyValues {
 
     public static String IMAGE_PATH = "images/";
 
+    public static String FACTION_PATH = "faction_";
+
 
     //#################################################################
 
+    // FACTION
+
+    public static String[] FACTION_NAMES = {"Wolves of the North", "Hogs of the East", "Snakes of the South", "Eagles of the West", "Fluffy Bunnies United"};
+    public static int NUMBER_OF_FACTIONS = FACTION_NAMES.length;
 
 
 }
