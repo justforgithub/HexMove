@@ -62,7 +62,13 @@ public class Worker extends AUnit {
     }
 
     @Override
-    public String toString(){
-        return this.name + ", Energy: " + this.energy +"\n" + "Backpack: " + backpack.toString();
+    public MyValues.ATTACK_TYPE getAttackType(){
+        return MyValues.ATTACK_TYPE.MELEE;
     }
+
+    @Override
+    public String toString(){
+        return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth() + "\n" + getBackpack().toString();
+    }
+
 }

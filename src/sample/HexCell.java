@@ -156,9 +156,15 @@ public class HexCell {
         drawGroup.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 board.dummy1 = this;
+                if(unit != null) {
+                    board.attText.setText("Attacker: " +  unit.getName() + " ;");
+                }
             } else {
                 if(event.getButton().equals(MouseButton.SECONDARY)){
                     board.dummy2 = this;
+                    if(unit != null) {
+                        board.defText.setText("Defender: " + unit.getName());
+                    }
                 }
             }
             if(board.dummy1 != null  && board.dummy2 != null){

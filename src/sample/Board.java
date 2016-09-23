@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.text.Text;
 import sample.Terrain.ATerrain;
 
 import java.util.ArrayList;
@@ -13,8 +14,11 @@ public class Board {
     private int sizeX;
     private int sizeY;
 
+    // TEST STUFF TODO remove
     public HexCell dummy1;
     public HexCell dummy2;
+    public Text attText = new Text("Attacker: - ; ");
+    public Text defText = new Text("Defender: -");
 
     Board(int sizeX, int sizeY, ATerrain terrain){
         this.sizeX = sizeX;

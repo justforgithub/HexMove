@@ -13,6 +13,7 @@ public class Forest extends ATerrain{
         this.name = MyValues.NAMES_FOREST;
         this.texture = generatePattern("forest.png");
         this.pathCost = 2.0;
+        this.coverage = 0.7;
         this.draw = new Group();
         this.hexCell = hexCell;
     }

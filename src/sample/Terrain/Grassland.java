@@ -13,6 +13,7 @@ public class Grassland extends ATerrain{
         this.name = MyValues.NAMES_GRASSLAND;
         this.texture = generatePattern("grassland.png");
         this.pathCost = 1.0;
+        this.coverage = 1.0;
         this.draw = new Group();
         this.hexCell = hexCell;
     }

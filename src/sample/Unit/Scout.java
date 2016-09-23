@@ -3,35 +3,33 @@ package sample.Unit;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
-import sample.Resources.Backpack;
 
 import java.util.ArrayList;
 
 /**
- * Created by Deviltech on 21.09.2016.
+ * Created by Deviltech on 23.09.2016.
  */
-public class Archer extends AUnit{
+public class Scout extends AUnit{
 
-
-    public Archer(HexCell hexCell) {
-        this.name = MyValues.NAMES_ARCHER;
-        this.texture = generatePattern("archer.png");
+    public Scout(HexCell hexCell) {
+        this.name = MyValues.NAMES_SCOUT;
+        this.texture = generatePattern("scout.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();
         this.pathCost = MyValues.UNIT_PATHCOST;
         this.hexCell = hexCell;
-        this.attackDamage = MyValues.ARCHER_ATTACK_DAMAGE;
+        this.attackDamage = MyValues.SCOUT_ATTACK_DAMAGE;
     }
 
     @Override
     public ArrayList<HexCell> getAttackCells() {
-        return getRangeAttackCells(2,3);
+        return getMeleeAttackCells();
     }
 
     @Override
     public MyValues.ATTACK_TYPE getAttackType(){
-        return MyValues.ATTACK_TYPE.RANGE;
+        return MyValues.ATTACK_TYPE.MELEE;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class Archer extends AUnit{
 
     @Override
     public double getMaxEnergy() {
-        return MyValues.ARCHER_MAX_ENERGY;
+        return MyValues.SCOUT_MAX_ENERGY;
     }
 
     @Override
@@ -51,7 +49,8 @@ public class Archer extends AUnit{
 
     @Override
     public double getMaxHealth() {
-        return MyValues.ARCHER_MAX_HEALTH;
+        return MyValues.SCOUT_MAX_HEALTH;
     }
+
 
 }

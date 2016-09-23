@@ -30,6 +30,11 @@ public class Swordsman extends AUnit {
     }
 
     @Override
+    public MyValues.ATTACK_TYPE getAttackType(){
+        return MyValues.ATTACK_TYPE.MELEE;
+    }
+
+    @Override
     public void resetEnergy() {
         this.energy = getMaxEnergy();
     }
@@ -49,8 +54,4 @@ public class Swordsman extends AUnit {
         return MyValues.SWORDSMAN_MAX_HEALTH;
     }
 
-    @Override
-    public String toString(){
-        return this.name + ", Energy: " + this.energy +"\n";
     }
-}

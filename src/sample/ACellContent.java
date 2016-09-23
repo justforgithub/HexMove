@@ -26,6 +26,10 @@ public abstract class ACellContent {
 
     public abstract Backpack getBackpack();
 
+    public String getName(){
+        return name;
+    }
+
     /**
      * draw rectangle with x, y, placement in %
      * @param x

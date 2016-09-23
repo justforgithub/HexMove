@@ -13,6 +13,7 @@ public class HQBackground extends ATerrain {
         this.name = MyValues.NAMES_HEAD_QUARTER;
         this.texture = generatePattern("hq.png");
         this.pathCost = 1.0;
+        this.coverage = 0.5;
         this.draw = new Group();
         this.hexCell = hexCell;
     }

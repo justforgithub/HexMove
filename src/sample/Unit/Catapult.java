@@ -8,30 +8,30 @@ import sample.Resources.Backpack;
 import java.util.ArrayList;
 
 /**
- * Created by Deviltech on 21.09.2016.
+ * Created by Deviltech on 22.09.2016.
  */
-public class Archer extends AUnit{
+public class Catapult extends AUnit {
 
-
-    public Archer(HexCell hexCell) {
-        this.name = MyValues.NAMES_ARCHER;
-        this.texture = generatePattern("archer.png");
+    public Catapult(HexCell hexCell) {
+        this.name = MyValues.NAMES_CATAPULT;
+        this.texture = generatePattern("catapult.png");
         this.energy = getMaxEnergy();
         this.health = getMaxHealth();
         this.draw = new Group();
         this.pathCost = MyValues.UNIT_PATHCOST;
         this.hexCell = hexCell;
-        this.attackDamage = MyValues.ARCHER_ATTACK_DAMAGE;
+        this.attackDamage = MyValues.CATAPULT_ATTACK_DAMAGE;
+
     }
 
     @Override
     public ArrayList<HexCell> getAttackCells() {
-        return getRangeAttackCells(2,3);
+        return getSiegeAttackCells(1, 3);
     }
 
     @Override
     public MyValues.ATTACK_TYPE getAttackType(){
-        return MyValues.ATTACK_TYPE.RANGE;
+        return MyValues.ATTACK_TYPE.SIEGE;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Archer extends AUnit{
 
     @Override
     public double getMaxEnergy() {
-        return MyValues.ARCHER_MAX_ENERGY;
+        return MyValues.CATAPULT_MAX_ENERGY;
     }
 
     @Override
@@ -51,7 +51,13 @@ public class Archer extends AUnit{
 
     @Override
     public double getMaxHealth() {
-        return MyValues.ARCHER_MAX_HEALTH;
+        return MyValues.CATAPULT_MAX_HEALTH;
     }
+
+    @Override
+    public Backpack getBackpack(){
+        return null;
+    }
+
 
 }

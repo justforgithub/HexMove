@@ -6,14 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.Action.Attack;
 import sample.Action.FindResources;
 import sample.Building.*;
 import sample.Resources.Food;
 import sample.Terrain.*;
-import sample.Unit.Archer;
-import sample.Unit.Swordsman;
-import sample.Unit.Worker;
+import sample.Unit.*;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,21 @@ public class Main extends Application {
         myBoard.getCell(7, 3).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(3, 0).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(1, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
-        myBoard.getCell(5, 5).setTerraBuildUnitGetDraw(new Forest(null), new FoodBerries(null, 21), null);
+
+        Catapult catapult = new Catapult(null);
+        myBoard.getCell(5, 5).setTerraBuildUnitGetDraw(null, null, catapult);
+
+        Scout scout = new Scout(null);
+        myBoard.getCell(5, 4).setTerraBuildUnitGetDraw(null, null, new Scout(null));
+
+        Swordsman sword2 = new Swordsman(null);
+        myBoard.getCell(6, 4).setTerraBuildUnitGetDraw(null, null, sword2);
+
+        Archer archer2 = new Archer(null);
+        myBoard.getCell(6, 5).setTerraBuildUnitGetDraw(null, null, archer2);
+
+        Worker worker2 = new Worker(null);
+        myBoard.getCell(5, 3).setTerraBuildUnitGetDraw(null, null, worker2);
 
 
         Archer archer = new Archer(null);
@@ -90,8 +104,10 @@ public class Main extends Application {
         Button b3 = new Button("Find Food");
         Button b4 = new Button("bring back food");
         Button b5 = new Button("find Storage");
-        Button b6 = new Button("Attack Melee");
-        Button b7 = new Button("Attack range");
+        Button b6 = new Button("Attk Range");
+        Button b7 = new Button("Def Range");
+        Button b8 = new Button("Attack!");
+        Button b9 = new Button("Heal attacker");
 
         FindResources strategy = new FindResources(hero, new FoodBerries(null, 10), false, null);
         strategy.setFindMost(100);
@@ -125,26 +141,52 @@ public class Main extends Application {
         });
 
         b6.setOnAction((value)-> {
-            ArrayList<HexCell> attcells = sword.getAttackCells();
-            myBoard.deselectAllCells();
-            for(HexCell x: attcells){
-                x.setSelected(3);
+            if(myBoard.dummy1 != null && myBoard.dummy1.getUnit() != null){
+                ArrayList<HexCell> attcells = myBoard.dummy1.getUnit().getAttackCells();
+                myBoard.deselectAllCells();
+                for(HexCell x: attcells){
+                    x.setSelected(3);
+                }
             }
         });
+
         b7.setOnAction((value)-> {
-            ArrayList<HexCell> attcells = archer.getAttackCells();
-            myBoard.deselectAllCells();
-            for(HexCell x: attcells){
-                x.setSelected(3);
+            if(myBoard.dummy2 != null && myBoard.dummy2.getUnit() != null){
+                ArrayList<HexCell> attcells = myBoard.dummy2.getUnit().getAttackCells();
+                myBoard.deselectAllCells();
+                for(HexCell x: attcells){
+                    x.setSelected(3);
+                }
             }
         });
+
+        b8.setOnAction((value)-> {
+            if(myBoard.dummy1 != null && myBoard.dummy2 != null) {
+                System.out.println("try to attack");
+                new Attack(myBoard.dummy1.getUnit(), myBoard.dummy2.getUnit()).execute();
+                myBoard.dummy1.drawObject();
+                myBoard.dummy2.drawObject();
+            }
+        });
+
+        b9.setOnAction((value)->{
+            if(myBoard.dummy1.getUnit() != null){
+                myBoard.dummy1.getUnit().resetHealth();
+                myBoard.dummy1.drawObject();
+            }
+        });
+
 
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7);
+        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9);
 
-        mainBox.getChildren().addAll(hbox, pane);
+        HBox textHBox = new HBox();
+        textHBox.getChildren().addAll(myBoard.attText, myBoard.defText);
+
+
+        mainBox.getChildren().addAll(hbox, textHBox, pane);
 
         primaryStage.setScene(new Scene(mainBox, 600, 600));
 

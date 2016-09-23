@@ -12,6 +12,7 @@ import sample.Resources.Backpack;
 public abstract class ATerrain extends ACellContent {
 
     public double pathCost;
+    public double coverage;
 
     @Override
     public Group drawObject() {
