@@ -12,6 +12,7 @@ import sample.Action.Attack;
 import sample.Action.FindResources;
 import sample.Building.*;
 import sample.Resources.Food;
+import sample.Resources.Wood;
 import sample.Terrain.*;
 import sample.Unit.*;
 
@@ -98,6 +99,9 @@ public class Main extends Application {
         myBoard.getCell(9, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 10), new Worker(bunnyFaction, null));
         myBoard.getCell(8, 2).setTerraBuildUnitGetDraw(new Hill(null), null, new Scout(bunnyFaction, null));
 
+        ConstructionSite construct =  new ConstructionSite(blueFaction, new Hut(blueFaction, null), null);
+        myBoard.getCell(3, 5).setTerraBuildUnitGetDraw(null,construct, null);
+
         Worker worker = new Worker(blueFaction, null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
 
@@ -112,21 +116,22 @@ public class Main extends Application {
 
 
         Button b1 = new Button("Reset Energy");
-        Button b2 = new Button("Go to Food");
-        Button b3 = new Button("Find Food");
-        Button b4 = new Button("bring back food");
+        Button b2 = new Button("Go to Wood");
+        Button b3 = new Button("Find Wood");
+        Button b4 = new Button("bring back Wood");
         Button b5 = new Button("find Storage");
         Button b6 = new Button("Attk Range");
         Button b7 = new Button("Def Range");
         Button b8 = new Button("Attack!");
         Button b9 = new Button("Heal attacker");
+        Button b10 = new Button("Construct");
 
-        FindResources strategy = new FindResources(hero, new FoodBerries(null, 10), false, null);
+        FindResources strategy = new FindResources(hero, new WoodPile(null, 10), false, null);
         strategy.setFindMost(100);
         strategy.prepareActions();
 
-        FindResources bringHomeStrategy = new FindResources(hero, new Hut(blueFaction, null), true, new Food(0));
-        bringHomeStrategy.setFindFastest(100);
+        FindResources bringHomeStrategy = new FindResources(hero, new ConstructionSite(blueFaction, new Barracks(null, null), null), true, new Wood(0));
+        bringHomeStrategy.setFindNearest(100);
         bringHomeStrategy.prepareActions();
 
         b1.setOnAction((value) -> {
@@ -188,11 +193,16 @@ public class Main extends Application {
             }
         });
 
+        b10.setOnAction((value)->{
+            construct.construct();
+            construct.hexCell.drawObject();
+        });
+
 
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9);
+        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10);
 
         HBox textHBox = new HBox();
         textHBox.getChildren().addAll(myBoard.attText, myBoard.defText);

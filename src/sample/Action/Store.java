@@ -1,5 +1,6 @@
 package sample.Action;
 
+import sample.Building.ConstructionSite;
 import sample.HexCell;
 import sample.MyValues;
 import sample.Resources.AResource;
@@ -34,7 +35,7 @@ public class Store extends AAction{
             double changeValue = Math.min(Math.min(worker.energy,
                     toStoreBackpack.getRemainingCapacity()),
                     // amount of resource in workerbackpack
-                    resource.findResource(workerBackpack).capacity);
+                    resource.findResource(workerBackpack).getCurrentCapacity());
             System.out.println(worker.energy +  " stored: " + changeValue);
             if(changeValue > 0.0) {
                 worker.energy -= changeValue;
@@ -42,6 +43,10 @@ public class Store extends AAction{
                 workerBackpack.addResource(-changeValue, resource);
                 // store resource into toStoreBackpack
                 toStoreBackpack.addResource( changeValue, resource);
+                // Try to construct
+                if(hexcell.getField().getClass().equals(ConstructionSite.class)){
+                    ((ConstructionSite) hexcell.getField()).construct();
+                }
                 hexcell.drawObject();
             } else {
                 actionStatus = MyValues.ACTION_STATUS.OBSOLETE;

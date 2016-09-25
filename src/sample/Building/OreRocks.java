@@ -3,7 +3,6 @@ package sample.Building;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
-import sample.Resources.AResource;
 import sample.Resources.Ore;
 
 /**
@@ -23,7 +22,7 @@ public class OreRocks extends AResourceField {
 
     @Override
     public String toString(){
-        return this.name + ": " + resource.capacity;
+        return this.name + ": " + resource.getCurrentCapacity();
     }
 
 

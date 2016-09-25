@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import sample.Faction;
 import sample.MyValues;
 import sample.Resources.AResource;
+import sample.Resources.Backpack;
 
 /**
  * Created by Deviltech on 18.09.2016.
@@ -34,4 +35,10 @@ public abstract class ABuildingField extends AField {
 
         return draw;
     }
+
+    /**
+     * returns construction costs via to be filled backpack
+     * @return
+     */
+    public abstract Backpack getConstructionCosts();
 }

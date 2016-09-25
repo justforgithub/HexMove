@@ -31,13 +31,13 @@ public class Harvest extends AAction {
             // Check if there is enough energy, resource or space in backpack for harvest
             Backpack backpack = worker.getBackpack();
             double changeValue = Math.min(Math.min(worker.energy,
-                    resource.capacity),
+                    resource.getCurrentCapacity()),
                     backpack.getRemainingCapacity());
-            System.out.println(worker.energy + " " + resource.capacity + " " + backpack.getRemainingCapacity() + " harvested: " + changeValue);
+            System.out.println(worker.energy + " " + resource.getCurrentCapacity() + " " + backpack.getRemainingCapacity() + " harvested: " + changeValue);
             if(changeValue > 0.0) {
                 worker.energy -= changeValue;
                 // fill resource into backpack
-                resource.capacity -= changeValue;
+                resource.addRemainingCapacity(- changeValue);
                 resource.addResource(backpack, changeValue);
                 hexcell.drawObject();
             } else {

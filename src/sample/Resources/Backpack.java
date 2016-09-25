@@ -1,5 +1,7 @@
 package sample.Resources;
 
+import sample.MyMath;
+
 /**
  * Created by Deviltech on 18.09.2016.
  */
@@ -12,26 +14,37 @@ public class Backpack {
 
     public Backpack(double capacity){
         this.food = new Food(0);
+        food.setMaxCapacity(capacity);
         this.ore = new Ore(0);
+        ore.setMaxCapacity(capacity);
         this.wood = new Wood(0);
+        wood.setMaxCapacity(capacity);
         this.capacity = capacity;
     }
 
     public double getRemainingCapacity(){
-        return (Math.max(0, capacity - food.capacity - ore.capacity - wood.capacity));
+        return (MyMath.setInBounds(0, capacity, capacity - food.getCurrentCapacity() - ore.getCurrentCapacity() - wood.getCurrentCapacity()));
+    }
+
+    /**
+     * Sets the overal Capacity to the summed maximum capacities of all resources
+     */
+    public void adjustCapacity(){
+        capacity = food.getMaxCapacity() + ore.getMaxCapacity() + wood.getMaxCapacity();
+        System.out.println("ADJUSTED " + capacity);
     }
 
 
     public void addFood(double value){
-        this.food.capacity += value;
+        food.addRemainingCapacity(value);
     }
 
     public void addOre(double value){
-        this.ore.capacity += value;
+        ore.addRemainingCapacity(value);
     }
 
     public void addWood(double value){
-        this.wood.capacity += value;
+        wood.addRemainingCapacity(value);
     }
 
     /**
@@ -40,7 +53,7 @@ public class Backpack {
      * @param resource
      */
     public void addResource(double value, AResource resource){
-        resource.findResource(this).capacity += value;
+        resource.findResource(this).addRemainingCapacity(value);
     }
 
     public Food getFood(){
@@ -57,7 +70,15 @@ public class Backpack {
 
     @Override
     public String toString(){
-        return "F: " + food.capacity + ", O: " + ore.capacity + ", W: " +  wood.capacity +", Capacity; " + (capacity - getRemainingCapacity()) + "/" +capacity;
+        String s = "F: " + food.toString() + ", O: " + ore.toString() + ", W: " +  wood.toString() +", Capacity; " +
+                (food.getCurrentCapacity() + ore.getCurrentCapacity() + wood.getCurrentCapacity());
+                // Check if capacity is limitless
+                if(capacity == Double.MAX_VALUE){
+                    s += "/-";
+                } else {
+                    s +=  "/" + capacity;
+                }
+        return s;
     }
 
 

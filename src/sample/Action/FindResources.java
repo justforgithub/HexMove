@@ -108,9 +108,9 @@ public class FindResources extends AStrategy {
             case NEAREST:
                 return  - p.pathCost;
             case MOST:
-                return ((AResourceField) p.getEnd().getField()).getResource().capacity;
+                return ((AResourceField) p.getEnd().getField()).getResource().getCurrentCapacity();
             case FASTEST:
-                return ((AResourceField) p.getEnd().getField()).getResource().capacity / (p.pathCost + 0.1);
+                return ((AResourceField) p.getEnd().getField()).getResource().getCurrentCapacity() / (p.pathCost + 0.1);
             default:
                 return -1;
         }

@@ -34,12 +34,22 @@ public class Hut extends ABuildingField {
 
     @Override
     public double getResourceQuantityByType(AResource toCompare){
-        return toCompare.findResource(backpack).capacity;
+        return toCompare.findResource(backpack).getCurrentCapacity();
     }
 
     @Override
     public Backpack getBackpack(){
         return backpack;
+    }
+
+    @Override
+    public Backpack getConstructionCosts() {
+        Backpack constructionBackpack = new Backpack(Double.MAX_VALUE);
+        constructionBackpack.getFood().setMaxCapacity(0);
+        constructionBackpack.getWood().setMaxCapacity(50);
+        constructionBackpack.getOre().setMaxCapacity(0);
+        constructionBackpack.adjustCapacity();
+        return constructionBackpack;
     }
 
 }

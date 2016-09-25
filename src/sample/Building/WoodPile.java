@@ -23,7 +23,7 @@ public class WoodPile extends AResourceField{
 
     @Override
     public String toString(){
-        return this.name + ": " + resource.capacity;
+        return this.name + ": " + resource.getCurrentCapacity();
     }
 
 

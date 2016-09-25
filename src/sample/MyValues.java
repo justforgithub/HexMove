@@ -101,6 +101,8 @@ public class MyValues {
 
     public static String NAMES_HEAD_QUARTER = "Head Quarter";
 
+    public static String NAMES_CONSTRUCTION_SITE = "Construction Site";
+
     public static String NAMES_WOOD = "Wood";
 
     public static String NAMES_BERRIES = "Berries";
@@ -126,6 +128,8 @@ public class MyValues {
     public static String NAMES_DEEP_WATER = "Deep Water";
 
     public static String NAMES_FOREST = "Forest";
+
+    public static String NAMES_HQ_BACKGROUND = "HQ Background";
 
 
     // IMAGE

@@ -28,7 +28,7 @@ public abstract class AResourceField extends AField {
     @Override
     public double getResourceQuantityByType(AResource toCompare){
         if(toCompare.getClass().equals(resource.getClass()) && resource != null){
-            return resource.capacity;
+            return resource.getCurrentCapacity();
         } else {
             return 0;
         }
