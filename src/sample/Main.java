@@ -98,6 +98,7 @@ public class Main extends Application {
         myBoard.getCell(9, 2).setTerraBuildUnitGetDraw(null, new Hut(bunnyFaction, null), new Worker(bunnyFaction, null));
         myBoard.getCell(9, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 10), new Worker(bunnyFaction, null));
         myBoard.getCell(8, 2).setTerraBuildUnitGetDraw(new Hill(null), null, new Scout(bunnyFaction, null));
+        myBoard.getCell(0, 6).setTerraBuildUnitGetDraw(null, new Mill(blueFaction, null), null);
 
         ConstructionSite construct =  new ConstructionSite(blueFaction, new Hut(blueFaction, null), null);
         myBoard.getCell(3, 5).setTerraBuildUnitGetDraw(null,construct, null);
@@ -124,7 +125,7 @@ public class Main extends Application {
         Button b7 = new Button("Def Range");
         Button b8 = new Button("Attack!");
         Button b9 = new Button("Heal attacker");
-        Button b10 = new Button("Construct");
+        Button b10 = new Button("New Turn");
 
         FindResources strategy = new FindResources(hero, new WoodPile(null, 10), false, null);
         strategy.setFindMost(100);
@@ -194,8 +195,11 @@ public class Main extends Application {
         });
 
         b10.setOnAction((value)->{
-            construct.construct();
-            construct.hexCell.drawObject();
+            for(int x = 0; x<myBoard.boardCells.length; x++) {
+                for (int y = 0; y < myBoard.boardCells[0].length; y++) {
+                    myBoard.boardCells[x][y].executeNewTurn();
+                }
+            }
         });
 
 

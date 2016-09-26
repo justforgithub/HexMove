@@ -46,6 +46,12 @@ public class MyValues {
 
     public static double HUT_BACKPACK_CAPACITY = 200.0;
 
+    public static double PRODUCTION_CAPACITY = 40;
+
+    public static double PRODUCTION_REGENERATION = 3.0;
+
+    public static double RESOURCE_REGENERATION = 1.0;
+
 
     // WORKER
 
@@ -96,6 +102,8 @@ public class MyValues {
     // NAME
 
     public static String NAMES_HUT = "Hut";
+
+    public static String NAMES_MILL = "Mill";
 
     public static String NAMES_BARRACKS = "Barracks";
 

@@ -18,6 +18,11 @@ public abstract class ACellContent {
     public HexCell hexCell;
     public double pathCost;
 
+    /**
+     * trigger new turn execution of cell content
+     */
+    public abstract void executeNewTurn();
+
     public abstract Group drawObject();
 
     public abstract String toString();
@@ -69,6 +74,8 @@ public abstract class ACellContent {
         String imagePath = MyValues.IMAGE_PATH + MyValues.FACTION_PATH + factionNumber + "/" + s;
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm()), 0, 0, 1, 1, true);
     }
+
+
 
 
 }

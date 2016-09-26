@@ -23,6 +23,11 @@ public abstract class ATerrain extends ACellContent {
     }
 
     @Override
+    public void executeNewTurn(){
+        // Nothing happens to Terrain
+    }
+
+    @Override
     public boolean isSameContent(HexCell cell){
         return cell.getTerrain() != null && this.getClass().equals(cell.getTerrain().getClass());
     }

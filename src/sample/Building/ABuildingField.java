@@ -36,6 +36,11 @@ public abstract class ABuildingField extends AField {
         return draw;
     }
 
+    @Override
+    public void executeNewTurn(){
+        // do nothing
+    }
+
     /**
      * returns construction costs via to be filled backpack
      * @return

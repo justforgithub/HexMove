@@ -29,6 +29,12 @@ public abstract class AUnit extends ACellContent {
     }
 
     @Override
+    public void executeNewTurn(){
+        // new Energy each round
+        resetEnergy();
+    }
+
+    @Override
     public boolean isSameContent(HexCell cell) {
         return cell.getUnit() != null && this.getClass().equals(cell.getUnit().getClass());
     }

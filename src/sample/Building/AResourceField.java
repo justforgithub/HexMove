@@ -21,6 +21,11 @@ public abstract class AResourceField extends AField {
     }
 
     @Override
+    public void executeNewTurn(){
+        resource.addRemainingCapacity(MyValues.RESOURCE_REGENERATION);
+    }
+
+    @Override
     public MyValues.FIELD_TYPE getFieldType(){
         return MyValues.FIELD_TYPE.RESOURCE;
     }

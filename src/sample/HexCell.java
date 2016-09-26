@@ -106,6 +106,22 @@ public class HexCell {
     }
 
     /**
+     * executes the new turn in every cellcontent
+     */
+    public void executeNewTurn(){
+        if(terrain != null){
+            terrain.executeNewTurn();
+        }
+        if(field != null){
+            field.executeNewTurn();
+        }
+        if(unit != null){
+            unit.executeNewTurn();
+        }
+        drawObject();
+    }
+
+    /**
      * Adjacent HexCell positioning based on given position of other Hexagon
      *
      * @param otherHexCell
