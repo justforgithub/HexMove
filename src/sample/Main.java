@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Action.Attack;
@@ -27,11 +28,11 @@ public class Main extends Application {
         VBox mainBox = new VBox();
 
 
-        Board myBoard = new Board(12,12, new Grassland(null));
+        Board myBoard = new Board(12, 12, new Grassland(null));
 
         Faction whiteFaction = new Faction(0);
         Faction redFaction = new Faction(1);
-        Faction greenFaction  = new Faction(2);
+        Faction greenFaction = new Faction(2);
         Faction blueFaction = new Faction(3);
         Faction bunnyFaction = new Faction(4);
 
@@ -82,16 +83,16 @@ public class Main extends Application {
         myBoard.getCell(5, 0).setTerraBuildUnitGetDraw(null, null, archer);
 
 
-        Worker hero =  new Worker(blueFaction, null);
+        Worker hero = new Worker(blueFaction, null);
         myBoard.getCell(0, 2).setTerraBuildUnitGetDraw(null, new Hut(blueFaction, null), hero);
-        myBoard.getCell(2, 2).setTerraBuildUnitGetDraw(new Grassland(null),null, null);
+        myBoard.getCell(2, 2).setTerraBuildUnitGetDraw(new Grassland(null), null, null);
         myBoard.getCell(4, 4).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 54), null);
         myBoard.getCell(3, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(3, 3).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(4, 2).setTerraBuildUnitGetDraw(null, new OreRocks(null, 12), null);
         myBoard.getCell(4, 3).setTerraBuildUnitGetDraw(new Hill(null), new OreRocks(null, 20), null);
         myBoard.getCell(1, 6).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 60), null);
-        myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), null,null);
+        myBoard.getCell(4, 0).setTerraBuildUnitGetDraw(new Hill(null), null, null);
 
         myBoard.getCell(8, 0).setTerraBuildUnitGetDraw(null, new Barracks(bunnyFaction, null), new Swordsman(bunnyFaction, null));
         myBoard.getCell(9, 1).setTerraBuildUnitGetDraw(new HQBackground(null), new HeadQuarter(bunnyFaction, null), new Archer(bunnyFaction, null));
@@ -100,20 +101,19 @@ public class Main extends Application {
         myBoard.getCell(8, 2).setTerraBuildUnitGetDraw(new Hill(null), null, new Scout(bunnyFaction, null));
         myBoard.getCell(0, 6).setTerraBuildUnitGetDraw(null, new Mill(blueFaction, null), null);
 
-        ConstructionSite construct =  new ConstructionSite(blueFaction, new Hut(blueFaction, null), null);
-        myBoard.getCell(3, 5).setTerraBuildUnitGetDraw(null,construct, null);
+        ConstructionSite construct = new ConstructionSite(blueFaction, new Hut(blueFaction, null), null);
+        myBoard.getCell(3, 5).setTerraBuildUnitGetDraw(null, construct, null);
 
         Worker worker = new Worker(blueFaction, null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
 
 
-        for(int x = 0; x<myBoard.boardCells.length; x++){
-            for (int y = 0; y < myBoard.boardCells[0].length; y++){
+        for (int x = 0; x < myBoard.boardCells.length; x++) {
+            for (int y = 0; y < myBoard.boardCells[0].length; y++) {
                 //System.out.println(Integer.toString(x) + " " + Integer.toString(y) +" " + myBoard.boardCells[x][y]);
-               pane.getChildren().add(myBoard.boardCells[x][y].drawGroup);
+                pane.getChildren().add(myBoard.boardCells[x][y].drawGroup);
             }
         }
-
 
 
         Button b1 = new Button("Reset Energy");
@@ -126,7 +126,9 @@ public class Main extends Application {
         Button b8 = new Button("Attack!");
         Button b9 = new Button("Heal attacker");
         Button b10 = new Button("New Turn");
+        Button b11 = new Button("Brightness");
 
+        /*
         FindResources strategy = new FindResources(hero, new WoodPile(null, 10), false, null);
         strategy.setFindMost(100);
         strategy.prepareActions();
@@ -134,6 +136,7 @@ public class Main extends Application {
         FindResources bringHomeStrategy = new FindResources(hero, new ConstructionSite(blueFaction, new Barracks(null, null), null), true, new Wood(0));
         bringHomeStrategy.setFindNearest(100);
         bringHomeStrategy.prepareActions();
+        */
 
         b1.setOnAction((value) -> {
             hero.energy = hero.getMaxEnergy();
@@ -142,71 +145,88 @@ public class Main extends Application {
             hero.hexCell.drawObject();
         });
 
-        b2.setOnAction((value)->{
+        /*
+        b2.setOnAction((value) -> {
             strategy.execute();
         });
 
-        b3.setOnAction((value)->{
+        b3.setOnAction((value) -> {
             strategy.prepareActions();
         });
 
-        b4.setOnAction((value)->{
+        b4.setOnAction((value) -> {
             bringHomeStrategy.execute();
         });
 
         b5.setOnAction((value) -> {
             bringHomeStrategy.prepareActions();
         });
+        */
 
-        b6.setOnAction((value)-> {
-            if(myBoard.dummy1 != null && myBoard.dummy1.getUnit() != null){
-                ArrayList<HexCell> attcells = myBoard.dummy1.getUnit().getAttackCells();
+        b2.setDisable(true);
+        b3.setDisable(true);
+        b4.setDisable(true);
+        b5.setDisable(true);
+
+        b6.setOnAction((value) -> {
+            if (myBoard.dummy1 != null && myBoard.dummy1 != null) {
+                ArrayList<HexCell> attcells = myBoard.dummy1.getAttackCells();
                 myBoard.deselectAllCells();
-                for(HexCell x: attcells){
+                for (HexCell x : attcells) {
                     x.setSelected(1);
                 }
             }
         });
 
-        b7.setOnAction((value)-> {
-            if(myBoard.dummy2 != null && myBoard.dummy2.getUnit() != null){
-                ArrayList<HexCell> attcells = myBoard.dummy2.getUnit().getAttackCells();
-                myBoard.deselectAllCells();
-                for(HexCell x: attcells){
-                    x.setSelected(1);
-                }
-            }
+        b7.setOnAction((value) -> {
+           // Nothing
         });
+        b7.setDisable(true);
 
-        b8.setOnAction((value)-> {
-            if(myBoard.dummy1 != null && myBoard.dummy2 != null) {
+        /*
+        b8.setOnAction((value) -> {
+            if (myBoard.dummy1 != null && myBoard.dummy2 != null) {
                 System.out.println("try to attack");
-                new Attack(myBoard.dummy1.getUnit(), myBoard.dummy2.getUnit()).execute();
+                new Attack(myBoard.dummy1, myBoard.dummy2.getUnit()).execute();
                 myBoard.dummy1.drawObject();
                 myBoard.dummy2.drawObject();
             }
         });
+         */
 
-        b9.setOnAction((value)->{
-            if(myBoard.dummy1.getUnit() != null){
-                myBoard.dummy1.getUnit().resetHealth();
-                myBoard.dummy1.drawObject();
+        b8.setDisable(true);
+
+        b9.setOnAction((value) -> {
+            if (myBoard.dummy1 != null) {
+                myBoard.dummy1.resetHealth();
+                myBoard.dummy1.hexCell.drawObject();
             }
         });
 
-        b10.setOnAction((value)->{
-            for(int x = 0; x<myBoard.boardCells.length; x++) {
+        b10.setOnAction((value) -> {
+            for (int x = 0; x < myBoard.boardCells.length; x++) {
                 for (int y = 0; y < myBoard.boardCells[0].length; y++) {
                     myBoard.boardCells[x][y].executeNewTurn();
                 }
             }
         });
 
+        b11.setOnAction((value) -> {
+            hero.isSelected.set(!hero.isSelected.get());
+            double hor = 30;
+            double dia = 35;
+            ArrayList<HexCell> cells = myBoard.findAllCellsInRange(myBoard.getCell(0, 2), 8);
+            myBoard.deselectAllCells();
+            for(HexCell c: cells){
+                c.setSelected(true);
+            }
+            }
+        );
 
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10);
+        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11);
 
         HBox textHBox = new HBox();
         textHBox.getChildren().addAll(myBoard.attText, myBoard.defText);
@@ -218,7 +238,6 @@ public class Main extends Application {
 
         primaryStage.show();
     }
-
 
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package sample.Unit;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
@@ -14,14 +15,9 @@ public class Swordsman extends AUnit {
 
 
     public Swordsman(sample.Faction faction, HexCell hexCell) {
-        this.faction = faction;
+        super(faction, hexCell);
         this.name = MyValues.NAMES_SWORDSMAN;
         this.texture = generatePattern(faction, "swordsman.png");
-        this.energy = getMaxEnergy();
-        this.health = getMaxHealth();
-        this.draw = new Group();
-        this.pathCost = MyValues.UNIT_PATHCOST;
-        this.hexCell = hexCell;
         this.attackDamage = MyValues.SWORDSMAN_ATTACK_DAMAGE;
     }
 

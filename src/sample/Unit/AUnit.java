@@ -1,6 +1,9 @@
 package sample.Unit;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import sample.*;
 import sample.Resources.Backpack;
@@ -20,12 +23,31 @@ public abstract class AUnit extends ACellContent {
     public double health;
     public Faction faction;
     public double attackDamage;
+    public SimpleBooleanProperty isSelected;
 
     @Override
     public Group drawObject() {
         draw.getChildren().clear();
+        // Drraw shadow in background if selected
+        if(isSelected.getValue()) {
+            draw.getChildren().addAll(generateShadow(texture, -0.5, 0.5));
+        }
         draw.getChildren().addAll(generateRectangle(texture, -0.5, 0.5));
         return draw;
+    }
+
+    public AUnit(sample.Faction faction, HexCell hexCell){
+        this.isSelected = new SimpleBooleanProperty(false);
+        // If selection changes, redraw object
+        this.isSelected.addListener((value)->{
+            drawObject();
+        });
+        this.faction = faction;
+        this.energy = getMaxEnergy();
+        this.health = getMaxHealth();
+        this.draw = new Group();
+        this.pathCost = MyValues.UNIT_PATHCOST;
+        this.hexCell = hexCell;
     }
 
     @Override

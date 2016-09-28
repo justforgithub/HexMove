@@ -32,6 +32,8 @@ public class MyValues {
 
     public static double HEX_SCALE = 20;
 
+    public static double SHADOW_SCALE = 1.1;
+
     public static Color HEX_BACKGROUND = Color.WHITE;
 
     public static Color[] HEX_STROKE_SELECTION = {Color.BLACK, Color.GREENYELLOW, Color.ORANGERED, Color.DARKRED};
@@ -79,15 +81,15 @@ public class MyValues {
 
     public static double ARCHER_MAX_ENERGY = 8.0;
 
-    public static double ARCHER_ATTACK_DAMAGE = 40.0;
+    public static double ARCHER_ATTACK_DAMAGE = 50.0;
 
     // SWORDSMAN
 
     public static double SWORDSMAN_MAX_HEALTH = 200.0;
 
-    public static double SWORDSMAN_MAX_ENERGY = 6.0;
+    public static double SWORDSMAN_MAX_ENERGY = 8.0;
 
-    public static double SWORDSMAN_ATTACK_DAMAGE = 50.0;
+    public static double SWORDSMAN_ATTACK_DAMAGE = 60.0;
 
 
     // CATAPULT

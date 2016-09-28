@@ -30,6 +30,8 @@ public class Attack extends AAction {
                     System.out.println("Defender hits back: " + counterDamage);
                     attacker.addHealth(- counterDamage);
                 }
+            } else {
+                System.out.println("Wrong attack ranges");
             }
         }
     }

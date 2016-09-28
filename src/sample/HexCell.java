@@ -4,10 +4,13 @@ import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Polygon;
+import sample.Action.Attack;
+import sample.Action.Move;
 import sample.Building.AField;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
 
+import java.util.ArrayList;
 
 
 /**
@@ -90,14 +93,7 @@ public class HexCell {
         double dia = MyValues.HEX_DIAGONAL_VALUE * MyValues.HEX_SCALE;
 
         Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(new Double[]{
-                -(dia + 0.5 * hor), 0.0,
-                -0.5 * hor, -hor,
-                +0.5 * hor, -hor,
-                +(dia + 0.5 * hor), 0.0,
-                +0.5 * hor, hor,
-                -0.5 * hor, hor,
-        });
+        polygon.getPoints().addAll(MyMath.generateHexagonCoords(hor, dia));
         polygon.setStroke(MyValues.HEX_STROKE_SELECTION[0]);
         polygon.setStrokeWidth(MyValues.HEX_STROKE_WIDTH);
         polygon.setFill(MyValues.HEX_BACKGROUND);
@@ -170,25 +166,55 @@ public class HexCell {
      */
     private void prepareEventListeners() {
         drawGroup.setOnMouseClicked(event -> {
+            // LEFT CLICK
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                board.dummy1 = this;
-                if(unit != null) {
-                    board.attText.setText("Attacker: " +  unit.getName() + " ;");
-                }
-            } else {
-                if(event.getButton().equals(MouseButton.SECONDARY)){
-                    board.dummy2 = this;
-                    if(unit != null) {
-                        board.defText.setText("Defender: " + unit.getName());
+                if(board.dummy1 == null && this.unit != null){
+                    board.dummy1 = this.unit;
+                    this.unit.isSelected.set(true);
+                    ArrayList<HexCell> moveCells = board.findAllCellsInRange(this, unit.energy);
+                    board.deselectAllCells();
+                    for(HexCell cell: moveCells){
+                        cell.setSelected(1);
                     }
+                } else {
+                    if(board.dummy1 != null && this.unit == null){
+                        new Move(board.dummy1, board.calculatePath(board.dummy1.hexCell, this)).execute();
+                        board.deselectAllCells();
+                        board.dummy1.isSelected.set(false);
+                        board.dummy1 = null;
+                    } else {
+                        if(board.dummy1 != null && this.unit != null && !this.unit.equals(board.dummy1)){
+                            new Attack(board.dummy1, this.unit).execute();
+                            board.dummy1.hexCell.drawObject();
+                            this.drawObject();
+                            ArrayList<HexCell> attkCells = board.dummy1.getAttackCells();
+                            if(attkCells.contains(this)){
+                                board.deselectAllCells();
+                                this.setSelected(2);
+                                board.dummy1.hexCell.setSelected(2);
+                            }
+                        }
                 }
-            }
-            if(board.dummy1 != null  && board.dummy2 != null){
-                Path path = board.calculatePath(board.dummy1, board.dummy2);
-                board.deselectAllCells();
-                for(HexCell current: path.pathCells){
-                    current.setSelected(true);
+
                 }
+            } else { // RIGHT CLICK
+                if(event.getButton().equals(MouseButton.SECONDARY)){
+                    if(board.dummy1 != null) {
+                        board.dummy1.isSelected.set(false);
+                        board.dummy1 = null;
+                        board.deselectAllCells();
+                    }
+                        if (this.unit != null) {
+                            ArrayList<HexCell> attkCells = this.unit.getAttackCells();
+                            board.deselectAllCells();
+                            for (HexCell cell : attkCells) {
+                                cell.setSelected(3);
+                            }
+                    } else {
+                            board.deselectAllCells();
+                        }
+                }
+
             }
 
         });

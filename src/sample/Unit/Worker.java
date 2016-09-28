@@ -1,5 +1,6 @@
 package sample.Unit;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import sample.HexCell;
@@ -17,14 +18,9 @@ public class Worker extends AUnit {
 
 
     public Worker(sample.Faction faction, HexCell hexCell) {
-        this.faction = faction;
+        super(faction, hexCell);
         this.name = MyValues.NAMES_WORKER;
         this.texture = generatePattern(faction, "worker.png");
-        this.energy = getMaxEnergy();
-        this.health = getMaxHealth();
-        this.draw = new Group();
-        this.pathCost = MyValues.UNIT_PATHCOST;
-        this.hexCell = hexCell;
         this.backpack = new Backpack(MyValues.WORKER_BACKPACK_CAPACITY);
         this.attackDamage = MyValues.WORKER_ATTACK_DAMAGE;
 

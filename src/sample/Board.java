@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.text.Text;
 import sample.Terrain.ATerrain;
+import sample.Unit.AUnit;
 
 import java.util.ArrayList;
 
@@ -15,8 +16,8 @@ public class Board {
     private int sizeY;
 
     // TEST STUFF TODO remove
-    public HexCell dummy1;
-    public HexCell dummy2;
+    public AUnit dummy1;
+    public AUnit dummy2;
     public Text attText = new Text("Attacker: - ; ");
     public Text defText = new Text("Defender: -");
 
@@ -301,7 +302,7 @@ public class Board {
 
 
         while(! pathFound){
-           getAllAdjacentCells(currentCell, usedCells, todoCells);
+            getAllAdjacentCells(currentCell, usedCells, todoCells);
             todoCells.remove(currentCell);
             usedCells.add(currentCell);
             if(currentCell == endCell){
@@ -331,7 +332,7 @@ public class Board {
         startCell.distance = 0;
         HexCell currentCell = startCell;
 
-        while(currentCell.distance < maxDistance && !todoCells.isEmpty()){
+        while(currentCell.distance <= maxDistance && !todoCells.isEmpty()){
             getAllAdjacentCells(currentCell, usedCells, todoCells);
             todoCells.remove(currentCell);
             usedCells.add(currentCell);
@@ -345,15 +346,32 @@ public class Board {
         return paths;
     }
 
+    public ArrayList<HexCell> findAllCellsInRange(HexCell startCell, double maxDistance){
+        // initialize startcell pathfinding
+        ArrayList<HexCell> todoCells = resetHexCellDistances();
+        ArrayList<HexCell> usedCells = new ArrayList<>();
+        startCell.distance = 0;
+        HexCell currentCell = startCell;
+
+        while(currentCell.distance <= maxDistance && !todoCells.isEmpty()){
+            getAllAdjacentCells(currentCell, usedCells, todoCells);
+            todoCells.remove(currentCell);
+            usedCells.add(currentCell);
+            currentCell = getLowestDistanceCell(todoCells);
+            todoCells.remove(currentCell);
+        }
+        return usedCells;
+    }
+
     /**
      * Deselect all Hexcells
      */
     public void deselectAllCells(){
-            for(int i = 0; i < boardCells.length; i++) {
-                for (int j = 0; j < boardCells[0].length; j++) {
-                    boardCells[i][j].setSelected(false);
-                }
+        for(int i = 0; i < boardCells.length; i++) {
+            for (int j = 0; j < boardCells[0].length; j++) {
+                boardCells[i][j].setSelected(false);
             }
+        }
     }
 
 

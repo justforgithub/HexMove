@@ -1,5 +1,6 @@
 package sample.Unit;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
@@ -13,14 +14,9 @@ public class Archer extends AUnit{
 
 
     public Archer(sample.Faction faction, HexCell hexCell) {
-        this.faction = faction;
+        super(faction, hexCell);
         this.name = MyValues.NAMES_ARCHER;
         this.texture = generatePattern(faction, "archer.png");
-        this.energy = getMaxEnergy();
-        this.health = getMaxHealth();
-        this.draw = new Group();
-        this.pathCost = MyValues.UNIT_PATHCOST;
-        this.hexCell = hexCell;
         this.attackDamage = MyValues.ARCHER_ATTACK_DAMAGE;
     }
 

@@ -1,5 +1,6 @@
 package sample.Unit;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
@@ -12,14 +13,9 @@ import java.util.ArrayList;
 public class Scout extends AUnit{
 
     public Scout(sample.Faction faction, HexCell hexCell) {
-        this.faction = faction;
+        super(faction, hexCell);
         this.name = MyValues.NAMES_SCOUT;
         this.texture = generatePattern(faction, "scout.png");
-        this.energy = getMaxEnergy();
-        this.health = getMaxHealth();
-        this.draw = new Group();
-        this.pathCost = MyValues.UNIT_PATHCOST;
-        this.hexCell = hexCell;
         this.attackDamage = MyValues.SCOUT_ATTACK_DAMAGE;
     }
 

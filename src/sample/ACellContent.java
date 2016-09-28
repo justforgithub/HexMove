@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -55,6 +56,29 @@ public abstract class ACellContent {
     }
 
     /**
+     * Generate background Shadow for cellcontent
+     * @param texture
+     * @param x
+     * @param y
+     * @return
+     */
+    public Rectangle generateShadow(ImagePattern texture, double x, double y){
+        Rectangle rectangle = generateRectangle(texture, x, y);
+        double scale = MyValues.SHADOW_SCALE;
+        double oldHeight = rectangle.getHeight();
+        double oldWidth = rectangle.getWidth();
+        // Place white shadow cenetered behind object
+        rectangle.setHeight(oldHeight * scale);
+        rectangle.setWidth(oldWidth * scale);
+        rectangle.setX(rectangle.getX() - (rectangle.getWidth() - oldWidth)*0.5 );
+        rectangle.setY(rectangle.getY() - (rectangle.getHeight() - oldHeight)*0.5 );
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(1.0);
+        rectangle.setEffect(colorAdjust);
+        return rectangle;
+    }
+
+    /**
      * generate general pattern
      * @param s
      * @return
@@ -73,6 +97,16 @@ public abstract class ACellContent {
         String factionNumber = Integer.toString(f.getTeamID());
         String imagePath = MyValues.IMAGE_PATH + MyValues.FACTION_PATH + factionNumber + "/" + s;
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm()), 0, 0, 1, 1, true);
+    }
+
+    public void setBrightBackground(){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        //colorAdjust.setContrast(0.1);
+        //colorAdjust.setHue(-0.05);
+        colorAdjust.setBrightness(0.5);
+        //colorAdjust.setSaturation(0.2);
+
+        draw.setEffect(colorAdjust);
     }
 
 
