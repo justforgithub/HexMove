@@ -4,6 +4,7 @@ package sample.Terrain;
 import javafx.scene.Group;
 import sample.ACellContent;
 import sample.HexCell;
+import sample.MyValues;
 import sample.Resources.Backpack;
 
 /**

@@ -84,7 +84,7 @@ public abstract class ACellContent {
      * @return
      */
     public ImagePattern generatePattern(String s){
-        return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.IMAGE_PATH + s).toExternalForm()), 0, 0, 1, 1, true);
+        return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.PATH_IMAGE + s).toExternalForm()), 0, 0, 1, 1, true);
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class ACellContent {
      */
     public ImagePattern generatePattern(Faction f, String s){
         String factionNumber = Integer.toString(f.getTeamID());
-        String imagePath = MyValues.IMAGE_PATH + MyValues.FACTION_PATH + factionNumber + "/" + s;
+        String imagePath = MyValues.PATH_IMAGE + MyValues.FACTION_PATH + factionNumber + "/" + s;
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm()), 0, 0, 1, 1, true);
     }
 

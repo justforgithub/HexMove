@@ -28,7 +28,7 @@ public abstract class AUnit extends ACellContent {
     @Override
     public Group drawObject() {
         draw.getChildren().clear();
-        // Drraw shadow in background if selected
+        // Draw shadow in background if selected
         if(isSelected.getValue()) {
             draw.getChildren().addAll(generateShadow(texture, -0.5, 0.5));
         }

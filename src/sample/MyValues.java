@@ -44,6 +44,10 @@ public class MyValues {
 
     // MISC
 
+    public static double UI_BUTTON_SCALE = 1.2;
+
+    public static Color UI_BUTTON_STROKE_COLOR = Color.BLACK;
+
     public static double UNIT_PATHCOST = Double.MAX_VALUE;
 
     public static double HUT_BACKPACK_CAPACITY = 200.0;
@@ -105,7 +109,11 @@ public class MyValues {
 
     public static String NAMES_HUT = "Hut";
 
-    public static String NAMES_MILL = "Mill";
+    public static String NAMES_FARM = "Farm";
+
+    public static String NAMES_QUARRY = "Quarry";
+
+    public static String NAMES_LUMBERJACK = "Lumberjack";
 
     public static String NAMES_BARRACKS = "Barracks";
 
@@ -141,10 +149,29 @@ public class MyValues {
 
     public static String NAMES_HQ_BACKGROUND = "HQ Background";
 
+    public static String NAMES_BUTTON_MOVE = "Move";
+
+    public static String NAMES_BUTTON_ATTACK  = "Attack";
+
+    public static String NAMES_BUTTON_STRATEGY = "Strategy";
+
+    public static String NAMES_BUTTON_HARVEST = "Harvest";
+
+    public static String NAMES_BUTTON_DEPOSIT = "Deposit";
+
+    public static String NAMES_BUTTON_RELOAD = "Reload";
+
+    public static String NAMES_BUTTON_CANCEL = "Cancel";
 
     // IMAGE
 
-    public static String IMAGE_PATH = "images/";
+    public static String PATH_IMAGE = "images/";
+
+    public static String PATH_BUILDING = "building/";
+
+    public static String PATH_TERRAIN = "terrain/";
+
+    public static String PATH_DETAILS = "details/";
 
     public static String FACTION_PATH = "faction_";
 
@@ -155,6 +182,8 @@ public class MyValues {
 
     public static String[] FACTION_NAMES = {"Wolves of the North", "Hogs of the East", "Snakes of the South", "Eagles of the West", "Fluffy Bunnies United"};
     public static int NUMBER_OF_FACTIONS = FACTION_NAMES.length;
+
+
 
 
 }

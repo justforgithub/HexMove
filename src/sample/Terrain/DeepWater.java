@@ -11,7 +11,7 @@ public class DeepWater extends ATerrain {
 
     public DeepWater(HexCell hexCell){
         this.name = MyValues.NAMES_DEEP_WATER;
-        this.texture = generatePattern("water_deep.png");
+        this.texture = generatePattern(MyValues.PATH_TERRAIN + "water_deep.png");
         this.pathCost = 10.0;
         this.coverage = 0.4;
         this.draw = new Group();

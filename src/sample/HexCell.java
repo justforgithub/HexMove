@@ -128,36 +128,12 @@ public class HexCell {
         double hor = MyValues.HEX_HORIZONTAL_VALUE * MyValues.HEX_SCALE + MyValues.HEX_STROKE_WIDTH * 0.4;
         double dia = MyValues.HEX_DIAGONAL_VALUE * MyValues.HEX_SCALE + MyValues.HEX_STROKE_WIDTH *0.4;
 
-        double x = 0;
-        double y = 0;
-        switch (position) {
-            case TOP:
-                x = 0;
-                y = -2 * hor;
-                break;
-            case TOP_LEFT:
-                x = -(hor + dia);
-                y = -hor;
-                break;
-            case TOP_RIGHT:
-                x = +(hor + dia);
-                y = -hor;
-                break;
-            case BOT:
-                x = 0;
-                y = +2 * hor;
-                break;
-            case BOT_LEFT:
-                x = -(hor + dia);
-                y = +hor;
-                break;
-            case BOT_RIGHT:
-                x = +(hor + dia);
-                y = +hor;
-                break;
-        }
-        otherHexCell.drawGroup.setTranslateX(drawGroup.getTranslateX() + x);
-        otherHexCell.drawGroup.setTranslateY(drawGroup.getTranslateY() + y);
+
+        // Calculate x, y fur adjacent cell
+        DoubleTuple coordsTuple = MyMath.calculatePositionCoords(hor, dia, position);
+
+        otherHexCell.drawGroup.setTranslateX(drawGroup.getTranslateX() + coordsTuple.getX());
+        otherHexCell.drawGroup.setTranslateY(drawGroup.getTranslateY() + coordsTuple.getY());
     }
 
 
@@ -306,7 +282,7 @@ public class HexCell {
     public String toString(){
         String s = " - Cell xy:" + Integer.toString(x) + " " + Integer.toString(y) + " Cost: " + getAllCosts(false) + "\n";
         if(terrain != null){
-            s += terrain.toString() + " \n";
+            s += terrain.toString() + ", Cover: " + terrain.coverage + " \n";
         }
         if(field != null){
             s += field.toString() + " \n";

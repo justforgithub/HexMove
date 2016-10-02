@@ -65,4 +65,43 @@ public class MyMath {
                 -0.5 * hor, hor,
         };
     }
+
+    /**
+     * Calculate the position coords of an adjacent hexcell
+     * @param hor
+     * @param dia
+     * @param position
+     */
+    public static DoubleTuple calculatePositionCoords(double hor, double dia, MyValues.HEX_POSITION position){
+        double x = 0;
+        double y = 0;
+        switch (position) {
+            case TOP:
+                x = 0;
+                y = -2 * hor;
+                break;
+            case TOP_LEFT:
+                x = -(hor + dia);
+                y = -hor;
+                break;
+            case TOP_RIGHT:
+                x = +(hor + dia);
+                y = -hor;
+                break;
+            case BOT:
+                x = 0;
+                y = +2 * hor;
+                break;
+            case BOT_LEFT:
+                x = -(hor + dia);
+                y = +hor;
+                break;
+            case BOT_RIGHT:
+                x = +(hor + dia);
+                y = +hor;
+                break;
+        }
+        return new DoubleTuple(x, y);
+    }
+
 }

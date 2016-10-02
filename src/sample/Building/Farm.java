@@ -9,15 +9,15 @@ import sample.Resources.Backpack;
 /**
  * Created by Deviltech on 26.09.2016.
  */
-public class Mill extends ABuildingField{
+public class Farm extends ABuildingField{
 
 
     public Backpack backpack;
 
-    public Mill(sample.Faction faction, HexCell hexCell) {
+    public Farm(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
-        this.name = MyValues.NAMES_MILL;
-        this.texture = generatePattern("mill.png");
+        this.name = MyValues.NAMES_FARM;
+        this.texture = generatePattern(MyValues.PATH_BUILDING + "farm.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

@@ -1,35 +1,40 @@
 package sample.Building;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import sample.HexCell;
 import sample.MyValues;
 import sample.Resources.AResource;
 import sample.Resources.Backpack;
 
 /**
- * Created by Deviltech on 07.09.2016.
+ * Created by Deviltech on 01.10.2016.
  */
-public class Hut extends ABuildingField {
+public class Quarry extends ABuildingField {
+
 
     public Backpack backpack;
 
-    public Hut(sample.Faction faction, HexCell hexCell) {
+    public Quarry(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
-        this.name = MyValues.NAMES_HUT;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "hut.png");
+        this.name = MyValues.NAMES_QUARRY;
+        this.texture = generatePattern(MyValues.PATH_BUILDING + "quarry.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;
-        this.backpack = new Backpack(MyValues.HUT_BACKPACK_CAPACITY);
+        this.backpack = new Backpack(MyValues.PRODUCTION_CAPACITY);
+        this.backpack.getWood().setMaxCapacity(0);
+        this.backpack.getOre().setMaxCapacity(MyValues.PRODUCTION_CAPACITY);
+        this.backpack.getFood().setMaxCapacity(0);
+    }
+
+    @Override
+    public void executeNewTurn(){
+        backpack.getOre().addRemainingCapacity(MyValues.PRODUCTION_REGENERATION);
     }
 
     @Override
     public String toString(){
-        return this.name  + backpack.toString();
+        return this.name  + ": " +  backpack.toString();
     }
 
     @Override
@@ -47,9 +52,8 @@ public class Hut extends ABuildingField {
         Backpack constructionBackpack = new Backpack(Double.MAX_VALUE);
         constructionBackpack.getFood().setMaxCapacity(0);
         constructionBackpack.getWood().setMaxCapacity(50);
-        constructionBackpack.getOre().setMaxCapacity(0);
+        constructionBackpack.getOre().setMaxCapacity(20);
         constructionBackpack.adjustCapacity();
         return constructionBackpack;
     }
-
 }

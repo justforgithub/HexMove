@@ -11,7 +11,7 @@ public class Forest extends ATerrain{
 
     public Forest(HexCell hexCell){
         this.name = MyValues.NAMES_FOREST;
-        this.texture = generatePattern("forest.png");
+        this.texture = generatePattern(MyValues.PATH_TERRAIN + "forest.png");
         this.pathCost = 2.0;
         this.coverage = 0.7;
         this.draw = new Group();

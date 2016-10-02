@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import sample.Action.Attack;
 import sample.Action.FindResources;
 import sample.Building.*;
+import sample.RectangleButtons.*;
 import sample.Resources.Food;
 import sample.Resources.Wood;
 import sample.Terrain.*;
@@ -56,9 +58,10 @@ public class Main extends Application {
         myBoard.getCell(5, 0).setTerraBuildUnitGetDraw(new Forest(null), null, null);
         myBoard.getCell(7, 1).setTerraBuildUnitGetDraw(new Forest(null), new WoodPile(null, 31), null);
         myBoard.getCell(7, 4).setTerraBuildUnitGetDraw(new Forest(null), new WoodPile(null, 29), null);
-        myBoard.getCell(7, 3).setTerraBuildUnitGetDraw(new Hill(null), null, null);
+        myBoard.getCell(7, 3).setTerraBuildUnitGetDraw(new Hill(null), new Quarry(blueFaction, null), null);
         myBoard.getCell(3, 0).setTerraBuildUnitGetDraw(new Hill(null), null, null);
         myBoard.getCell(1, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
+        myBoard.getCell(6, 2).setTerraBuildUnitGetDraw(new Forest(null), new Lumberjack(blueFaction, null), null);
 
         Catapult catapult = new Catapult(redFaction, null);
         myBoard.getCell(5, 5).setTerraBuildUnitGetDraw(null, null, catapult);
@@ -99,7 +102,7 @@ public class Main extends Application {
         myBoard.getCell(9, 2).setTerraBuildUnitGetDraw(null, new Hut(bunnyFaction, null), new Worker(bunnyFaction, null));
         myBoard.getCell(9, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 10), new Worker(bunnyFaction, null));
         myBoard.getCell(8, 2).setTerraBuildUnitGetDraw(new Hill(null), null, new Scout(bunnyFaction, null));
-        myBoard.getCell(0, 6).setTerraBuildUnitGetDraw(null, new Mill(blueFaction, null), null);
+        myBoard.getCell(0, 6).setTerraBuildUnitGetDraw(null, new Farm(blueFaction, null), null);
 
         ConstructionSite construct = new ConstructionSite(blueFaction, new Hut(blueFaction, null), null);
         myBoard.getCell(3, 5).setTerraBuildUnitGetDraw(null, construct, null);
@@ -122,7 +125,7 @@ public class Main extends Application {
         Button b4 = new Button("bring back Wood");
         Button b5 = new Button("find Storage");
         Button b6 = new Button("Attk Range");
-        Button b7 = new Button("Def Range");
+        Button b7 = new Button("UI button");
         Button b8 = new Button("Attack!");
         Button b9 = new Button("Heal attacker");
         Button b10 = new Button("New Turn");
@@ -141,6 +144,10 @@ public class Main extends Application {
         b1.setOnAction((value) -> {
             hero.energy = hero.getMaxEnergy();
             worker.energy = worker.getMaxEnergy();
+            if(myBoard.dummy1 != null){
+                myBoard.dummy1.resetEnergy();
+                myBoard.dummy1.hexCell.drawObject();
+            }
             worker.hexCell.drawObject();
             hero.hexCell.drawObject();
         });
@@ -179,9 +186,23 @@ public class Main extends Application {
         });
 
         b7.setOnAction((value) -> {
-           // Nothing
+            if(myBoard.dummy1 != null) {
+                Group g = myBoard.dummy1.hexCell.drawGroup;
+                RectangleMenu men = new RectangleMenu();
+                men.setButton(new MoveButton(men), 0);
+                men.setButton(new AttackButton(men), 1);
+                men.setButton(new HarvestButton(men), 2);
+                men.setButton(new ReloadButton(men), 3);
+                men.setButton(new StrategyButton(men), 5);
+                men.setButton(new CancelButton(men), 4);
+
+                Group g2 = men.drawObject();
+                g2.setTranslateX(g.getTranslateX());
+                g2.setTranslateY(g.getTranslateY());
+
+                pane.getChildren().add(g2);
+            }
         });
-        b7.setDisable(true);
 
         /*
         b8.setOnAction((value) -> {
@@ -207,6 +228,11 @@ public class Main extends Application {
             for (int x = 0; x < myBoard.boardCells.length; x++) {
                 for (int y = 0; y < myBoard.boardCells[0].length; y++) {
                     myBoard.boardCells[x][y].executeNewTurn();
+                }
+                myBoard.deselectAllCells();
+                if(myBoard.dummy1 != null) {
+                    myBoard.dummy1.isSelected.set(false);
+                    myBoard.dummy1 = null;
                 }
             }
         });

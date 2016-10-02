@@ -13,7 +13,7 @@ public class Barracks extends ABuildingField {
     public Barracks(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_BARRACKS;
-        this.texture = generatePattern("barracks.png");
+        this.texture = generatePattern(MyValues.PATH_BUILDING + "barracks.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;
