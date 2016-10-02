@@ -7,8 +7,8 @@ import sample.MyValues;
  */
 public class DepositButton extends AButton {
 
-    public DepositButton(RectangleMenu rectangleMenu) {
-        super(rectangleMenu);
+    public DepositButton(HexagonMenu hexagonMenu) {
+        super(hexagonMenu);
         this.name = MyValues.NAMES_BUTTON_DEPOSIT;
         this.texture =generatePattern("button_deposit.png");
     }

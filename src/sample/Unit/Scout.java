@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
+import sample.RectangleButtons.HexagonMenu;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,24 @@ public class Scout extends AUnit{
         this.name = MyValues.NAMES_SCOUT;
         this.texture = generatePattern(faction, "scout.png");
         this.attackDamage = MyValues.SCOUT_ATTACK_DAMAGE;
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return true;
+    }
+
+    @Override
+    public void setLoaded(boolean b) {
+    }
+
+    @Override
+    public void reload(){
+    }
+
+    @Override
+    public HexagonMenu generateHexagonMenu() {
+        return super.generateStandardHexagonMenu();
     }
 
     @Override

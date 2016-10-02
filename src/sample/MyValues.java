@@ -87,6 +87,8 @@ public class MyValues {
 
     public static double ARCHER_ATTACK_DAMAGE = 50.0;
 
+    public static double ARCHER_RELOAD_COST = ARCHER_MAX_ENERGY * 0.5;
+
     // SWORDSMAN
 
     public static double SWORDSMAN_MAX_HEALTH = 200.0;
@@ -103,6 +105,8 @@ public class MyValues {
     public static double CATAPULT_MAX_ENERGY = 5.0;
 
     public static double CATAPULT_ATTACK_DAMAGE = 70.0;
+
+    public static double CATAPULT_RELOAD_COST = CATAPULT_MAX_ENERGY;
 
 
     // NAME
@@ -160,6 +164,10 @@ public class MyValues {
     public static String NAMES_BUTTON_DEPOSIT = "Deposit";
 
     public static String NAMES_BUTTON_RELOAD = "Reload";
+
+    public static String NAMES_BUTTON_BUILD = "Build";
+
+    public static String NAMES_BUTTON_EMPTY = "";
 
     public static String NAMES_BUTTON_CANCEL = "Cancel";
 

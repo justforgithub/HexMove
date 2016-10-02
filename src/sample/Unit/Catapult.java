@@ -4,6 +4,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
+import sample.RectangleButtons.AttackButton;
+import sample.RectangleButtons.HexagonMenu;
+import sample.RectangleButtons.ReloadButton;
 import sample.Resources.Backpack;
 
 import java.util.ArrayList;
@@ -13,12 +16,44 @@ import java.util.ArrayList;
  */
 public class Catapult extends AUnit {
 
+    private boolean isLoaded;
+
     public Catapult(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_CATAPULT;
         this.texture = generatePattern(faction, "catapult.png");
         this.attackDamage = MyValues.CATAPULT_ATTACK_DAMAGE;
+        this.isLoaded = true;
 
+    }
+
+    @Override
+    public HexagonMenu generateHexagonMenu(){
+        HexagonMenu menu = super.generateStandardHexagonMenu();
+        if(isLoaded){
+            menu.setButton(new AttackButton(menu), 1);
+        } else {
+            menu.setButton(new ReloadButton(menu), 1);
+        }
+        return menu;
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    @Override
+    public void setLoaded(boolean b) {
+        this.isLoaded = b;
+    }
+
+    @Override
+    public void reload(){
+        if(!isLoaded && energy >= MyValues.CATAPULT_RELOAD_COST){
+            energy -= MyValues.CATAPULT_RELOAD_COST;
+            isLoaded = true;
+        }
     }
 
     @Override

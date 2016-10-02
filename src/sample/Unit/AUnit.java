@@ -1,14 +1,11 @@
 package sample.Unit;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import sample.*;
+import sample.RectangleButtons.*;
 import sample.Resources.Backpack;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static java.lang.StrictMath.round;
@@ -70,7 +67,17 @@ public abstract class AUnit extends ACellContent {
 
     public abstract MyValues.ATTACK_TYPE getAttackType();
 
+    public abstract boolean isLoaded();
 
+    public abstract void setLoaded(boolean b);
+
+    public abstract void reload();
+
+    /**
+     * generate a Menubutton based on Unit type and status
+     * @return
+     */
+    public abstract HexagonMenu generateHexagonMenu();
     /**
      * Sets the energy to the unit's max value
      */
@@ -183,6 +190,19 @@ public abstract class AUnit extends ACellContent {
     @Override
     public String toString(){
         return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth() + "\n" + faction.getName();
+    }
+
+    /**
+     * generates a standad Hexagon menu with attack, move, cancel and strategy
+     * @return
+     */
+    HexagonMenu generateStandardHexagonMenu(){
+        HexagonMenu menu = new HexagonMenu();
+        menu.setButton(new MoveButton(menu), 0);
+        menu.setButton(new AttackButton(menu), 1);
+        menu.setButton(new CancelButton(menu), 4);
+        menu.setButton(new StrategyButton(menu), 5);
+        return menu;
     }
 
 

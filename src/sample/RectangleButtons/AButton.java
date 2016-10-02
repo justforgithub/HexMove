@@ -19,10 +19,10 @@ public abstract class AButton {
 
     ImagePattern texture;
     String name;
-    RectangleMenu rectangleMenu;
+    HexagonMenu hexagonMenu;
 
-    public AButton(RectangleMenu rectangleMenu){
-        this.rectangleMenu = rectangleMenu;
+    public AButton(HexagonMenu hexagonMenu){
+        this.hexagonMenu = hexagonMenu;
     }
 
     public abstract void execute();

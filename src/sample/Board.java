@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.text.Text;
+import sample.RectangleButtons.HexagonMenu;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
 
@@ -346,6 +347,12 @@ public class Board {
         return paths;
     }
 
+    /**
+     * returns all cells in a given range
+     * @param startCell
+     * @param maxDistance
+     * @return
+     */
     public ArrayList<HexCell> findAllCellsInRange(HexCell startCell, double maxDistance){
         // initialize startcell pathfinding
         ArrayList<HexCell> todoCells = resetHexCellDistances();
@@ -362,6 +369,8 @@ public class Board {
         }
         return usedCells;
     }
+
+
 
     /**
      * Deselect all Hexcells

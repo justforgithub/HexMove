@@ -8,12 +8,23 @@ import sample.MyValues;
 /**
  * Created by Deviltech on 28.09.2016.
  */
-public class RectangleMenu {
+public class HexagonMenu {
 
-    private AButton[] buttonArray = new AButton[6];
+    private AButton[] buttonArray;
+
+    public HexagonMenu(){
+        buttonArray = new AButton[6];
+        for (int i = 0; i < buttonArray.length; i++){
+            buttonArray[i] = new EmptyButton(this);
+        }
+    }
 
     public void setButton(AButton button, int pos){
         buttonArray[pos%buttonArray.length] = button;
+    }
+
+    public AButton getButton(int i){
+        return buttonArray[i];
     }
 
     public Group drawObject(){
@@ -32,4 +43,6 @@ public class RectangleMenu {
         }
         return group;
     };
+
+
 }

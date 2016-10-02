@@ -7,8 +7,8 @@ import sample.MyValues;
  */
 public class ReloadButton extends AButton {
 
-    public ReloadButton(RectangleMenu rectangleMenu) {
-        super(rectangleMenu);
+    public ReloadButton(HexagonMenu hexagonMenu) {
+        super(hexagonMenu);
         this.name = MyValues.NAMES_BUTTON_RELOAD;
         this.texture =generatePattern("button_reload.png");
     }

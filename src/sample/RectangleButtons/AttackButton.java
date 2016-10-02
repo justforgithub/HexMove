@@ -7,8 +7,8 @@ import sample.MyValues;
  */
 public class AttackButton extends AButton {
 
-    public AttackButton(RectangleMenu rectangleMenu) {
-        super(rectangleMenu);
+    public AttackButton(HexagonMenu hexagonMenu) {
+        super(hexagonMenu);
         this.name = MyValues.NAMES_BUTTON_ATTACK;
         this.texture =generatePattern("button_attack.png");
     }

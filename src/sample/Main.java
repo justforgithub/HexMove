@@ -35,8 +35,8 @@ public class Main extends Application {
         Faction whiteFaction = new Faction(0);
         Faction redFaction = new Faction(1);
         Faction greenFaction = new Faction(2);
-        Faction blueFaction = new Faction(3);
-        Faction bunnyFaction = new Faction(4);
+        Faction blueFaction = new Faction(1);
+        Faction bunnyFaction = new Faction(2);
 
         myBoard.getCell(0, 0).setTerraBuildUnitGetDraw(new Forest(null), new Barracks(blueFaction, null), null);
 
@@ -188,18 +188,11 @@ public class Main extends Application {
         b7.setOnAction((value) -> {
             if(myBoard.dummy1 != null) {
                 Group g = myBoard.dummy1.hexCell.drawGroup;
-                RectangleMenu men = new RectangleMenu();
-                men.setButton(new MoveButton(men), 0);
-                men.setButton(new AttackButton(men), 1);
-                men.setButton(new HarvestButton(men), 2);
-                men.setButton(new ReloadButton(men), 3);
-                men.setButton(new StrategyButton(men), 5);
-                men.setButton(new CancelButton(men), 4);
+                HexagonMenu men = myBoard.dummy1.generateHexagonMenu();
 
                 Group g2 = men.drawObject();
                 g2.setTranslateX(g.getTranslateX());
                 g2.setTranslateY(g.getTranslateY());
-
                 pane.getChildren().add(g2);
             }
         });

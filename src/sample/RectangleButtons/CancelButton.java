@@ -7,8 +7,8 @@ import sample.MyValues;
  */
 public class CancelButton extends AButton {
 
-    public CancelButton(RectangleMenu rectangleMenu) {
-        super(rectangleMenu);
+    public CancelButton(HexagonMenu hexagonMenu) {
+        super(hexagonMenu);
         this.name = MyValues.NAMES_BUTTON_CANCEL;
         this.texture =generatePattern("button_cancel.png");
     }

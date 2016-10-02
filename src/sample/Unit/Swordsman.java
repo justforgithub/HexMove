@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
+import sample.RectangleButtons.HexagonMenu;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,25 @@ public class Swordsman extends AUnit {
         this.texture = generatePattern(faction, "swordsman.png");
         this.attackDamage = MyValues.SWORDSMAN_ATTACK_DAMAGE;
     }
+
+    @Override
+    public boolean isLoaded() {
+        return true;
+    }
+
+    @Override
+    public void setLoaded(boolean b) {
+    }
+
+    @Override
+    public void reload(){
+    }
+
+    @Override
+    public HexagonMenu generateHexagonMenu() {
+        return super.generateStandardHexagonMenu();
+    }
+
 
     @Override
     public ArrayList<HexCell> getAttackCells() {

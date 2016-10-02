@@ -7,8 +7,8 @@ import sample.MyValues;
  */
 public class HarvestButton extends AButton {
 
-    public HarvestButton(RectangleMenu rectangleMenu) {
-        super(rectangleMenu);
+    public HarvestButton(HexagonMenu hexagonMenu) {
+        super(hexagonMenu);
         this.name = MyValues.NAMES_BUTTON_HARVEST;
         this.texture =generatePattern("button_harvest.png");
     }
