@@ -25,9 +25,8 @@ public class ReloadButton extends AButton {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     // reload
                     unit.reload();
-                    unit.isSelected.set(false);
-                    targetCell.board.closeHexMenu();
-                    targetCell.board.deselectAllCells();
+                    unit.useAttackEnergy();
+                    unit.completeDeselect();
                 }
             });
 

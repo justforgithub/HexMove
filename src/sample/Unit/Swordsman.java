@@ -42,6 +42,10 @@ public class Swordsman extends AUnit {
     }
 
     @Override
+    public void useAttackEnergy() {
+    }
+
+    @Override
     public HexagonMenu generateHexagonMenu() {
         return super.generateStandardHexagonMenu();
     }

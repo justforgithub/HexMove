@@ -7,15 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.Action.Attack;
-import sample.Action.FindResources;
 import sample.Building.*;
 import sample.RectangleButtons.*;
-import sample.Resources.Food;
-import sample.Resources.Wood;
 import sample.Terrain.*;
 import sample.Unit.*;
 
@@ -30,7 +24,7 @@ public class Main extends Application {
         VBox mainBox = new VBox();
 
 
-        Board myBoard = new Board(12, 12, new Grassland(null));
+        Board myBoard = new Board(15, 12, new Grassland(null));
 
         Faction whiteFaction = new Faction(0);
         Faction redFaction = new Faction(1);
@@ -110,6 +104,11 @@ public class Main extends Application {
         Worker worker = new Worker(blueFaction, null);
         myBoard.getCell(2, 3).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 15), worker);
 
+        myBoard.fillAreaWithcCellContents(new Tuple(10, 0), new Tuple(14, 6), new Swamp(null), null, null);
+        myBoard.getCell(11, 0).setTerraBuildUnitGetDraw(new Swamp(null).chooseVariant(1), null, null);
+        myBoard.getCell(13, 1).setTerraBuildUnitGetDraw(new Swamp(null).chooseVariant(2), null, null);
+        myBoard.getCell(12, 4).setTerraBuildUnitGetDraw(new Swamp(null).chooseVariant(3), null, null);
+
 
         for (int x = 0; x < myBoard.boardCells.length; x++) {
             for (int y = 0; y < myBoard.boardCells[0].length; y++) {
@@ -118,30 +117,11 @@ public class Main extends Application {
             }
         }
 
-
-        Button b1 = new Button("Reset Energy");
-        Button b2 = new Button("Go to Wood");
-        Button b3 = new Button("Find Wood");
-        Button b4 = new Button("bring back Wood");
-        Button b5 = new Button("find Storage");
-        Button b6 = new Button("Attk Range");
-        Button b7 = new Button("UI button");
-        Button b8 = new Button("Attack!");
+        Button b8 = new Button("Reset energy");
         Button b9 = new Button("Heal attacker");
         Button b10 = new Button("New Turn");
-        Button b11 = new Button("Brightness");
 
-        /*
-        FindResources strategy = new FindResources(hero, new WoodPile(null, 10), false, null);
-        strategy.setFindMost(100);
-        strategy.prepareActions();
-
-        FindResources bringHomeStrategy = new FindResources(hero, new ConstructionSite(blueFaction, new Barracks(null, null), null), true, new Wood(0));
-        bringHomeStrategy.setFindNearest(100);
-        bringHomeStrategy.prepareActions();
-        */
-
-        b1.setOnAction((value) -> {
+        b9.setOnAction((value) -> {
             hero.energy = hero.getMaxEnergy();
             worker.energy = worker.getMaxEnergy();
             if(myBoard.dummy1 != null){
@@ -152,63 +132,6 @@ public class Main extends Application {
             hero.hexCell.drawObject();
         });
 
-        /*
-        b2.setOnAction((value) -> {
-            strategy.execute();
-        });
-
-        b3.setOnAction((value) -> {
-            strategy.prepareActions();
-        });
-
-        b4.setOnAction((value) -> {
-            bringHomeStrategy.execute();
-        });
-
-        b5.setOnAction((value) -> {
-            bringHomeStrategy.prepareActions();
-        });
-        */
-
-        b2.setDisable(true);
-        b3.setDisable(true);
-        b4.setDisable(true);
-        b5.setDisable(true);
-
-        b6.setOnAction((value) -> {
-            if (myBoard.dummy1 != null && myBoard.dummy1 != null) {
-                ArrayList<HexCell> attcells = myBoard.dummy1.getAttackCells();
-                myBoard.deselectAllCells();
-                for (HexCell x : attcells) {
-                    x.setSelected(1);
-                }
-            }
-        });
-
-        b7.setOnAction((value) -> {
-            if(myBoard.dummy1 != null) {
-                Group g = myBoard.dummy1.hexCell.drawGroup;
-                HexagonMenu men = myBoard.dummy1.generateHexagonMenu();
-
-                Group g2 = men.drawObject();
-                g2.setTranslateX(g.getTranslateX());
-                g2.setTranslateY(g.getTranslateY());
-                pane.getChildren().add(g2);
-            }
-        });
-
-        /*
-        b8.setOnAction((value) -> {
-            if (myBoard.dummy1 != null && myBoard.dummy2 != null) {
-                System.out.println("try to attack");
-                new Attack(myBoard.dummy1, myBoard.dummy2.getUnit()).execute();
-                myBoard.dummy1.drawObject();
-                myBoard.dummy2.drawObject();
-            }
-        });
-         */
-
-        b8.setDisable(true);
 
         b9.setOnAction((value) -> {
             if (myBoard.dummy1 != null) {
@@ -230,32 +153,18 @@ public class Main extends Application {
             }
         });
 
-        b11.setOnAction((value) -> {
-            hero.isSelected.set(!hero.isSelected.get());
-            double hor = 30;
-            double dia = 35;
-            ArrayList<HexCell> cells = myBoard.findAllCellsInRange(myBoard.getCell(0, 2), 8);
-            myBoard.deselectAllCells();
-            for(HexCell c: cells){
-                c.setSelected(true);
-            }
-            }
-        );
 
 
         pane.getChildren().add(myBoard.hexMenuGroup);
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11);
-
-        HBox textHBox = new HBox();
-        textHBox.getChildren().addAll(myBoard.attText, myBoard.defText);
+        hbox.getChildren().addAll(b8, b9, b10);
 
 
-        mainBox.getChildren().addAll(hbox, textHBox, pane);
+        mainBox.getChildren().addAll(hbox, pane);
 
-        primaryStage.setScene(new Scene(mainBox, 800, 600));
+        primaryStage.setScene(new Scene(mainBox, 1000, 700));
 
         primaryStage.show();
     }

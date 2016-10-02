@@ -151,6 +151,8 @@ public class MyValues {
 
     public static String NAMES_FOREST = "Forest";
 
+    public static String NAMES_SWAMP = "SWAMP";
+
     public static String NAMES_HQ_BACKGROUND = "HQ Background";
 
     public static String NAMES_BUTTON_MOVE = "Move";

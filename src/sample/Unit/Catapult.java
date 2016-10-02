@@ -63,6 +63,11 @@ public class Catapult extends AUnit {
     }
 
     @Override
+    public void useAttackEnergy() {
+        energy = Math.max(energy - MyValues.ARCHER_RELOAD_COST, 0);
+    }
+
+    @Override
     public ArrayList<HexCell> getAttackCells() {
         return getSiegeAttackCells(1, 3);
     }

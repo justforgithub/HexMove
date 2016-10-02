@@ -18,7 +18,7 @@ public class Attack extends AAction {
 
     @Override
     public void execute() {
-        if(attacker != null && defender!= null && attacker.isLoaded() && !attacker.isHasAttacked()){
+        if(attacker != null && defender!= null && attacker.isLoaded() && !attacker.isHasAttacked() && attacker.isEnoughEnergyForAttack()){
             // attacker does damage
             if(attacker.getAttackCells().contains(defender.hexCell)){
                 double damage = attacker.calculateAttackDamage(defender);
@@ -26,6 +26,7 @@ public class Attack extends AAction {
                 // Attacker has to reload afterwards
                 attacker.setLoaded(false);
                 attacker.setHasAttacked(true);
+                attacker.useAttackEnergy();
                 System.out.println("Attacker hits for HP: " + damage);
                 // defender hits back, if melee and in range
                 if(defender.getAttackType().equals(MyValues.ATTACK_TYPE.MELEE) && defender.getAttackCells().contains(attacker.hexCell)){

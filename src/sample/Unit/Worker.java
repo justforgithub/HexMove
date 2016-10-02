@@ -57,6 +57,10 @@ public class Worker extends AUnit {
     }
 
     @Override
+    public void useAttackEnergy() {
+    }
+
+    @Override
     public void resetEnergy() {
         this.energy = getMaxEnergy();
     }

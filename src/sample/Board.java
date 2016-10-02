@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.Group;
 import javafx.scene.text.Text;
+import sample.Building.AField;
 import sample.RectangleButtons.HexagonMenu;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
@@ -58,6 +59,22 @@ public class Board {
                 //System.out.println(Integer.toString(i) + Integer.toString(j));
                 boardCells[i][j+1] = currentCell;
                 boardCells[i][j].placeHexCell(currentCell, MyValues.HEX_POSITION.BOT);
+            }
+        }
+    }
+
+    /**
+     * Fill part of board with a specific terrain, field, unit
+     * @param fromTuple
+     * @param toTuple
+     * @param terrain
+     * @param field
+     * @param unit
+     */
+    public void fillAreaWithcCellContents(Tuple fromTuple, Tuple toTuple, ATerrain terrain, AField field, AUnit unit){
+        for(int x = fromTuple.getX(); x < toTuple.getX(); x++){
+            for(int y = fromTuple.getY(); y < toTuple.getY(); y++){
+                getCell(x, y).setTerraBuildUnitGetDraw(terrain, field, unit);
             }
         }
     }

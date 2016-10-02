@@ -79,7 +79,16 @@ public abstract class AUnit extends ACellContent {
 
     public abstract boolean reload();
 
+    /**
+     * checks if unit hast enough energy for attack (especially ranged)
+     * @return
+     */
     public abstract boolean isEnoughEnergyForAttack();
+
+    /**
+     * reduce energy after attack (for ranged)
+     */
+    public abstract void useAttackEnergy();
 
     /**
      * generate a Menubutton based on Unit type and status
