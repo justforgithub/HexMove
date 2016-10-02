@@ -18,13 +18,14 @@ public class Attack extends AAction {
 
     @Override
     public void execute() {
-        if(attacker != null && defender!= null && attacker.isLoaded()){
+        if(attacker != null && defender!= null && attacker.isLoaded() && !attacker.isHasAttacked()){
             // attacker does damage
             if(attacker.getAttackCells().contains(defender.hexCell)){
                 double damage = attacker.calculateAttackDamage(defender);
                 defender.addHealth(- damage);
                 // Attacker has to reload afterwards
                 attacker.setLoaded(false);
+                attacker.setHasAttacked(true);
                 System.out.println("Attacker hits for HP: " + damage);
                 // defender hits back, if melee and in range
                 if(defender.getAttackType().equals(MyValues.ATTACK_TYPE.MELEE) && defender.getAttackCells().contains(attacker.hexCell)){
@@ -33,7 +34,7 @@ public class Attack extends AAction {
                     attacker.addHealth(- counterDamage);
                 }
             } else {
-                System.out.println("Wrong attack ranges or not reloaded");
+                System.out.println("Wrong attack ranges or not reloaded or already attacked");
             }
         }
     }

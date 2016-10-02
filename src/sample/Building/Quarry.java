@@ -17,7 +17,7 @@ public class Quarry extends ABuildingField {
     public Quarry(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_QUARRY;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "quarry.png");
+        this.texture = generatePattern("quarry.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

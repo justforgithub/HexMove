@@ -177,11 +177,13 @@ public class MyValues {
 
     public static String PATH_BUILDING = "building/";
 
+    public static String PATH_BUTTON = "button/";
+
     public static String PATH_TERRAIN = "terrain/";
 
     public static String PATH_DETAILS = "details/";
 
-    public static String FACTION_PATH = "faction_";
+    public static String PATH_FACTION = "faction_";
 
 
     //#################################################################

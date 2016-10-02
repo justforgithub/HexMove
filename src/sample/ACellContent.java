@@ -79,25 +79,21 @@ public abstract class ACellContent {
     }
 
     /**
-     * generate general pattern
+     * image pattern generator to be overwritten by different subclasses
      * @param s
      * @return
      */
-    public ImagePattern generatePattern(String s){
+    public abstract ImagePattern generatePattern(String s);
+
+    /**
+     * generate general pattern independent from subclasses
+     * @param s
+     * @return
+     */
+    public ImagePattern generateGeneralPattern(String s){
         return new ImagePattern(new Image(getClass().getClassLoader().getResource(MyValues.PATH_IMAGE + s).toExternalForm()), 0, 0, 1, 1, true);
     }
 
-    /**
-     * generate pattern based on faction specific images
-     * @param f
-     * @param s
-     * @return
-     */
-    public ImagePattern generatePattern(Faction f, String s){
-        String factionNumber = Integer.toString(f.getTeamID());
-        String imagePath = MyValues.PATH_IMAGE + MyValues.FACTION_PATH + factionNumber + "/" + s;
-        return new ImagePattern(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm()), 0, 0, 1, 1, true);
-    }
 
     public void setBrightBackground(){
         ColorAdjust colorAdjust = new ColorAdjust();

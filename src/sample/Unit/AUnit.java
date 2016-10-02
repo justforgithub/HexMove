@@ -2,6 +2,8 @@ package sample.Unit;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import sample.*;
 import sample.RectangleButtons.*;
 import sample.Resources.Backpack;
@@ -21,6 +23,7 @@ public abstract class AUnit extends ACellContent {
     public Faction faction;
     public double attackDamage;
     public SimpleBooleanProperty isSelected;
+    private boolean hasAttacked;
 
     @Override
     public Group drawObject() {
@@ -45,10 +48,13 @@ public abstract class AUnit extends ACellContent {
         this.draw = new Group();
         this.pathCost = MyValues.UNIT_PATHCOST;
         this.hexCell = hexCell;
+        this.hasAttacked = false;
     }
 
     @Override
     public void executeNewTurn(){
+        // new Attack possible for this round
+        hasAttacked = false;
         // new Energy each round
         resetEnergy();
     }
@@ -71,7 +77,9 @@ public abstract class AUnit extends ACellContent {
 
     public abstract void setLoaded(boolean b);
 
-    public abstract void reload();
+    public abstract boolean reload();
+
+    public abstract boolean isEnoughEnergyForAttack();
 
     /**
      * generate a Menubutton based on Unit type and status
@@ -187,6 +195,14 @@ public abstract class AUnit extends ACellContent {
         return health;
     }
 
+    public boolean isHasAttacked(){
+        return hasAttacked;
+    }
+
+    public void setHasAttacked(boolean b){
+        hasAttacked = b;
+    }
+
     @Override
     public String toString(){
         return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth() + "\n" + faction.getName();
@@ -203,6 +219,28 @@ public abstract class AUnit extends ACellContent {
         menu.setButton(new CancelButton(menu), 4);
         menu.setButton(new StrategyButton(menu), 5);
         return menu;
+    }
+
+    /**
+     * generate pattern based on faction specific images
+     * @param s
+     * @return
+     */
+    public ImagePattern generatePattern(String s){
+        return  generateGeneralPattern(faction.getPath() + s);
+    }
+
+    /**
+     * Returns if there is any valid enemy in range
+     * @return
+     */
+    public boolean isEnemyInRange(HexCell cell){
+        if(getAttackCells().contains(cell)){
+            if(cell.getUnit() != null){
+                return !faction.isSameFaction(cell.getUnit().faction);
+            }
+        }
+        return false;
     }
 
 

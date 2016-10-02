@@ -18,7 +18,7 @@ public class Swordsman extends AUnit {
     public Swordsman(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_SWORDSMAN;
-        this.texture = generatePattern(faction, "swordsman.png");
+        this.texture = generatePattern("swordsman.png");
         this.attackDamage = MyValues.SWORDSMAN_ATTACK_DAMAGE;
     }
 
@@ -32,7 +32,13 @@ public class Swordsman extends AUnit {
     }
 
     @Override
-    public void reload(){
+    public boolean  reload(){
+        return false;
+    }
+
+    @Override
+    public boolean isEnoughEnergyForAttack(){
+        return true;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Archer extends AUnit{
     public Archer(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_ARCHER;
-        this.texture = generatePattern(faction, "archer.png");
+        this.texture = generatePattern("archer.png");
         this.attackDamage = MyValues.ARCHER_ATTACK_DAMAGE;
         this.isLoaded = true;
     }
@@ -57,11 +57,17 @@ public class Archer extends AUnit{
     }
 
     @Override
-    public void reload(){
+    public boolean reload(){
         if(!isLoaded && energy >= MyValues.ARCHER_RELOAD_COST){
             energy -= MyValues.ARCHER_RELOAD_COST;
             isLoaded = true;
         }
+        return isLoaded;
+    }
+
+    @Override
+    public boolean isEnoughEnergyForAttack(){
+        return energy - MyValues.ARCHER_RELOAD_COST >= 0;
     }
 
     @Override

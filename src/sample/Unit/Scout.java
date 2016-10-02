@@ -16,7 +16,7 @@ public class Scout extends AUnit{
     public Scout(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_SCOUT;
-        this.texture = generatePattern(faction, "scout.png");
+        this.texture = generatePattern("scout.png");
         this.attackDamage = MyValues.SCOUT_ATTACK_DAMAGE;
     }
 
@@ -30,7 +30,13 @@ public class Scout extends AUnit{
     }
 
     @Override
-    public void reload(){
+    public boolean reload(){
+        return false;
+    }
+
+    @Override
+    public boolean isEnoughEnergyForAttack(){
+        return true;
     }
 
     @Override

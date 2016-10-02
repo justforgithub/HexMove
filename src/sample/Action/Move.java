@@ -33,7 +33,7 @@ public class Move extends AAction {
             double currentPathCost = startCell.getAllCosts(false) + endCell.getAllCosts(true);
             while (cells.size() >= 2 && position >=1) {
                 System.out.println("Path l: " + cells.size() + " pos: " + position + " unit e: " + unit.energy + " +cost " + currentPathCost);
-                if (unit.energy >= currentPathCost) {
+                if (unit.energy >= currentPathCost && !unit.isHasAttacked()) {
                     unit.energy -= currentPathCost;
                     endCell.setUnit(unit);
                     unit.hexCell = endCell;

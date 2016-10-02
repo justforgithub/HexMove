@@ -30,8 +30,10 @@ public abstract class ABuildingField extends AField {
     @Override
     public Group drawObject() {
 
+        String factionNumber = Integer.toString(this.faction.getTeamID());
+        String imagePath = MyValues.PATH_FACTION + factionNumber + "/";
         draw.getChildren().clear();
-        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(generatePattern(faction, "banner1.png"), 0.75, 0.55));
+        draw.getChildren().addAll(generateRectangle(texture, 0, 0.55), generateRectangle(generateGeneralPattern(imagePath + "banner1.png"), 0.75, 0.55));
 
         return draw;
     }

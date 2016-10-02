@@ -17,7 +17,7 @@ public class Lumberjack extends ABuildingField {
     public Lumberjack(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_LUMBERJACK;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "lumberjack.png");
+        this.texture = generatePattern("lumberjack.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

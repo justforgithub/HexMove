@@ -7,6 +7,7 @@ import javafx.scene.shape.Polygon;
 import sample.Action.Attack;
 import sample.Action.Move;
 import sample.Building.AField;
+import sample.RectangleButtons.HexagonMenu;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
 
@@ -63,7 +64,7 @@ public class HexCell {
         if (terrain != null) {
             polygon.setFill(terrain.texture);
         }
-        drawGroup.getChildren().addAll(new Group(polygon));
+        drawGroup.getChildren().addAll(polygon);
 
 
         // field Check
@@ -147,30 +148,32 @@ public class HexCell {
                 if(board.dummy1 == null && this.unit != null){
                     board.dummy1 = this.unit;
                     this.unit.isSelected.set(true);
-                    ArrayList<HexCell> moveCells = board.findAllCellsInRange(this, unit.energy);
                     board.deselectAllCells();
-                    for(HexCell cell: moveCells){
-                        cell.setSelected(1);
+
+                    // No movement or attack, if moved
+                    if(!board.dummy1.isHasAttacked()) {
+                        ArrayList<HexCell> moveCells = board.findAllCellsInRange(this, unit.energy);
+                        ArrayList<HexCell> attackCells = board.findAllEnemiesInRange(board.dummy1);
+                        for (HexCell cell : moveCells) {
+                            cell.setSelected(1);
+                        }
+                        for (HexCell cell : attackCells) {
+                            cell.setSelected(2);
+                        }
                     }
                 } else {
-                    if(board.dummy1 != null && this.unit == null){
-                        new Move(board.dummy1, board.calculatePath(board.dummy1.hexCell, this)).execute();
-                        board.deselectAllCells();
-                        board.dummy1.isSelected.set(false);
-                        board.dummy1 = null;
-                    } else {
-                        if(board.dummy1 != null && this.unit != null && !this.unit.equals(board.dummy1)){
-                            new Attack(board.dummy1, this.unit).execute();
-                            board.dummy1.hexCell.drawObject();
-                            this.drawObject();
-                            ArrayList<HexCell> attkCells = board.dummy1.getAttackCells();
-                            if(attkCells.contains(this)){
-                                board.deselectAllCells();
-                                this.setSelected(2);
-                                board.dummy1.hexCell.setSelected(2);
-                            }
-                        }
-                }
+                    // Catch nullpointer
+                    if (board.dummy1 != null) {
+                        HexagonMenu menu = board.dummy1.generateHexagonMenu();
+                        menu.prepareEventListeners(board.dummy1, this);
+
+                        Group menuGroup = menu.drawObject();
+
+                        menuGroup.setTranslateX(drawGroup.getTranslateX());
+                        menuGroup.setTranslateY(drawGroup.getTranslateY());
+                        board.hexMenuGroup.getChildren().clear();
+                        board.hexMenuGroup.getChildren().add(menuGroup);
+                    }
 
                 }
             } else { // RIGHT CLICK
@@ -179,6 +182,7 @@ public class HexCell {
                         board.dummy1.isSelected.set(false);
                         board.dummy1 = null;
                         board.deselectAllCells();
+                        board.hexMenuGroup.getChildren().clear();
                     }
                         if (this.unit != null) {
                             ArrayList<HexCell> attkCells = this.unit.getAttackCells();
@@ -186,8 +190,13 @@ public class HexCell {
                             for (HexCell cell : attkCells) {
                                 cell.setSelected(3);
                             }
+                            ArrayList<HexCell> attackCells = board.findAllEnemiesInRange(this.unit);
+                            for(HexCell cell: attackCells){
+                                cell.setSelected(2);
+                            }
                     } else {
                             board.deselectAllCells();
+                            board.hexMenuGroup.getChildren().clear();
                         }
                 }
 

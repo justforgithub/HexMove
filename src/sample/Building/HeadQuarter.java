@@ -14,7 +14,8 @@ public class HeadQuarter extends ABuildingField{
     public HeadQuarter(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_HEAD_QUARTER;
-        this.texture = generatePattern(faction, "banner2.png");
+        // Special case: Different faction color for building
+        this.texture = generateGeneralPattern(faction.getPath() + "banner2.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

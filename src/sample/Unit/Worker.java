@@ -23,7 +23,7 @@ public class Worker extends AUnit {
     public Worker(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_WORKER;
-        this.texture = generatePattern(faction, "worker.png");
+        this.texture = generatePattern("worker.png");
         this.backpack = new Backpack(MyValues.WORKER_BACKPACK_CAPACITY);
         this.attackDamage = MyValues.WORKER_ATTACK_DAMAGE;
 
@@ -47,7 +47,13 @@ public class Worker extends AUnit {
     }
 
     @Override
-    public void reload(){
+    public boolean reload(){
+        return false;
+    }
+
+    @Override
+    public boolean isEnoughEnergyForAttack(){
+        return true;
     }
 
     @Override

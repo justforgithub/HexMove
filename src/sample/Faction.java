@@ -21,4 +21,18 @@ public class Faction {
     public String getName(){
         return name;
     }
+
+    /**
+     * get relative path based on teamID
+     * @return
+     */
+    public String getPath(){
+        String factionNumber = Integer.toString(teamID);
+        String imagePath = MyValues.PATH_FACTION + factionNumber + "/";
+        return imagePath;
+    }
+
+    public boolean isSameFaction(Faction f2){
+        return teamID == f2.getTeamID();
+    }
 }

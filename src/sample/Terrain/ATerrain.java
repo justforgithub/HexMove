@@ -2,6 +2,7 @@ package sample.Terrain;
 
 
 import javafx.scene.Group;
+import javafx.scene.paint.ImagePattern;
 import sample.ACellContent;
 import sample.HexCell;
 import sample.MyValues;
@@ -48,5 +49,9 @@ public abstract class ATerrain extends ACellContent {
      * @return
      */
     public abstract ATerrain generateNewCopy(HexCell hexCell);
+
+    public ImagePattern generatePattern(String s){
+        return generateGeneralPattern(MyValues.PATH_TERRAIN + s);
+    }
 
 }

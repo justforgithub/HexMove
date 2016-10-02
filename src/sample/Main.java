@@ -243,6 +243,8 @@ public class Main extends Application {
         );
 
 
+        pane.getChildren().add(myBoard.hexMenuGroup);
+
         HBox hbox = new HBox();
 
         hbox.getChildren().addAll(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11);

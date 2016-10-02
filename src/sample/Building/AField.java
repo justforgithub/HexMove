@@ -1,6 +1,7 @@
 package sample.Building;
 
 import javafx.scene.Group;
+import javafx.scene.paint.ImagePattern;
 import sample.ACellContent;
 import sample.HexCell;
 import sample.MyValues;
@@ -37,5 +38,9 @@ public abstract class AField extends ACellContent {
     @Override
     public String toString(){
         return this.name;
+    }
+
+    public ImagePattern generatePattern(String s){
+        return generateGeneralPattern(MyValues.PATH_BUILDING + s);
     }
 }

@@ -14,7 +14,7 @@ public class FoodBerries extends AResourceField{
 
     public FoodBerries(HexCell hexCell, double capacity){
         this.name = MyValues.NAMES_BERRIES;
-        this.texture=generatePattern(MyValues.PATH_BUILDING + "berries.png");
+        this.texture=generatePattern("berries.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

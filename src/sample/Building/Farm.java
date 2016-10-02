@@ -17,7 +17,7 @@ public class Farm extends ABuildingField{
     public Farm(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_FARM;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "farm.png");
+        this.texture = generatePattern("farm.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

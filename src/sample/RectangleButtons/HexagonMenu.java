@@ -2,8 +2,10 @@ package sample.RectangleButtons;
 
 import javafx.scene.Group;
 import sample.DoubleTuple;
+import sample.HexCell;
 import sample.MyMath;
 import sample.MyValues;
+import sample.Unit.AUnit;
 
 /**
  * Created by Deviltech on 28.09.2016.
@@ -43,6 +45,13 @@ public class HexagonMenu {
         }
         return group;
     };
+
+    public void prepareEventListeners(AUnit unit, HexCell targetCell){
+        for(AButton currentButton: buttonArray){
+            currentButton.prepareEventListener(unit, targetCell);
+        }
+
+    }
 
 
 }

@@ -21,7 +21,7 @@ public class Catapult extends AUnit {
     public Catapult(sample.Faction faction, HexCell hexCell) {
         super(faction, hexCell);
         this.name = MyValues.NAMES_CATAPULT;
-        this.texture = generatePattern(faction, "catapult.png");
+        this.texture = generatePattern("catapult.png");
         this.attackDamage = MyValues.CATAPULT_ATTACK_DAMAGE;
         this.isLoaded = true;
 
@@ -49,11 +49,17 @@ public class Catapult extends AUnit {
     }
 
     @Override
-    public void reload(){
+    public boolean reload(){
         if(!isLoaded && energy >= MyValues.CATAPULT_RELOAD_COST){
             energy -= MyValues.CATAPULT_RELOAD_COST;
             isLoaded = true;
         }
+        return  isLoaded;
+    }
+
+    @Override
+    public boolean isEnoughEnergyForAttack(){
+            return energy-MyValues.CATAPULT_RELOAD_COST >= 0;
     }
 
     @Override

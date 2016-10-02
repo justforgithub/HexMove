@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.Group;
 import javafx.scene.text.Text;
 import sample.RectangleButtons.HexagonMenu;
 import sample.Terrain.ATerrain;
@@ -19,6 +20,7 @@ public class Board {
     // TEST STUFF TODO remove
     public AUnit dummy1;
     public AUnit dummy2;
+    public Group hexMenuGroup;
     public Text attText = new Text("Attacker: - ; ");
     public Text defText = new Text("Defender: -");
 
@@ -27,6 +29,7 @@ public class Board {
         this.sizeY = sizeY;
         boardCells = new HexCell[sizeX][sizeY];
         fillBoardWithCells(terrain);
+        hexMenuGroup = new Group();
     }
 
     /**
@@ -370,6 +373,22 @@ public class Board {
         return usedCells;
     }
 
+    /**
+     * Returns a List of enemy cells in  attack range
+     * @param unit
+     * @return
+     */
+    public ArrayList<HexCell> findAllEnemiesInRange(AUnit unit){
+        ArrayList<HexCell> attackCells = unit.getAttackCells();
+        ArrayList<HexCell> enemyCells = new ArrayList<>();
+        for(HexCell currentCell: attackCells){
+            if(currentCell.getUnit()!= null && !(unit.faction.getTeamID() == currentCell.getUnit().faction.getTeamID())){
+                enemyCells.add(currentCell);
+            }
+        }
+        return enemyCells;
+    }
+
 
 
     /**
@@ -381,6 +400,13 @@ public class Board {
                 boardCells[i][j].setSelected(false);
             }
         }
+    }
+
+    /**
+     *
+     */
+    public void closeHexMenu(){
+        hexMenuGroup.getChildren().clear();
     }
 
 

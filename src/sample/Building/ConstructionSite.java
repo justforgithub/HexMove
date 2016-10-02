@@ -18,7 +18,7 @@ public class ConstructionSite extends ABuildingField{
     public ConstructionSite(sample.Faction faction, ABuildingField buildingField, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_CONSTRUCTION_SITE;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "construction_site.png");
+        this.texture = generatePattern("construction_site.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;

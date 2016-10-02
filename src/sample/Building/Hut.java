@@ -20,7 +20,7 @@ public class Hut extends ABuildingField {
     public Hut(sample.Faction faction, HexCell hexCell) {
         this.faction = faction;
         this.name = MyValues.NAMES_HUT;
-        this.texture = generatePattern(MyValues.PATH_BUILDING + "hut.png");
+        this.texture = generatePattern("hut.png");
         this.draw = new Group();
         this.hexCell = hexCell;
         this.pathCost = 0.0;
