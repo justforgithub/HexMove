@@ -243,6 +243,16 @@ public abstract class AUnit extends ACellContent {
         return false;
     }
 
+    /**
+     * Completely deselects unit, field and hexmenu
+     */
+    public void completeDeselect(){
+        isSelected.set(false);
+        hexCell.board.dummy1 = null;
+        hexCell.board.closeHexMenu();
+        hexCell.board.deselectAllCells();
+    }
+
 
 }
 

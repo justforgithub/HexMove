@@ -25,7 +25,7 @@ public class AttackButton extends AButton {
         // Check, if target legit and not in own faction
         if (unit != null && targetCell.getUnit() != null && !targetCell.getUnit().equals(unit)) {
             // Check, if attack possible
-            if (unit.isEnoughEnergyForAttack() && !unit.isHasAttacked() && unit.isEnemyInRange(targetCell)) {
+            if (unit.isLoaded() && unit.isEnoughEnergyForAttack() && !unit.isHasAttacked() && unit.isEnemyInRange(targetCell)) {
                 this.isEnabled.set(true);
                 //Add listener
                 drawGroup.setOnMouseClicked((event) -> {
@@ -39,11 +39,13 @@ public class AttackButton extends AButton {
                         targetCell.drawObject();
                         this.drawObject();
 
+                        //TODO: perform normal attack instead
                         ArrayList<HexCell> attkCells = unit.getAttackCells();
                         if (attkCells.contains(targetCell)) {
                             targetCell.setSelected(2);
                             unit.hexCell.setSelected(2);
                         }
+                        targetCell.board.dummy1 = null;
                     }
                 });
             }

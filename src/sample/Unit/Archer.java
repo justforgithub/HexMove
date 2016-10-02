@@ -28,11 +28,8 @@ public class Archer extends AUnit{
     @Override
     public HexagonMenu generateHexagonMenu(){
         HexagonMenu menu = super.generateStandardHexagonMenu();
-        if(isLoaded){
-            menu.setButton(new AttackButton(menu), 1);
-        } else {
-            menu.setButton(new ReloadButton(menu), 1);
-        }
+        menu.setButton(new AttackButton(menu), 1);
+        menu.setButton(new ReloadButton(menu), 2);
         return menu;
     }
 
@@ -69,6 +66,7 @@ public class Archer extends AUnit{
     public boolean isEnoughEnergyForAttack(){
         return energy - MyValues.ARCHER_RELOAD_COST >= 0;
     }
+
 
     @Override
     public void resetEnergy() {

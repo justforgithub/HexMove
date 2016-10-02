@@ -21,9 +21,7 @@ public class CancelButton extends AButton {
     public void prepareEventListener(AUnit unit, HexCell targetCell) {
         drawGroup.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                unit.isSelected.set(false);
-                targetCell.board.closeHexMenu();
-                targetCell.board.deselectAllCells();
+                unit.completeDeselect();
             }
         });
     }

@@ -19,15 +19,19 @@ public class ReloadButton extends AButton {
 
     @Override
     public void prepareEventListener(AUnit unit, HexCell targetCell) {
-        drawGroup.setOnMouseClicked((event)-> {
-            if (event.getButton().equals(MouseButton.PRIMARY)){
-                // reload
-                if(unit.reload()){
-                    // if reloaded, close menu
+        if(!unit.isLoaded() &&  unit.isEnoughEnergyForAttack()) {
+            isEnabled.set(true);
+            drawGroup.setOnMouseClicked((event) -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    // reload
+                    unit.reload();
+                    unit.isSelected.set(false);
                     targetCell.board.closeHexMenu();
+                    targetCell.board.deselectAllCells();
                 }
-            }});
+            });
 
+        }
 
     }
 
