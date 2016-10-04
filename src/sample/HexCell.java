@@ -145,7 +145,7 @@ public class HexCell {
     private void prepareEventListeners() {
         drawGroup.setOnMouseClicked(event -> {
             // LEFT CLICK
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getButton().equals(MouseButton.PRIMARY ) && false) {
                 if(board.dummy1 == null && this.unit != null){
                     board.dummy1 = this.unit;
                     this.unit.isSelected.set(true);
@@ -201,7 +201,7 @@ public class HexCell {
                         }
                 } else {
                     // TODO just for fun
-                    if (event.getButton().equals(MouseButton.MIDDLE)){
+                    if (event.getButton().equals(MouseButton.MIDDLE) || true){
                         if(event.isShiftDown()){
                             this.unit = null;
                             drawObject();

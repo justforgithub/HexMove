@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +19,11 @@ import javafx.stage.Stage;
 import sample.Building.*;
 import sample.RectangleButtons.*;
 import sample.Terrain.*;
+import sample.UI.Submenu;
 import sample.Unit.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -165,83 +168,66 @@ public class Main extends Application {
         });
 
         // Terrain
-        ListView<String> terrainList = new ListView<>();
-        ObservableList<String> items = FXCollections.observableArrayList();
-        for (ATerrain t: MyValues.LIST_TERRAINS){
-            items.add(t.getName());
-        }
-        items.add("<empty>");
-        terrainList.setPrefHeight(50);
-        terrainList.setItems(items);
-        terrainList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) ->{
-                    int i = terrainList.getSelectionModel().getSelectedIndex();
-                    if (i >= MyValues.LIST_TERRAINS.length){
-                        myBoard.dummyTerrain = null;
-                    } else {
-                        myBoard.dummyTerrain = MyValues.LIST_TERRAINS[terrainList.getSelectionModel().getSelectedIndex()];
-                    }
-                }));
-        terrainList.getSelectionModel().select(MyValues.LIST_TERRAINS.length);
+        SimpleIntegerProperty terrainProperty = new SimpleIntegerProperty(-1);
+        Submenu terrainMenu = new Submenu(MyValues.LIST_TERRAINS, terrainProperty).chooseCloseOnClick(false).choosePrefSize(50.0, null);
+        terrainMenu.addItem("<empty>");
+        terrainMenu.chooseSelection(terrainMenu.getSize());
+
+        terrainProperty.addListener((value)->{
+            if (terrainProperty.getValue() >= MyValues.LIST_TERRAINS.length){
+                myBoard.dummyTerrain = null;
+            } else {
+                myBoard.dummyTerrain = MyValues.LIST_TERRAINS[terrainProperty.getValue()];
+            }
+        });
+        Group terrainGroup = terrainMenu.drawObject();
+
 
         // Field
-        ListView<String> fieldList = new ListView<>();
-        items = FXCollections.observableArrayList();
-        for (AField f: MyValues.LIST_FIELDS){
-            items.add(f.getName());
-        }
-        items.add("<empty>");
-        fieldList.setPrefHeight(50);
-        fieldList.setItems(items);
-        fieldList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) ->{
-                    int i = fieldList.getSelectionModel().getSelectedIndex();
-                    if (i >= MyValues.LIST_FIELDS.length){
-                        myBoard.dummyField = null;
-                    } else {
-                        myBoard.dummyField = MyValues.LIST_FIELDS[fieldList.getSelectionModel().getSelectedIndex()];
-                        myBoard.dummyField.hexCell = null;
-                    }
-                }));
-        fieldList.getSelectionModel().select(MyValues.LIST_FIELDS.length);
+        SimpleIntegerProperty fieldProperty = new SimpleIntegerProperty(-1);
+        Submenu fieldMenu = new Submenu(MyValues.LIST_FIELDS, fieldProperty).chooseCloseOnClick(false).choosePrefSize(50.0, null);
+        fieldMenu.addItem("<empty>");
+        fieldMenu.chooseSelection(fieldMenu.getSize());
+
+        fieldProperty.addListener((value)->{
+            if (fieldProperty.getValue() >= MyValues.LIST_FIELDS.length){
+                myBoard.dummyField = null;
+            } else {
+                myBoard.dummyField = MyValues.LIST_FIELDS[fieldProperty.getValue()];
+                myBoard.dummyField.hexCell = null;
+            }
+        });
+        Group fieldGroup = fieldMenu.drawObject();
+
 
         // Unit
-        ListView<String> unitList = new ListView<>();
-        items = FXCollections.observableArrayList();
-        for (AUnit u: MyValues.LIST_UNITS){
-            items.add(u.getName());
-        }
-        items.add("<empty>");
-        unitList.setPrefHeight(50);
-        unitList.setItems(items);
-        unitList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) ->{
-                    int i = unitList.getSelectionModel().getSelectedIndex();
-                    if (i >= MyValues.LIST_UNITS.length){
-                        myBoard.dummyUnit = null;
-                    } else {
-                        myBoard.dummyUnit = MyValues.LIST_UNITS[unitList.getSelectionModel().getSelectedIndex()];
-                        myBoard.dummyUnit.hexCell = null;
-                    }
-                }));
-        unitList.getSelectionModel().select(MyValues.LIST_UNITS.length);
+        SimpleIntegerProperty unitProperty = new SimpleIntegerProperty(-1);
+        Submenu unitMenu = new Submenu(MyValues.LIST_UNITS, unitProperty).chooseCloseOnClick(false).choosePrefSize(50.0, null);
+        unitMenu.addItem("<empty>");
+        unitMenu.chooseSelection(unitMenu.getSize());
 
-        // Faction
-        ListView<String> factionList = new ListView<>();
-        items = FXCollections.observableArrayList();
-        for (int i = 0; i <MyValues.FACTION_NAMES.length; i++){
-            items.add(Integer.toString(i));
-        }
-        factionList.setPrefHeight(50);
-        factionList.setPrefWidth(50);
-        factionList.setItems(items);
-        factionList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) ->{
-                    int i = factionList.getSelectionModel().getSelectedIndex();
-                    myBoard.dummyFaction = new Faction(i);
-                }));
-        factionList.getSelectionModel().select(0);
+        unitProperty.addListener((value)->{
+            if (unitProperty.getValue() >= MyValues.LIST_UNITS.length){
+                myBoard.dummyUnit = null;
+            } else {
+                myBoard.dummyUnit = MyValues.LIST_UNITS[unitProperty.getValue()];
+                myBoard.dummyUnit.hexCell = null;
+            }
+        });
+        Group unitGroup = unitMenu.drawObject();
 
+
+        //Faction
+        SimpleIntegerProperty factionProperty = new SimpleIntegerProperty(0);
+        Submenu factionMenu = new Submenu(MyValues.FACTION_NAMES, factionProperty).chooseCloseOnClick(false).choosePrefSize(50.0, null);
+        myBoard.dummyFaction = new Faction(0);
+
+        factionProperty.addListener((value)->{
+            System.out.println(factionProperty.getValue());
+            myBoard.dummyFaction = new Faction(factionProperty.getValue());
+        });
+        Group factionGroup = factionMenu.drawObject();
+        factionMenu.chooseSelection(0);
 
 
 
@@ -249,7 +235,7 @@ public class Main extends Application {
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b8, b9, b10, terrainList, fieldList, unitList, factionList);
+        hbox.getChildren().addAll(b8, b9, b10, terrainGroup, fieldGroup, unitGroup, factionGroup);
 
 
         // Test TODO

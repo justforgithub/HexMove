@@ -7,6 +7,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ListView;
 import sample.ACellContent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Deviltech on 04.10.2016.
@@ -14,29 +17,39 @@ import sample.ACellContent;
 public class Submenu {
 
     public boolean isCloseOnClick;
-    private String[] names;
+    private List<String> names;
     private SimpleIntegerProperty integerProperty;
     private Group draw;
     private ListView<String> list;
 
     public Submenu(ACellContent[] cellContents, SimpleIntegerProperty integerProperty){
-        this.names = new String[cellContents.length];
-        for(int i = 0; i <this.names.length; i++){
-            this.names[i] = cellContents[i].name;
+        this.names = new ArrayList<>();
+        for(int i = 0; i <cellContents.length; i++){
+            this.names.add(cellContents[i].name);
         }
         this.isCloseOnClick = true;
         this.integerProperty = integerProperty;
         this.draw = new Group();
+        this.list = new ListView<String>();
         drawObject();
 
     }
 
     public Submenu(String[] names, SimpleIntegerProperty integerProperty){
         this.isCloseOnClick = true;
-        this.names = names;
+        this.names = new ArrayList<>();
+        for (String s: names){
+            this.names.add(s);
+        }
+        this.isCloseOnClick = true;
         this.integerProperty = integerProperty;
         this.draw = new Group();
+        this.list = new ListView<String>();
         drawObject();
+    }
+
+    public void addItem(String s){
+        names.add(s);
     }
 
     public Submenu chooseCloseOnClick(boolean b){
@@ -55,6 +68,28 @@ public class Submenu {
         return draw;
     }
 
+    /**
+     * Set list size, catch nullpointer
+     * @param height
+     * @param width
+     */
+    public Submenu choosePrefSize(Double height, Double width){
+        if(height != null){
+            list.setPrefHeight(height);
+        }
+        if(width != null){
+            list.setPrefWidth(width);
+        }
+        return this;
+    }
+
+    public Submenu chooseSelection(int i){
+        if(list != null){
+            list.getSelectionModel().select(i);
+        }
+        return this;
+    }
+
     public SimpleIntegerProperty getIntegerProperty(){
         return integerProperty;
     }
@@ -64,11 +99,22 @@ public class Submenu {
         this.draw.getChildren().clear();
     }
 
+    /**
+     * get size, catch nullpointer
+     * @return
+     */
+    public int getSize(){
+        if(list != null){
+            return list.getItems().size();
+        } else {
+            return 0;
+        }
+    }
+
 
     public Group drawObject() {
         // Unit
         draw.getChildren().clear();
-        list = new ListView<String>();
         ObservableList<String> items = FXCollections.observableArrayList();
         for (String s : names) {
             items.add(s);
