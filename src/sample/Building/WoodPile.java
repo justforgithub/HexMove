@@ -26,5 +26,10 @@ public class WoodPile extends AResourceField{
         return this.name + ": " + resource.getCurrentCapacity();
     }
 
+    @Override
+    public AField generateCopy(){
+        return new WoodPile(this.hexCell, this.resource.getCurrentCapacity());
+    }
+
 
 }

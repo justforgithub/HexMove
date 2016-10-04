@@ -93,4 +93,9 @@ public class Archer extends AUnit{
         return MyValues.ARCHER_MAX_HEALTH;
     }
 
+    @Override
+    public AUnit generateCopy(){
+        return new Archer(this.faction, this.hexCell);
+    }
+
 }

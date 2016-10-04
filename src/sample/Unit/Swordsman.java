@@ -81,4 +81,9 @@ public class Swordsman extends AUnit {
         return MyValues.SWORDSMAN_MAX_HEALTH;
     }
 
+    @Override
+    public AUnit generateCopy(){
+        return new Swordsman(this.faction, this.hexCell);
+    }
+
     }

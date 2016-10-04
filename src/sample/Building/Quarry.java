@@ -56,4 +56,9 @@ public class Quarry extends ABuildingField {
         constructionBackpack.adjustCapacity();
         return constructionBackpack;
     }
+
+    @Override
+    public AField generateCopy(){
+        return new Quarry(this.faction, this.hexCell);
+    }
 }

@@ -17,6 +17,12 @@ public abstract class ABuildingField extends AField {
         return faction;
     }
 
+    @Override
+    public AField chooseFaction(Faction f){
+        this.faction = f;
+        return this;
+    }
+
     // In general, Buildings dont hold resources
     public double getResourceQuantityByType(AResource toCompare){
         return 0.0;

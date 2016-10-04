@@ -11,6 +11,8 @@ public abstract class AAction {
 
     public abstract void execute();
 
+    public abstract boolean isActionPossible();
+
     public boolean isObsolete(){
         return actionStatus.equals(MyValues.ACTION_STATUS.OBSOLETE);
     }

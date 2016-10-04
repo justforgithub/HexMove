@@ -102,5 +102,10 @@ public class Catapult extends AUnit {
         return null;
     }
 
+    @Override
+    public AUnit generateCopy(){
+        return new Catapult(this.faction, this.hexCell);
+    }
+
 
 }

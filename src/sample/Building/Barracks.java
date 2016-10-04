@@ -4,6 +4,8 @@ import javafx.scene.Group;
 import sample.HexCell;
 import sample.MyValues;
 import sample.Resources.Backpack;
+import sample.Unit.AUnit;
+import sample.Unit.Archer;
 
 /**
  * Created by Deviltech on 18.09.2016.
@@ -28,5 +30,10 @@ public class Barracks extends ABuildingField {
         constructionBackpack.getOre().setMaxCapacity(200);
         constructionBackpack.adjustCapacity();
         return constructionBackpack;
+    }
+
+    @Override
+    public AField generateCopy(){
+        return new Barracks(this.faction, this.hexCell);
     }
 }

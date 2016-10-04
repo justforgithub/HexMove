@@ -1,6 +1,7 @@
 package sample.Building;
 
 import javafx.scene.Group;
+import sample.Faction;
 import sample.MyValues;
 import sample.Resources.AResource;
 
@@ -18,6 +19,11 @@ public abstract class AResourceField extends AField {
         draw.getChildren().addAll(generateRectangle(texture, 0, 0.55));
 
         return draw;
+    }
+
+    @Override
+    public AField chooseFaction(Faction f){
+        return this;
     }
 
     @Override

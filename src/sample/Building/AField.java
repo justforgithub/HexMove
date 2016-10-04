@@ -3,6 +3,7 @@ package sample.Building;
 import javafx.scene.Group;
 import javafx.scene.paint.ImagePattern;
 import sample.ACellContent;
+import sample.Faction;
 import sample.HexCell;
 import sample.MyValues;
 import sample.Resources.AResource;
@@ -22,6 +23,10 @@ public abstract class AField extends ACellContent {
      */
     public abstract double getResourceQuantityByType(AResource toCompare);
 
+    public abstract AField generateCopy();
+
+
+    public abstract AField chooseFaction(Faction f);
 
 
     @Override

@@ -5,9 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.text.Text;
 import sample.HexCell;
 import sample.MyValues;
-import sample.RectangleButtons.DepositButton;
-import sample.RectangleButtons.HarvestButton;
-import sample.RectangleButtons.HexagonMenu;
+import sample.RectangleButtons.*;
 import sample.Resources.Backpack;
 
 import java.util.ArrayList;
@@ -41,8 +39,8 @@ public class Worker extends AUnit {
     @Override
     public HexagonMenu generateHexagonMenu() {
         HexagonMenu menu = super.generateStandardHexagonMenu();
-        menu.setButton(new HarvestButton(menu), 2);
-        menu.setButton(new DepositButton(menu), 3);
+        menu.setButton(new HarvestDepositButton(menu), 2);
+        menu.setButton(new BuildButton(menu), 3);
         return menu;
     }
 
@@ -98,6 +96,11 @@ public class Worker extends AUnit {
     @Override
     public String toString(){
         return this.name + ", Energy: " + this.energy +"/" + getMaxEnergy() + "\n" + "Health: " + health + "/" + getMaxHealth() + "\n" + getBackpack().toString();
+    }
+
+    @Override
+    public AUnit generateCopy(){
+        return new Worker(this.faction, this.hexCell);
     }
 
 }

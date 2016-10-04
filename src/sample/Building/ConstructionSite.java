@@ -59,6 +59,11 @@ public class ConstructionSite extends ABuildingField{
         }
     }
 
+    @Override
+    public AField generateCopy(){
+        return new ConstructionSite(this.faction, this.buildingField, this.hexCell);
+    }
+
 
 
 }

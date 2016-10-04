@@ -23,20 +23,16 @@ public class MoveButton extends AButton {
     @Override
     public void prepareEventListener(AUnit unit, HexCell targetCell) {
 
-        if (unit != null && targetCell.getUnit() == null) {
-            // No movement, when already attacked
-            if(!unit.isHasAttacked()) {
-                Path movePath = targetCell.board.calculatePath(unit.hexCell, targetCell);
-                // Check if unit has enough energy for path
-                if (movePath.pathCost <= unit.energy) {
-                    isEnabled.set(true);
-                    drawGroup.setOnMouseClicked((event) -> {
-                        if (event.getButton().equals(MouseButton.PRIMARY)) {
-                            new Move(unit, targetCell.board.calculatePath(unit.hexCell, targetCell)).execute();
-                            unit.completeDeselect();
-                        }
-                    });
-                }
+        if (unit != null) {
+            Move moveAction = new Move(unit, targetCell.board.calculatePath(unit.hexCell, targetCell));
+            if (moveAction.isActionPossible()) {
+                isEnabled.set(true);
+                drawGroup.setOnMouseClicked((event) -> {
+                    if (event.getButton().equals(MouseButton.PRIMARY)) {
+                        moveAction.execute();
+                        unit.completeDeselect();
+                    }
+                });
             }
         }
     }

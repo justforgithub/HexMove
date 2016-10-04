@@ -7,6 +7,7 @@ import javafx.scene.shape.Polygon;
 import sample.Action.Attack;
 import sample.Action.Move;
 import sample.Building.AField;
+import sample.Building.Barracks;
 import sample.RectangleButtons.HexagonMenu;
 import sample.Terrain.ATerrain;
 import sample.Unit.AUnit;
@@ -198,8 +199,24 @@ public class HexCell {
                             board.deselectAllCells();
                             board.hexMenuGroup.getChildren().clear();
                         }
+                } else {
+                    // TODO just for fun
+                    if (event.getButton().equals(MouseButton.MIDDLE)){
+                        if(event.isShiftDown()){
+                            this.unit = null;
+                            drawObject();
+                        }else {
+                            if(event.isControlDown()){
+                                this.field = null;
+                                drawObject();
+                            } else {
+                                this.setTerraBuildUnitGetDraw(board.dummyTerrain,
+                                        board.dummyField != null ? board.dummyField.chooseFaction(board.dummyFaction).generateCopy() : null,
+                                        board.dummyUnit != null ? board.dummyUnit.chooseFaction(board.dummyFaction).generateCopy() : null);
+                            }
+                        }
+                    }
                 }
-
             }
 
         });

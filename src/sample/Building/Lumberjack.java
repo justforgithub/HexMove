@@ -56,4 +56,9 @@ public class Lumberjack extends ABuildingField {
         constructionBackpack.adjustCapacity();
         return constructionBackpack;
     }
+
+    @Override
+    public AField generateCopy(){
+        return new Lumberjack(this.faction, this.hexCell);
+    }
 }

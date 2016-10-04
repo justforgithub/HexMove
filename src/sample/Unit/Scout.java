@@ -78,5 +78,10 @@ public class Scout extends AUnit{
         return MyValues.SCOUT_MAX_HEALTH;
     }
 
+    @Override
+    public AUnit generateCopy(){
+        return new Scout(this.faction, this.hexCell);
+    }
+
 
 }

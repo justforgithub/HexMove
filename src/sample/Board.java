@@ -21,16 +21,23 @@ public class Board {
     // TEST STUFF TODO remove
     public AUnit dummy1;
     public AUnit dummy2;
+    public ATerrain dummyTerrain;
+    public AField dummyField;
+    public AUnit dummyUnit;
+    public Faction dummyFaction;
     public Group hexMenuGroup;
+    public Group subMenuGroup;
     public Text attText = new Text("Attacker: - ; ");
     public Text defText = new Text("Defender: -");
 
     Board(int sizeX, int sizeY, ATerrain terrain){
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        boardCells = new HexCell[sizeX][sizeY];
+        this.boardCells = new HexCell[sizeX][sizeY];
         fillBoardWithCells(terrain);
-        hexMenuGroup = new Group();
+        this.hexMenuGroup = new Group();
+        this.subMenuGroup = new Group();
+
     }
 
     /**

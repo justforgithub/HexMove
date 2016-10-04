@@ -1,9 +1,14 @@
 package sample;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import sample.Building.*;
+import sample.Terrain.*;
+import sample.Unit.*;
 
 import java.util.ArrayList;
 
@@ -151,7 +156,7 @@ public class MyValues {
 
     public static String NAMES_FOREST = "Forest";
 
-    public static String NAMES_SWAMP = "SWAMP";
+    public static String NAMES_SWAMP = "Swamp";
 
     public static String NAMES_HQ_BACKGROUND = "HQ Background";
 
@@ -168,6 +173,8 @@ public class MyValues {
     public static String NAMES_BUTTON_RELOAD = "Reload";
 
     public static String NAMES_BUTTON_BUILD = "Build";
+
+    public static String NAMES_BUTTON_HARVEST_DEPOSIT = "Resources";
 
     public static String NAMES_BUTTON_EMPTY = "";
 
@@ -192,8 +199,28 @@ public class MyValues {
 
     // FACTION
 
-    public static String[] FACTION_NAMES = {"Wolves of the North", "Hogs of the East", "Snakes of the South", "Eagles of the West", "Fluffy Bunnies United"};
+    public static String[] FACTION_NAMES = {"Wolves of the North", "Hogs of the East", "Snakes of the South",
+            "Eagles of the West", "Fluffy Bunnies United"};
+
     public static int NUMBER_OF_FACTIONS = FACTION_NAMES.length;
+
+    public static ATerrain[] LIST_TERRAINS = {new DeepWater(null), new Water(null),
+            new Grassland(null), new Forest(null), new Hill(null), new Swamp(null), new HQBackground(null)};
+
+
+    private static Faction f0 = new Faction(0);
+    private static double c = 30;
+
+    public static ABuildingField[] LIST_BUILDINGS = {new Barracks(f0, null), new Farm(f0, null),
+            new Hut(f0, null), new Lumberjack(f0, null), new Quarry(f0, null)};
+
+    public static AField[] LIST_FIELDS = {new Barracks(f0, null), new Farm(f0, null), new HeadQuarter(f0, null),
+            new Hut(f0, null), new Lumberjack(f0, null), new Quarry(f0, null), new FoodBerries(null, c),
+            new OreRocks(null, c), new WoodPile(null, c)};
+
+    public static AUnit[] LIST_UNITS = {new Archer(f0, null), new Catapult(f0, null), new Scout(f0, null),
+            new Swordsman(f0, null), new Worker(f0, null)};
+
 
 
 

@@ -22,10 +22,9 @@ public class AttackButton extends AButton {
 
     @Override
     public void prepareEventListener(AUnit unit, HexCell targetCell) {
-        // Check, if target legit and not in own faction
-        if (unit != null && targetCell.getUnit() != null && !targetCell.getUnit().equals(unit)) {
-            // Check, if attack possible
-            if (unit.isLoaded() && unit.isEnoughEnergyForAttack() && !unit.isHasAttacked() && unit.isEnemyInRange(targetCell)) {
+        if (unit != null && targetCell.getUnit() != null){
+            Attack attackAction = new Attack(unit, targetCell.getUnit());
+            if (attackAction.isActionPossible()){
                 this.isEnabled.set(true);
                 //Add listener
                 drawGroup.setOnMouseClicked((event) -> {

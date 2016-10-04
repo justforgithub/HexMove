@@ -2,6 +2,8 @@ package sample.Resources;
 
 import sample.MyMath;
 
+import java.util.ArrayList;
+
 /**
  * Created by Deviltech on 18.09.2016.
  */
@@ -79,6 +81,24 @@ public class Backpack {
                     s +=  "/" + capacity;
                 }
         return s;
+    }
+
+    /**
+     * If there are resources, return them in a list
+     * @return
+     */
+    public ArrayList<AResource> getAllResources(){
+        ArrayList<AResource> resources = new ArrayList<>();
+        if(food.getCurrentCapacity() > 0){
+            resources.add(food);
+        }
+        if(ore.getCurrentCapacity() > 0){
+            resources.add(ore);
+        }
+        if(wood.getCurrentCapacity() > 0){
+            resources.add(wood);
+        }
+        return resources;
     }
 
 

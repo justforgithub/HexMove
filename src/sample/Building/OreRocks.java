@@ -25,5 +25,10 @@ public class OreRocks extends AResourceField {
         return this.name + ": " + resource.getCurrentCapacity();
     }
 
+    @Override
+    public AField generateCopy(){
+        return new OreRocks(this.hexCell, this.resource.getCurrentCapacity());
+    }
+
 
 }

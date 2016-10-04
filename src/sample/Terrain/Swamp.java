@@ -9,7 +9,7 @@ import sample.MyValues;
  */
 public class Swamp extends ATerrain {
 
-    String[] variant = {"swamp_0", "swamp_1", "swamp_2", "swamp_3"};
+    String[] variant = {"swamp_0", "swamp_1", "swamp_2", "swamp_3", "swamp_4", "swamp_5"};
 
     public Swamp(HexCell hexcell){
         this.name = MyValues.NAMES_SWAMP;
@@ -27,7 +27,7 @@ public class Swamp extends ATerrain {
 
 
     @Override
-    public ATerrain generateNewCopy(HexCell hexCell) {
+    public ATerrain generateCopy(HexCell hexCell) {
         return new Swamp(hexCell);
     }
 }

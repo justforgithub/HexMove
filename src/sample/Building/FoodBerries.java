@@ -26,5 +26,10 @@ public class FoodBerries extends AResourceField{
         return this.name + ": " + resource.getCurrentCapacity();
     }
 
+    @Override
+    public AField generateCopy(){
+        return new FoodBerries(this.hexCell, this.resource.getCurrentCapacity());
+    }
+
 
 }

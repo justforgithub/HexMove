@@ -48,7 +48,7 @@ public abstract class ATerrain extends ACellContent {
      * generates a new copy of itself
      * @return
      */
-    public abstract ATerrain generateNewCopy(HexCell hexCell);
+    public abstract ATerrain generateCopy(HexCell hexCell);
 
     public ImagePattern generatePattern(String s){
         return generateGeneralPattern(MyValues.PATH_TERRAIN + s);

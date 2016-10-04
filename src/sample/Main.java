@@ -1,12 +1,19 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import sample.Building.*;
 import sample.RectangleButtons.*;
@@ -14,6 +21,7 @@ import sample.Terrain.*;
 import sample.Unit.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main extends Application {
@@ -24,7 +32,7 @@ public class Main extends Application {
         VBox mainBox = new VBox();
 
 
-        Board myBoard = new Board(15, 12, new Grassland(null));
+        Board myBoard = new Board(28, 23, new Grassland(null));
 
         Faction whiteFaction = new Faction(0);
         Faction redFaction = new Faction(1);
@@ -81,7 +89,10 @@ public class Main extends Application {
 
 
         Worker hero = new Worker(blueFaction, null);
-        myBoard.getCell(0, 2).setTerraBuildUnitGetDraw(null, new Hut(blueFaction, null), hero);
+        hero.getBackpack().addWood(10);
+        Hut hut = new Hut(blueFaction, null);
+        hut.backpack.addWood(10);
+        myBoard.getCell(0, 2).setTerraBuildUnitGetDraw(null, hut, hero);
         myBoard.getCell(2, 2).setTerraBuildUnitGetDraw(new Grassland(null), null, null);
         myBoard.getCell(4, 4).setTerraBuildUnitGetDraw(null, new FoodBerries(null, 54), null);
         myBoard.getCell(3, 2).setTerraBuildUnitGetDraw(new Hill(null), null, null);
@@ -153,20 +164,120 @@ public class Main extends Application {
             }
         });
 
+        // Terrain
+        ListView<String> terrainList = new ListView<>();
+        ObservableList<String> items = FXCollections.observableArrayList();
+        for (ATerrain t: MyValues.LIST_TERRAINS){
+            items.add(t.getName());
+        }
+        items.add("<empty>");
+        terrainList.setPrefHeight(50);
+        terrainList.setItems(items);
+        terrainList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) ->{
+                    int i = terrainList.getSelectionModel().getSelectedIndex();
+                    if (i >= MyValues.LIST_TERRAINS.length){
+                        myBoard.dummyTerrain = null;
+                    } else {
+                        myBoard.dummyTerrain = MyValues.LIST_TERRAINS[terrainList.getSelectionModel().getSelectedIndex()];
+                    }
+                }));
+        terrainList.getSelectionModel().select(MyValues.LIST_TERRAINS.length);
+
+        // Field
+        ListView<String> fieldList = new ListView<>();
+        items = FXCollections.observableArrayList();
+        for (AField f: MyValues.LIST_FIELDS){
+            items.add(f.getName());
+        }
+        items.add("<empty>");
+        fieldList.setPrefHeight(50);
+        fieldList.setItems(items);
+        fieldList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) ->{
+                    int i = fieldList.getSelectionModel().getSelectedIndex();
+                    if (i >= MyValues.LIST_FIELDS.length){
+                        myBoard.dummyField = null;
+                    } else {
+                        myBoard.dummyField = MyValues.LIST_FIELDS[fieldList.getSelectionModel().getSelectedIndex()];
+                        myBoard.dummyField.hexCell = null;
+                    }
+                }));
+        fieldList.getSelectionModel().select(MyValues.LIST_FIELDS.length);
+
+        // Unit
+        ListView<String> unitList = new ListView<>();
+        items = FXCollections.observableArrayList();
+        for (AUnit u: MyValues.LIST_UNITS){
+            items.add(u.getName());
+        }
+        items.add("<empty>");
+        unitList.setPrefHeight(50);
+        unitList.setItems(items);
+        unitList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) ->{
+                    int i = unitList.getSelectionModel().getSelectedIndex();
+                    if (i >= MyValues.LIST_UNITS.length){
+                        myBoard.dummyUnit = null;
+                    } else {
+                        myBoard.dummyUnit = MyValues.LIST_UNITS[unitList.getSelectionModel().getSelectedIndex()];
+                        myBoard.dummyUnit.hexCell = null;
+                    }
+                }));
+        unitList.getSelectionModel().select(MyValues.LIST_UNITS.length);
+
+        // Faction
+        ListView<String> factionList = new ListView<>();
+        items = FXCollections.observableArrayList();
+        for (int i = 0; i <MyValues.FACTION_NAMES.length; i++){
+            items.add(Integer.toString(i));
+        }
+        factionList.setPrefHeight(50);
+        factionList.setPrefWidth(50);
+        factionList.setItems(items);
+        factionList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) ->{
+                    int i = factionList.getSelectionModel().getSelectedIndex();
+                    myBoard.dummyFaction = new Faction(i);
+                }));
+        factionList.getSelectionModel().select(0);
 
 
-        pane.getChildren().add(myBoard.hexMenuGroup);
+
+
+        pane.getChildren().addAll(myBoard.hexMenuGroup, myBoard.subMenuGroup);
 
         HBox hbox = new HBox();
 
-        hbox.getChildren().addAll(b8, b9, b10);
+        hbox.getChildren().addAll(b8, b9, b10, terrainList, fieldList, unitList, factionList);
 
 
-        mainBox.getChildren().addAll(hbox, pane);
+        // Test TODO
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
 
-        primaryStage.setScene(new Scene(mainBox, 1000, 700));
+        pane.setPrefHeight(2000);
+        pane.setPrefWidth(2000);
+        pane.setStyle("-fx-background-color : #a4b3a8;");
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefHeight(bounds.getHeight());
+        scrollPane.setPrefWidth(bounds.getWidth());
+        scrollPane.setPannable(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setContent(pane);
+
+        mainBox.getChildren().addAll(hbox, scrollPane);
+
+        primaryStage.setScene(new Scene(mainBox, 1000, 1000));
 
         primaryStage.show();
+
     }
 
 

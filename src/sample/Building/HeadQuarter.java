@@ -41,4 +41,9 @@ public class HeadQuarter extends ABuildingField{
         return constructionBackpack;
     }
 
+    @Override
+    public AField generateCopy(){
+        return new HeadQuarter(this.faction, this.hexCell);
+    }
+
 }

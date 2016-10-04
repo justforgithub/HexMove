@@ -119,6 +119,15 @@ public abstract class AUnit extends ACellContent {
      */
     public abstract double getMaxHealth();
 
+    public Faction getFaction(){
+        return faction;
+    }
+
+    public AUnit chooseFaction(Faction f){
+        this.faction = f;
+        return this;
+    }
+
     /**
      * returns all possible adjacent cells of unit for melee range
      *
@@ -260,7 +269,10 @@ public abstract class AUnit extends ACellContent {
         hexCell.board.dummy1 = null;
         hexCell.board.closeHexMenu();
         hexCell.board.deselectAllCells();
+        hexCell.drawObject();
     }
+
+    public abstract AUnit generateCopy();
 
 
 }

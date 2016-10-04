@@ -16,22 +16,37 @@ public class Move extends AAction {
     private Path path;
     private int position;
 
-    public Move(AUnit unit, Path path){
+    public Move(AUnit unit, Path path) {
         this.unit = unit;
         this.path = path;
-        this.position = path.pathCells.size()-1;
+        this.position = path.pathCells.size() - 1;
         this.actionStatus = MyValues.ACTION_STATUS.READY;
     }
 
 
     @Override
-    public void execute(){
+    public boolean isActionPossible() {
+        boolean isPossible = false;
+        if (unit != null && path.getEnd().getUnit() == null) {
+            // No movement, when already attacked
+            if (!unit.isHasAttacked()) {
+                // Check if unit has enough energy for path
+                if (path.pathCost <= unit.energy) {
+                    isPossible = true;
+                }
+            }
+        }
+        return isPossible;
+    }
+
+    @Override
+    public void execute() {
         ArrayList<HexCell> cells = path.pathCells;
-        if(cells.size() >= 2 && position >= 1) {
+        if (cells.size() >= 2 && position >= 1) {
             HexCell startCell = cells.get(position);
             HexCell endCell = cells.get(position - 1);
             double currentPathCost = startCell.getAllCosts(false) + endCell.getAllCosts(true);
-            while (cells.size() >= 2 && position >=1) {
+            while (cells.size() >= 2 && position >= 1) {
                 System.out.println("Path l: " + cells.size() + " pos: " + position + " unit e: " + unit.energy + " +cost " + currentPathCost);
                 if (unit.energy >= currentPathCost && !unit.isHasAttacked()) {
                     unit.energy -= currentPathCost;
@@ -43,7 +58,7 @@ public class Move extends AAction {
                     cells.remove(position);
                     position -= 1;
                     // Workaround TODO
-                    if(position >= 1) {
+                    if (position >= 1) {
                         startCell = cells.get(position);
                         endCell = cells.get(position - 1);
                         currentPathCost = startCell.getAllCosts(false) + endCell.getAllCosts(true);
@@ -54,7 +69,7 @@ public class Move extends AAction {
                     break;
                 }
             }
-        } else{
+        } else {
             actionStatus = MyValues.ACTION_STATUS.OBSOLETE;
         }
     }

@@ -90,7 +90,7 @@ public class FindResources extends AStrategy {
             bestPath.setSelected(true);
             AAction storeOrHarvestAction;
             if(isStore){
-                storeOrHarvestAction = new Store(currentUnit, bestPath.getEnd(), currentResource);
+                storeOrHarvestAction = new Deposit(currentUnit, bestPath.getEnd(), currentResource);
             } else {
                 storeOrHarvestAction = new Harvest(currentUnit, bestPath.getEnd());
             }

@@ -19,7 +19,7 @@ public class HQBackground extends ATerrain {
     }
 
     @Override
-    public ATerrain generateNewCopy(HexCell hexCell) {
+    public ATerrain generateCopy(HexCell hexCell) {
         return new HQBackground(hexCell);
     }
 

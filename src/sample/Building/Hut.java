@@ -52,4 +52,9 @@ public class Hut extends ABuildingField {
         return constructionBackpack;
     }
 
+    @Override
+    public AField generateCopy(){
+        return new Hut(this.faction, this.hexCell);
+    }
+
 }

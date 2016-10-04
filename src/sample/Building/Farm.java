@@ -57,5 +57,9 @@ public class Farm extends ABuildingField{
         return constructionBackpack;
     }
 
+    @Override
+    public AField generateCopy(){
+        return new Farm(this.faction, this.hexCell);
+    }
 
 }
